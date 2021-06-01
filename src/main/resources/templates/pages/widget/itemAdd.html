@@ -1,0 +1,135 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<div class="modal fade" id="modalAddGroup3nd" role="dialog">
+		<div class="modal-dialog modal-dialog-custom">
+
+			<!-- Modal content-->
+			<div class="modal-content modal-content-custom">
+				<div class="modal-header">
+					<h5>Thông tin chi tiết</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="card-body">
+					<div class="card-body">
+						<form th:object="${groupItem}" name="group3ndAddFrm" id="group3ndAddForm">
+							<input type="hidden" th:value="${groupItem.groupId}" name ="groupId">
+							<input type="hidden" th:value="${groupItem.group1stCode}" name ="group1stCode">
+							<input type="hidden" th:value="${groupItem.group1stName}" name ="group1stName">
+							<input type="hidden" th:value="${groupItem.group2ndCode}" name ="group2ndCode">
+							<input type="hidden" th:value="${groupItem.group2ndName}" name ="group2ndName">
+							<fieldset class="field-panel">
+							<legend th:text="${legend}"></legend>
+							<!-- <div class="form-group form-group-custom row">
+								<label for="group3ndCodeAdd" class="col-sm-3 col-form-label lbl-custom">Mã</label>
+								<div class="col-sm-9 msg-warning">
+									<input type="text" th:field="*{group3ndCode}" class="form-control txt-popup-add-cus" id="group3ndCodeAdd"
+										placeholder="Mã">
+								</div>
+							</div> -->
+							<div class="form-group form-group-custom row">
+								<label for="group3ndNameAdd" class="col-sm-3 col-form-label lbl-custom">Tên</label>
+								<div class="col-sm-9 msg-warning">
+									<input type="text" th:field="*{group3ndName}" class="form-control txt-popup-add-cus" id="group3ndNameAdd"
+										placeholder="Tên">
+								</div>
+							</div>
+							<th:block th:switch="${groupItem.groupId}">
+								<th:block th:case="1">
+									<div class="form-group form-group-custom row">
+										<label for="itemSpec1Add" class="col-sm-3 col-form-label lbl-custom">Đơn vị tính</label>
+										<div class="col-sm-9 msg-warning">
+											<input type="text" class="form-control txt-popup-add-cus" id="itemSpec1Add"
+												th:field="*{itemSpec1}" placeholder="Đơn vị tính">
+										</div>
+									</div>
+								</th:block>
+								<th:block th:case="2">
+									<div class="form-group form-group-custom row">
+										<label for="itemSpec3Add" class="col-sm-3 col-form-label lbl-custom">Nhà cung cấp</label>
+										<div class="col-sm-9 msg-warning">
+											<input type="text" class="form-control txt-popup-add-cus" id="itemSpec3Add"
+												th:field="*{itemSpec3}" placeholder="Nhà cung cấp">
+										</div>
+									</div>
+									<div class="form-group form-group-custom row">
+										<label for="itemSpec2Add" class="col-sm-3 col-form-label lbl-custom">Quy cách</label>
+										<div class="col-sm-3 msg-warning">
+											<input type="text" class="form-control txt-popup-add-cus" id="itemSpec2Add"
+												th:field="*{itemSpec2}" placeholder="Quy cách">
+										</div>
+										<label for="itemSpec4Add" class="col-sm-3 col-form-label lbl-custom">Đơn vị tính</label>
+										<div class="col-sm-3 msg-warning">
+											<input type="text" class="form-control txt-popup-add-cus" id="itemSpec4Add"
+												th:field="*{itemSpec4}" placeholder="Đơn vị tính">
+										</div>
+									</div>
+								</th:block>
+								<th:block th:case="3">
+									<div class="form-group form-group-custom row">
+										<label for="itemSpec6Add" class="col-sm-3 col-form-label lbl-custom">Dạng sử dụng</label>
+										<div class="col-sm-9 msg-warning">
+											<input type="text" class="form-control txt-popup-add-cus" id="itemSpec6Add"
+												th:field="*{itemSpec6}" placeholder="Dạng sử dụng">
+										</div>
+									</div>
+									<div class="form-group form-group-custom row">
+										<label for="itemSpec8Add" class="col-sm-3 col-form-label lbl-custom">Thành phần</label>
+										<div class="col-sm-9 msg-warning">
+											<input type="text" class="form-control txt-popup-add-cus" id="itemSpec8Add"
+												th:field="*{itemSpec8}" placeholder="Thành phần">
+										</div>
+									</div>
+									<div class="form-group form-group-custom row">
+										<label for="itemSpec5Add" class="col-sm-3 col-form-label lbl-custom">Đơn vị tính</label>
+										<div class="col-sm-3 msg-warning">
+											<input type="text" class="form-control txt-popup-add-cus" id="itemSpec5Add"
+												th:field="*{itemSpec5}" placeholder="Đơn vị tính">
+										</div>
+										<label for="itemSpec7Add" class="col-sm-3 col-form-label lbl-custom">Quy cách</label>
+										<div class="col-sm-3 msg-warning">
+											<input type="text" class="form-control txt-popup-add-cus" id="itemSpec7Add"
+												th:field="*{itemSpec7}" placeholder="Quy cách">
+										</div>
+									</div>
+								</th:block>
+							</th:block>
+							<div class="form-group form-group-custom row">
+								<label for="noteAdd" class="col-sm-3 col-form-label lbl-custom">Ghi chú</label>
+								<div class="col-sm-9">
+									<input type="text" th:field="*{descript}" class="form-control txt-popup-add-cus" id="noteAdd"
+										placeholder="Ghi chú">
+								</div>
+							</div>
+							
+							<th:block th:switch="${groupItem.groupId}">
+								<th:block th:case="2">
+									<!-- upload file -->
+									<div class="form-group form-group-custom row">
+										<label for="noteAdd" class="col-sm-3 col-form-label lbl-custom">Ảnh</label>
+										<div class="col-sm-6">
+		   									<input type="file" class="form-control-file" name="fileImage" accept="image/png, image/jpeg" id="imgInp" />
+										</div>
+										<div class="col-sm-3">
+											<img id="blah" th:src="@{/images/default-thumb.gif}" alt="your image" class="image-product"/>
+										</div>
+									</div>
+								</th:block>
+							</th:block>
+						</fieldset>
+						</form>
+					</div>
+					<!-- /.card-body -->
+					<div class="card-footer">
+                  <button type="button" class="btn btn-success" onclick="addAction();">Thêm mới</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy bỏ</button>
+                </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

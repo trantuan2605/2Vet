@@ -1,0 +1,568 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="pages/head">
+</head>
+<head>
+<link rel="stylesheet" th:href="@{/css/customize/common.css}">
+<link rel="stylesheet" th:href="@{/css/customize/summary.css}">
+<script th:src="@{/js/pages/common.js}"></script>
+<script th:src="@{/js/pages/examina/progress5.js}"></script>
+<script th:src="@{/js/jquery/jquery.serializeToJSON.js}"></script>
+<script th:src="@{/js/jquery-validation/jquery.validate.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/js/bootstrap/bootstrap.bundle.min.js}"
+	src="static/js/bootstrap/bootstrap.bundle.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script th:src="@{/js/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{/js/datatables-bs4/dataTables.bootstrap4.min.js}"></script>
+<script
+	th:src="@{/js/datatables-responsive/dataTables.responsive.min.js}"></script>
+<!-- Select2 -->
+<link rel="stylesheet" th:href="@{/css/select2/select2.min.css}">
+<link rel="stylesheet" th:href="@{/css/select2-bootstrap4-theme/select2-bootstrap4.min.css}">
+</head>
+<body>
+	<div class="wrapper">
+		<div th:replace="pages/menu"></div>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 class="m-0" th:text="${title}"></h1>
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="#">Home</a></li>
+								<li class="breadcrumb-item active" th:text="${title}"></li>
+							</ol>
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</div>
+			<!-- /.content-header -->
+
+			<!-- Main content -->
+			<div class="content">
+				<!--content inner-->
+				<div class="content__inner">
+					<div class="container"></div>
+					<!--multisteps-form-->
+					<!--progress bar-->
+					<div class="row">
+						<div class="col-md-12">
+							<form id="progress5" name="frmProgres5" class="parent-frm">
+								<div id="viewAllExam">
+									<fieldset class="field-panel">
+										<legend class="multisteps-form__title">Thông tin
+											khách hàng</legend>
+										<div class="children-div">
+											<div class="form-group form-group-custom row">
+												<label for="cusCodeExam"
+													class="col-sm-3 col-form-label lbl-custom">Mã khách
+													hàng</label>
+												<div class="col-sm-3 msg-warning">
+													<input type="text" name="cusCode"
+														class="form-control txt-popup-add-cus" id="cusCodeExam"
+														placeholder="Mã khách hàng" th:value="${examDTO.cusCode}"
+														readonly>
+												</div>
+
+												<label for="cusTypeExam"
+													class="col-sm-3 col-form-label lbl-custom">Loại
+													khách hàng</label>
+
+												<div class="col-sm-3 msg-warning">
+													<input type="text" name="cusType"
+														class="form-control txt-popup-add-cus" id="cusTypeExam"
+														placeholder="Loại khách hàng"
+														th:value="${examDTO.cusTypeName}" readonly>
+												</div>
+											</div>
+											<div class="form-group form-group-custom row">
+												<label for="cusNameExam"
+													class="col-sm-3 col-form-label lbl-custom">Tên
+													khách hàng</label>
+												<div class="col-sm-3 msg-warning">
+													<input type="text" name="cusName"
+														class="form-control txt-popup-add-cus" id="cusNameExam"
+														placeholder="Tên khách hàng" th:value="${examDTO.cusName}"
+														readonly>
+												</div>
+												<label for="cusPhoneExam"
+													class="col-sm-3 col-form-label lbl-custom">Số điện
+													thoại</label>
+												<div class="col-sm-3 msg-warning">
+													<input type="text" name="cusPhone"
+														class="form-control txt-popup-add-cus" id="cusPhoneExam"
+														placeholder="Số điện thoại" th:value="${examDTO.phone}"
+														readonly>
+												</div>
+											</div>
+											<div class="form-group form-group-custom row">
+												<label for="cusAddressExam"
+													class="col-sm-3 col-form-label lbl-custom">Địa chỉ</label>
+												<div class="col-sm-9 msg-warning">
+													<input type="text" name="cusAddress"
+														class="form-control txt-popup-add-cus" id="cusAddressExam"
+														placeholder="Địa chỉ" th:value="${examDTO.address}"
+														readonly>
+												</div>
+											</div>
+										</div>
+									</fieldset>
+
+									<fieldset class="field-panel">
+										<legend class="multisteps-form__title">Thông tin thú
+											nuôi</legend>
+										<div id="pet-info-add" class="children-div">
+											<div class="form-group form-group-custom row">
+												<label for="petCodeExam"
+													class="col-sm-3 col-form-label lbl-custom">Mã thú
+													nuôi</label>
+												<div class="col-sm-3 msg-warning">
+													<input type="text" name="cusAddress"
+														class="form-control txt-popup-add-cus" id="petCodeExam"
+														placeholder="Địa chỉ" th:value="${examDTO.petCode}"
+														readonly>
+												</div>
+												<label for="petTypeExam"
+													class="col-sm-3 col-form-label lbl-custom">Loại thú
+													nuôi</label>
+												<div class="col-sm-3 msg-warning">
+													<input type="text" name="petType"
+														class="form-control txt-popup-add-cus" id="petTypeExam"
+														placeholder="Loại thú cưng"
+														th:value="${examDTO.breedName}" readonly>
+												</div>
+											</div>
+											<div class="form-group form-group-custom row">
+												<label for="petNameExam"
+													class="col-sm-3 col-form-label lbl-custom">Tên thú
+													nuôi</label>
+												<div class="col-sm-3 msg-warning">
+													<input type="text" name="petName"
+														class="form-control txt-popup-add-cus" id="petNameExam"
+														placeholder="Tên thú nuôi" th:value="${examDTO.petName}"
+														readonly>
+												</div>
+												<label for="petSexExam"
+													class="col-sm-3 col-form-label lbl-custom">Giới
+													tính</label>
+												<div class="col-sm-3 msg-warning">
+													<input type="text" name="petSex"
+														class="form-control txt-popup-add-cus" id="petSexExam"
+														placeholder="Giới tính" th:value="${examDTO.sexStr}"
+														readonly>
+												</div>
+											</div>
+											<div class="form-group form-group-custom row">
+												<label for="petAgeExam"
+													class="col-sm-3 col-form-label lbl-custom">Tuổi</label>
+												<div class="col-sm-3 msg-warning">
+													<input type="text" name="petName"
+														class="form-control txt-popup-add-cus" id="petAgeExam"
+														placeholder="Tên thú nuôi" th:value="${examDTO.petAge}"
+														readonly>
+												</div>
+											</div>
+										</div>
+									</fieldset>
+
+									<fieldset class="field-panel">
+										<legend class="multisteps-form__title">Thông tin
+											phiếu khám bệnh lâm sàng</legend>
+										<div class="children-div">
+											<div class="form-group form-group-custom row">
+												<input type="hidden" id="examCodeHidden"
+													name="examClinicalCode" th:value="${examCode}"> <input
+													type="hidden"
+													th:value="${#dates.format(standardDate, 'dd/MM/yyyy')}"
+													name="createTimeStr"> <label for="createdDateExam"
+													class="col-sm-3 offset-md-6 col-form-label lbl-custom date-create-lbl"><span
+													class="title-span">Ngày lập:</span><span
+													th:text="${examDTO.createTimeStr}">DD/MM/YYYY</span></label> <label
+													for="ticketNo"
+													class="col-sm-3 col-form-label lbl-custom ticket-no-lbl"><span
+													class="title-span">Số phiếu:</span><span id="examCode"
+													th:text="${examDTO.examClinicalCode}"></span></label>
+											</div>
+											<div class="form-group form-group-custom row">
+												<label for="timeIn"
+													class="col-sm-2 col-form-label lbl-custom">Thời
+													gian nhập viện</label>
+												<div class="col-sm-2" id="hospitalizeDate"
+													data-target-input="nearest">
+													<input type="text"
+														class="form-control datetimepicker-input" id="timeIn"
+														data-target="#hospitalizeDate" name="hospitalizeDateStr"
+														th:value="${examDTO.hospitalizeDateStr}" readonly />
+												</div>
+
+											</div>
+<!-- 											<div class="form-group form-group-custom row"> -->
+<!-- 												<input type="hidden" id="serviceCodeListHidden" -->
+<!-- 													name="serviceCodeList"> <label for="serviceType" -->
+<!-- 													class="col-sm-2 col-form-label lbl-custom">Loại -->
+<!-- 													dịch vụ</label> -->
+<!-- 											</div> -->
+											<div class="form-group form-group-custom row">
+													<input type="hidden" id="serviceCodeListHidden" name ="serviceCodeList">
+													<label for="serviceType"
+														class="col-sm-2 col-form-label lbl-custom">Loại dịch vụ</label>
+													<div class=" col-sm-10 msg-warning select2-purple">
+<!-- 														<select class="select2 service-select form-control-border slt-popup-add-cus" multiple="multiple" id = "multiple" -->
+<!-- 															data-placeholder="Chọn loại dịch vụ" -->
+<!-- 															data-dropdown-css-class="select2-purple" style="width: 100%;" disabled="disabled"> -->
+<!-- 															<option value="0">-- Lựa chọn --</option> -->
+<!-- 															<option th:each="service : ${lstService}" -->
+<!-- 															th:value="${service.group3ndCode}" -->
+<!-- 															th:selected="${service.group3ndCode} == ${examDTO.serviceCodeList}" -->
+<!-- 															th:utext="${service.group3ndName}"></option> -->
+<!-- 														</select> -->
+															<select
+																class="custom-select form-control-border slt-popup-add-cus"
+																name="serviceCode" id="breedAdd1" onchange="changeFunc(this);">
+																	<option th:each="service : ${lstServiceSubEx}"
+																		th:value="${service.group3ndCode}"
+																		th:utext="${service.group3ndName}" />
+															</select>	
+													</div>
+											</div>
+											<div class="form-group form-group-custom row">
+												<label for="temperature"
+													class="col-sm-2 col-form-label lbl-custom">Nhiệt độ</label>
+												<div class="col-sm-2 msg-warning">
+													<input type="text" name="bodyTemp"
+														class="form-control txt-popup-add-cus" id="temperature"
+														th:value="${examDTO.bodyTemp}" readonly>
+												</div>
+												<label for="vaccine"
+													class="col-sm-2 col-form-label lbl-custom">Tiêm
+													phòng</label>
+												<div class="col-sm-2 msg-warning">
+													<input type="text" name="vacineName"
+														class="form-control txt-popup-add-cus" id="vacineName"
+														th:value="${examDTO.vacineName}" readonly>
+												</div>
+												<label for="firstBranch"
+													class="col-sm-2 col-form-label lbl-custom">Cơ sở
+													khám lần đầu</label>
+												<div class="col-sm-2 msg-warning">
+													<input type="text" name="firstBranchAdd"
+														class="form-control txt-popup-add-cus" id="firstBranchAdd"
+														th:value="${examDTO.branchFirstName}" readonly>
+												</div>
+											</div>
+											<div class="form-group form-group-custom row">
+												<label for="branchExam"
+													class="col-sm-2 col-form-label lbl-custom">Cơ sở
+													điều trị</label>
+												<div class="col-sm-2 msg-warning">
+													<input type="text" name="branchExamAdd"
+														class="form-control txt-popup-add-cus" id="branchExamAdd"
+														th:value="${examDTO.branchName}" readonly>
+												</div>
+												<label for="doctor"
+													class="col-sm-2 col-form-label lbl-custom">Bác sĩ
+													khám</label>
+												<div class="col-sm-2 msg-warning">
+													<input type="text" name="doctorAdd"
+														class="form-control txt-popup-add-cus" id="doctorAdd"
+														th:value="${examDTO.doctorName}" readonly>
+												</div>
+												<label for="amountTemp"
+													class="col-sm-2 col-form-label lbl-custom">Số tiền
+													đặt cọc</label>
+												<div class="col-sm-2 msg-warning">
+													<input type="text" name="deposit"
+														class="form-control txt-popup-add-cus" id="amountTemp"
+														th:value="${examDTO.deposit}" readonly>
+												</div>
+											</div>
+
+											<div class="form-group form-group-custom row">
+												<input type="hidden" id="symptomCodeListHidden" name ="symptomCodeList">
+												<label for="symptomType"
+													class="col-sm-2 col-form-label lbl-custom">Triệu chứng</label>
+												<div class=" col-sm-10 msg-warning select2-purple">
+<!-- 													<select class="select2 symptom-select form-control-border slt-popup-add-cus" multiple="multiple" id = "multiple-symptom" onchange="changeMultipleSymptom(this);" -->
+<!-- 														data-placeholder="Chọn triệu chứng" -->
+<!-- 														data-dropdown-css-class="select2-purple" style="width: 100%;" disabled="disabled"> -->
+<!-- 														<option value="0">-- Lựa chọn --</option> -->
+<!-- 														<option th:each="symptom : ${lstSymptom}" -->
+<!-- 															th:value="${symptom.symptomCode}" -->
+<!-- 															th:selected="${symptom.symptomCode} == ${examDTO.symptomCodeList}" -->
+<!-- 															th:utext="${symptom.symptomName}"></option> -->
+<!-- 													</select> -->
+														<select
+															class="custom-select form-control-border slt-popup-add-cus"
+															name="serviceCode" id="breedAdd1" onchange="changeFunc(this);">
+																<option th:each="symtom : ${lstSymptomSubEx}"
+																	th:value="${symtom.symptomCode}"
+																	th:utext="${symtom.symptomName}" />
+														</select>	
+												</div>
+											</div>
+
+											<div class="form-group form-group-custom row">
+												<label for="summary"
+													class="col-sm-2 col-form-label lbl-custom">Triệu
+													chứng bổ sung</label>
+												<div class="col-sm-10 msg-warning">
+													<input type="text" name="symptomExtra"
+														class="form-control txt-popup-add-cus" id="summary"
+														th:value="${examDTO.symptomExtra}" readonly>
+												</div>
+
+											</div>
+
+											<div class="form-group form-group-custom row">
+												<label for="summary"
+													class="col-sm-2 col-form-label lbl-custom">Chẩn
+													đoán sơ bộ</label>
+												<div class="col-sm-10 msg-warning">
+													<textarea
+														class="form-control form-control txt-popup-add-cus"
+														id="summary" rows="3" name="symptom"
+														th:utext="${examDTO.symptom}" readonly></textarea>
+												</div>
+
+											</div>
+
+											<div class="form-group form-group-custom row">
+												<label for="description"
+													class="col-sm-2 col-form-label lbl-custom">Ghi chú</label>
+												<div class="col-sm-10 msg-warning">
+													<textarea
+														class="form-control form-control txt-popup-add-cus"
+														id="description" rows="3" name="remark"
+														th:utext="${examDTO.remark}" readonly></textarea>
+												</div>
+											</div>
+										</div>
+									</fieldset>
+
+									<fieldset class="field-panel">
+										<legend class="multisteps-form__title">Thông tin
+											phiếu khám bệnh cận lâm sàng</legend>
+										<div class="children-div" th:each="subExam, state:${subExams}">
+											<div class="row" style="margin-bottom: 10px;">
+												<div class="col-md-12">
+													<button type="button" class="btn btn-success" onclick="expandData(this);"
+														data-card-widget="collapse" data-toggle="collapse"
+														th:attr="data-target='#expand-data' + ${state.count}"
+														th:id="'expand-btn-data' + ${state.count}">
+														<i class="fas fa-plus-square"></i>
+													</button>
+													<button type="button" class="btn btn-success collapse-btn-data"
+														data-card-widget="collapse" data-toggle="collapse"
+														onclick="collapseData(this);"
+														th:attr="data-target='#expand-data' + ${state.count}">
+														<i class="fas fa-minus-square"></i>
+													</button>
+													<label th:text="${subExam.executionDateStr}">Ngày
+														22/05/2021</label>
+												</div>
+											</div>
+											<div class="row card card-primary collapsed-card">
+												<div th:id="'expand-data' + ${state.count}"
+													class="collapse col-md-12">
+
+													<table th:id="'tbl-subDtl' + ${state.count}"
+														class="table table-bordered">
+														<thead>
+															<tr>
+																<th class="text-center" style="min-width: 180px;">Ngày
+																	thực hiện</th>
+																<th class="text-center" style="min-width: 160px;">Cận
+																	lâm sàng</th>
+																<!-- <th class="text-center" style="min-width: 160px;">SP
+																	đi kèm</th> -->
+																<th class="text-center" style="min-width: 200px;">Mô
+																	tả chi tiết</th>
+																<th class="text-center" style="min-width: 160px;">Cơ
+																	sở</th>
+																<th class="text-center" style="min-width: 160px;">Bác
+																	sĩ</th>
+																<!-- <th class="text-center" style="min-width: 100px;">Insert
+																	file</th> -->
+															</tr>
+														</thead>
+														<tbody id="tbodyData" class="tbodyDataClass">
+															<tr class="tr_clone"
+																th:each="progress3Dto, state:${lstProgress3s}">
+																<td class="align-middle">
+																	<input type="text" readonly="readonly"
+																		class="form-control"
+																		th:value="${progress3Dto.executionDateStr}" />
+																</td>
+																<td class="align-middle">
+																	<input type="text" readonly="readonly"
+																	class="form-control"
+																	th:value="${progress3Dto.serviceName}" />
+																</td>
+																<td class="align-middle">
+																	<input type="text" readonly="readonly"
+																	class="form-control"
+																	th:value="${progress3Dto.remark}" />
+																</td>
+																<td class="align-middle">
+																	<input type="text" readonly="readonly"
+																	class="form-control"
+																	th:value="${progress3Dto.branchName}" />
+																</td>
+																<td class="align-middle">
+																	<input type="text" readonly="readonly"
+																	class="form-control"
+																	th:value="${progress3Dto.doctorName}" />
+																</td>
+																<!-- <td class="align-middle">
+																	<input type="text" readonly="readonly"
+																	class="form-control datetimepicker-input"
+																	th:value="${progress3Dto.executionDateStr}" />
+																</td>
+																<td class="align-middle">
+																	<input type="text" readonly="readonly"
+																	class="form-control datetimepicker-input"
+																	th:value="${progress3Dto.executionDateStr}" />
+																</td> -->
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</fieldset>
+
+
+									<fieldset class="field-panel">
+										<legend class="multisteps-form__title">Kết luận bệnh
+											án</legend>
+										<div class="multisteps-form__content">
+
+												<div class="form-group form-group-custom row">
+													<label for="timeIn"
+														class="col-sm-2 col-form-label lbl-custom">Thời
+														gian nhập viện</label>
+													<div class="col-sm-2" id="hospitalizeDateSum"
+														data-target-input="nearest">
+														<input type="text"
+															class="form-control datetimepicker-input" id="timeIn"
+															data-target="#hospitalizeDate" name="hospitalizeDateStr"
+															th:value="${conclutionDto.hospitalizeDateStr}" readonly />
+													</div>
+													
+													<label for="timeOt"
+														class="col-sm-2 col-form-label lbl-custom">Thời
+														gian ra viện</label>
+													<div class="col-sm-2" id="dischargeDateSum"
+														data-target-input="nearest">
+														<input type="text"
+															class="form-control datetimepicker-input" id="timeOt"
+															data-target="#hospitalizeDate" name="dischargeDateStr"
+															th:value="${conclutionDto.dischargeDateStr}" readonly />
+													</div>
+
+												</div>
+											
+												<div class="form-group form-group-custom row">
+													<label for="diagnose" class="col-sm-2 col-form-label lbl-custom">Chẩn đoán</label>
+													<div class="col-sm-5 msg-warning">
+														<textarea class="form-control form-control txt-popup-add-cus" id="diagnose" rows="3" 
+															th:utext="${conclutionDto.diagnose}" name="diagnose" readonly></textarea>
+													</div>
+												</div>
+												<div class="form-group form-group-custom row">
+													<label for="diagnose" class="col-sm-2 col-form-label lbl-custom">Phương pháp điều trị</label>
+													<div class="col-sm-5 msg-warning">
+														<textarea class="form-control form-control txt-popup-add-cus" id="treatments" rows="3" 
+															th:utext="${conclutionDto.treatments}" name="treatments" readonly></textarea>
+													</div>
+												</div>
+												<div class="form-group form-group-custom row">
+													<label for="diagnose" class="col-sm-2 col-form-label lbl-custom">Tiên lượng</label>
+													<div class="col-sm-5 msg-warning">
+														<textarea class="form-control form-control txt-popup-add-cus" id="prognosis" 
+															th:utext="${conclutionDto.prognosis}" rows="3" name="prognosis" readonly></textarea>
+													</div>
+												</div>
+												
+												<div class="form-group form-group-custom row">
+													<label for="timeIn" class="col-sm-2 col-form-label lbl-custom">Lịch tái khám</label>
+													<div class="col-sm-2 msg-warning input-group date" id="reExamDate"
+														data-target-input="nearest">
+														<input type="text" class="form-control datetimepicker-input" id="reExamDate"
+															data-target="#reExamDate" name="reExamDate" th:value="${conclutionDto.reExamDateStr}" readonly/>
+													</div>
+													
+													<label for="firstBranch" class="col-sm-2 col-form-label lbl-custom">Cơ sở khám</label>
+													<div class="col-sm-2 msg-warning">
+														<select
+															class="custom-select form-control-border slt-popup-add-cus form-control select2bs4"
+															name="branchCode" id="branchAdd" disabled>
+															<option th:each="branch : ${lstBranch}" 
+																th:value="${branch.branchCode}"
+																th:selected="${branch.branchCode} == ${conclutionDto.branchCode}"
+																th:utext="${branch.branchName}" />
+														</select>
+													</div>
+													
+													<label for="doctor" class="col-sm-2 col-form-label lbl-custom">Bác sĩ khám</label>
+													<div class="col-sm-2 msg-warning">
+														 <select
+															class="custom-select form-control-border slt-popup-add-cus form-control select2bs4"
+															name="doctorCode" id="doctorAdd" disabled>
+															<option th:each="doctor : ${lstDoctor}" 
+																th:value="${doctor.doctorCode}"
+																th:selected="${doctor.doctorCode} == ${conclutionDto.doctorCode}"
+																th:utext="${doctor.doctorName}" />
+														</select> 
+													</div>
+												</div>
+										</div>
+									</fieldset>
+									<!-- <div class="button-row d-flex mt-4">
+										<button class="btn btn-primary ml-auto js-btn-next"
+											type="button" title="Tiếp tục" id="progress5">Tiếp
+											tục</button>
+									</div> -->
+								</div>
+							</form>
+						</div>
+					</div>
+					<!-- /.content -->
+				</div>
+			</div>
+		</div>
+		<!-- /.content-wrapper -->
+		<div th:replace="pages/footer"></div>
+		<!-- /.control-sidebar -->
+	</div>
+</body>
+
+<!-- <style>
+	#viewAllExam {
+	  max-height: 700px;
+	  overflow: scroll;
+}
+</style> -->
+<script th:src="@{/js/select2/select2.full.min.js}"></script>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Initialize Select2 Elements
+//     $('.select2bs4').select2({
+//       theme: 'bootstrap4'
+//     })
+  })
+</script>
+</html>

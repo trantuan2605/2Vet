@@ -1,0 +1,111 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<div class="modal fade" id="editSpecModal" role="dialog">
+		<div class="modal-dialog modal-dialog-custom">
+
+			<!-- Modal content-->
+			<div class="modal-content modal-content-custom">
+				<div class="modal-header">
+					<h5>Thông tin chi tiết</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="card-body">
+					<div class="card-body" id="detailSpecEdit">
+						<form name="objFrmEdit" id="specFormEdit">
+							<input type="hidden" th:value="${specDto.id}" name ="id">
+							<fieldset class="field-panel">
+								<legend>Thông tin giống</legend>
+								
+								<!-- <div class="form-group form-group-custom row">
+									<label for="specieEdit" class="col-sm-3 col-form-label lbl-custom">Loài</label>
+									<div class="col-sm-3">
+										<select class="custom-select form-control-border slt-popup-add-cus" name="breedCdStr" id="breedEdit">
+					                         <option value="0"> -- Lựa chọn --</option>
+					                         <option th:each="breed : ${lstBreed}"
+					                         	th:selected="${breed.breedCode} == ${specDto.breedCode}"
+					                            th:value="${breed.breedCode}"
+					                            th:utext="${breed.breedName}"/>
+						                  </select>
+						                  <span id="breedEdit-error" class="error invalid-feedback-customize">Loại là bắt buộc</span>
+									</div>
+								</div> -->
+								
+								<div class="form-group form-group-custom row">
+									<label for="breedTypeEdit" class="col-sm-3 col-form-label lbl-custom">Loài</label>
+									<div class="col-sm-9">
+											<select class="custom-select form-control-border slt-popup-add-cus" name="breedCdStr" id="breedTypeEdit">
+						                         <option value="0"> -- Lựa chọn --</option>
+						                         <option th:each="breed : ${lstBreed}"
+						                         	th:selected="${breed.breedCode} == ${specDto.breedCode}"
+						                            th:value="${breed.breedCode}"
+						                            th:utext="${breed.breedName}"/>
+							                  </select>
+									</div>
+								</div>
+								
+								<div class="form-group form-group-custom row">
+									<label for="cuscodeEdit" class="col-sm-3 col-form-label lbl-custom">Mã
+										giống</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="breedcodeEdit" readonly="readonly" name="specCode"
+											th:value="${specDto.specCode}" placeholder="Mã giống">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="cusnameEdit" class="col-sm-3 col-form-label lbl-custom">Tên
+										giống</label>
+									<div class="col-sm-9 msg-warning">
+										<input type="text" class="form-control" id="breednameEdit" name="specName"
+											th:value="${specDto.specName}" placeholder="Tên giống">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="noteEdit" class="col-sm-3 col-form-label lbl-custom">Đặc điểm</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="noteEdit" name="spectify"
+											th:value="${specDto.spectify}" placeholder="Đặc điểm">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="noteEdit" class="col-sm-3 col-form-label lbl-custom">Ghi
+										chú</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="noteEdit" name="descript"
+											th:value="${specDto.descript}" placeholder="Ghi chú">
+									</div>
+								</div>
+								<!-- upload file -->
+									<div class="form-group form-group-custom row">
+										<label for="noteAdd" class="col-sm-3 col-form-label lbl-custom">Ảnh</label>
+										<div class="col-sm-6">
+		   									<input type="file" class="form-control-file" name="fileImage" accept="image/png, image/jpeg" id="imgInpEdit" />
+										</div>
+										<div class="col-sm-3">
+											<th:block th:if="${#strings.isEmpty(specDto.path)}">
+												<img id="imagePreviewEdit" th:src="@{/images/default-thumb.gif}" alt="your image" class="image-product"/>
+											</th:block>
+											<th:block th:unless="${#strings.isEmpty(specDto.path)}">
+												<img id="imagePreviewEdit" th:src="@{${specDto.path}}" alt="your image" class="image-product"/>
+											</th:block>
+										</div>
+										<input type="hidden" th:value="${specDto.path}" id ="pathHidden" name="pathHidden">
+									</div>
+							</fieldset>
+						</form>
+					</div>
+					<!-- /.card-body -->
+					<div class="card-footer">
+                  <button type="button" class="btn btn-warning" onclick="editAction();">Cập nhật</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy bỏ</button>
+                </div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

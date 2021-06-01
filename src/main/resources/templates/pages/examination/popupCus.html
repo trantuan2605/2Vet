@@ -1,0 +1,72 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<div class="modal fade" id="modalLstCus" role="dialog">
+		<div class="modal-dialog modal-dialog-custom">
+
+			<!-- Modal content-->
+			<div class="modal-content modal-content-custom">
+				<div class="modal-header">
+					<h5>Danh sách khách hàng</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="card-body">
+					<div class="card-body">
+						<form name="branchFrm" id="branchForm">
+							<fieldset class="field-panel">
+								<div class="form-group form-group-custom row ">
+									<div class="col-12 col-sm-12">
+										<div class="row">
+						<div class="col-md-12">
+							<div class="card" id ="refresh-section">
+								<!-- /.card-header -->
+								<div class="card-body" id ="showDataCus">
+									<table id="customerDataTbl" class="table table-bordered">
+										<thead>
+											<tr>
+												<th style="width: 10px">STT</th>
+												<th>Mã KH</th>
+												<th>Khách hàng</th>
+												<th>Địa chỉ</th>
+												<th>Điện thoại</th>
+											</tr>
+										</thead>
+										<tbody id = "customerTbl">
+											<input type="hidden" id="msg-add" th:value="${message}"/>
+											<tr th:each="customer, state:${lstCustomer}" class="text_data">
+												<td th:text="${state.count}">1.</td>
+												<td th:text="${customer.cusCode}">KH0000001</td>
+												<td th:text=${customer.cusName}>Trần Tiến Đức</td>
+												<td th:text=${customer.address}>Số 1 Thái Hà</td>
+												<td th:text=${customer.phone}>0399355436</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<!-- /.card -->
+						</div>
+						<!-- /.col -->
+					</div>
+									</div>
+
+								</div>
+
+							</fieldset>
+						</form>
+					</div>
+					<!-- /.card-body -->
+					<div class="card-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="checkedExtraCancel();">Hủy
+							bỏ</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

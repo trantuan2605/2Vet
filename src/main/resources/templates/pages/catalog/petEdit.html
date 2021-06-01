@@ -1,0 +1,185 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<div class="modal fade" id="editPetModal" role="dialog">
+		<div class="modal-dialog modal-dialog-custom">
+
+			<!-- Modal content-->
+			<div class="modal-content modal-content-custom">
+				<div class="modal-header">
+					<h5>Thông tin chi tiết</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="card-body">
+					<div class="card-body" id="detailPetEdit">
+						<form name="petFrmEdit" id="petFormEdit">
+							<input type="hidden" th:value="${petDto.id}" name ="id">
+							<fieldset class="field-panel">
+								<legend>Thông tin thú cưng</legend>
+								<div class="form-group form-group-custom row">
+									<label for="petcodeEdit" class="col-sm-3 col-form-label lbl-custom">Mã thú cưng</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="petcodeEdit" readonly="readonly" name="petCode"
+											th:value="${petDto.petCode}" placeholder="Mã thú cưng">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="petnameEdit" class="col-sm-3 col-form-label lbl-custom">Tên thú cưng</label>
+									<div class="col-sm-9 msg-warning">
+										<input type="text" class="form-control" id="petnameEdit" name="petName"
+											th:value="${petDto.petName}" placeholder="Tên thú cưng">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="cuscodeEdit" class="col-sm-3 col-form-label lbl-custom">Khách hàng</label>
+									<div class="col-sm-9 msg-warning">
+										<input type="hidden" name="cusCode" th:value="${petDto.cusCode}">
+											<select class="custom-select form-control-border slt-popup-add-cus"
+											id="cuscodeEdit" disabled="disabled">
+					                         <option value="0"> -- Chọn --</option>
+					                         <option th:each="customer : ${lstCus}"
+					                         	th:selected="${customer.cusCode} == ${petDto.cusCode}"
+					                            th:value="${customer.cusCode}"
+					                            th:utext="${customer.cusCode + '_' + customer.cusName}"/>
+						                  </select>
+									</div>
+								</div>
+								<!-- <div class="form-group form-group-custom row">
+									<label for="cusnameEdit" class="col-sm-3 col-form-label lbl-custom">Tên khách hàng</label>
+									<div class="col-sm-9 msg-warning">
+										<input type="text" class="form-control" id="cusnameEdit" name="cusName" readonly="readonly"
+											th:value="${petDto.cusName}" placeholder="Tên khách hàng">
+									</div>
+								</div> -->
+								<div class="form-group form-group-custom row">
+									<label for="sexEdit" class="col-sm-3 col-form-label lbl-custom">Giới tính</label>
+									<div class="col-sm-3 msg-warning">
+										<!-- <input type="text" class="form-control" id="sexEdit" name="sex"
+											th:value="${petDto.sex}" placeholder="Giới tính"> -->
+										<div class="group-sex">
+											<div class="custom-control custom-radio custom-radio-sex">
+					                          <input class="custom-control-input" type="radio" id="customRadioEdit1" name="customRadioEdit1" value="1" th:checked="${petDto.sex == 1}">
+					                          <label for="customRadioEdit1" class="custom-control-label">Đực</label>
+					                        </div>
+					                        <div class="custom-control custom-radio custom-radio-sex">
+					                          <input class="custom-control-input" type="radio" id="customRadioEdit2" name="customRadioEdit1" value="0" th:checked="${petDto.sex == 0}">
+					                          <label for="customRadioEdit2" class="custom-control-label">Cái</label>
+					                        </div>
+				                        </div>
+									</div>
+									<label for="certificateBirthEdit" class="col-sm-3 col-form-label lbl-custom">Ngày sinh</label>
+									<div class="col-sm-3">
+										<!-- <input type="text" class="form-control" id="dobEdit" name="dob"
+											th:value="${doctorDto.dob}" placeholder="Ngày sinh"> -->
+										<div class="input-group date" id="dobPickerEdit" data-target-input="nearest">
+					                        <input type="text" class="form-control datetimepicker-input" id="dobEdit" data-toggle="datetimepicker"
+					                        	 data-target="#dobPickerEdit" name="dobStr" th:value="${petDto.dobStr}"/>
+					                        <div class="input-group-append" data-target="#dobPickerEdit" data-toggle="datetimepicker">
+					                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+					                        </div>
+	                    				</div>
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="breedEdit" class="col-sm-3 col-form-label lbl-custom">Loài</label>
+									<div class="col-sm-3">
+										<!-- <input type="text" class="form-control" id="specieEdit" name="breed"
+											th:value="${petDto.certificateBirth}" placeholder="Giấy khai sinh"> -->
+										<select class="custom-select form-control-border slt-popup-add-cus" name="breed" id="breedEdit" onchange="changeFunc(this);">
+					                         <option value="0"> -- Chọn --</option>
+					                         <option th:each="breed : ${lstBreed}"
+					                         	th:selected="${breed.breedCode} == ${petDto.breedCode}"
+					                            th:value="${breed.breedCode}"
+					                            th:utext="${breed.breedName}"/>
+						                  </select>
+									</div>
+									<label for="specEdit" class="col-sm-3 col-form-label lbl-custom">Giống</label>
+									<div class="col-sm-3" id="species-droplist-edit">
+										<!-- <input type="text" class="form-control" id="specieEdit" name="specie"
+											th:value="${petDto.sex}" placeholder="Giống"> -->
+											<select class="custom-select form-control-border slt-popup-add-cus" name="specCode" id="specEdit">
+					                         <option value="0"> -- Chọn --</option>
+					                         <option th:each="spec : ${lstSpec}"
+					                         	th:selected="${spec.specCode} == ${petDto.specCode}"
+					                            th:value="${spec.specCode}"
+					                            th:utext="${spec.specName}"/>
+						                  </select>
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="colorEdit" class="col-sm-3 col-form-label lbl-custom">Màu</label>
+										<div class="col-sm-3">
+										<input type="text" class="form-control" id="colorEdit" name="color"
+											th:value="${petDto.color}" placeholder="Màu">
+									</div>
+									<label for="microchipNoEdit" class="col-sm-3 col-form-label lbl-custom">Số microchip</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" id="microchipNoEdit" name="microchipNo"
+											th:value="${petDto.microchipNo}" placeholder="Số microchip">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<div class="col-sm-3">
+									</div>
+									<div class="col-sm-3">
+										<input type="hidden" class="checkbox-hidden vaccin-hidden" name ="vaccinated" id="vaccinatedEditHidden" th:value="${petDto.vaccinated}">
+										<input type="checkbox" class="checkboxPrimary chk-base-info chk-vaccin"
+											id="vaccinatedEdit" onchange="changeValueChecked(this);" th:checked="${petDto.vaccinated == 1}">
+										<label class="lbl-vaccin lbl-custom" for="vaccinatedEdit">Đã tiêm chủng</label>
+									</div>
+									<div class="col-sm-3">
+										<input type="hidden" class="checkbox-hidden worm-hidden" name ="wormed" id="wormedEditHidden" th:value="${petDto.wormed}">
+										<input type="checkbox" class="checkboxPrimary chk-base-info chk-worm" id="wormedEdit"
+											onchange="changeValueChecked(this);" th:checked="${petDto.wormed == 1}">
+										<label class="lbl-worm lbl-custom" for="wormedEdit">Đã tẩy giun</label>
+									</div>
+									<div class="col-sm-3">
+										<input type="hidden" class="checkbox-hidden sterili-hidden" name ="sterilized" id="sterilizedEditHidden" th:value="${petDto.sterilized}">
+										<input type="checkbox" class="checkboxPrimary chk-base-info chk-sterili" id="sterilizedEdit"
+											onchange="changeValueChecked(this);" th:checked="${petDto.sterilized == 1}">
+										<label class="lbl-sterili lbl-custom" for="sterilizedEdit">Đã triệt sản</label>
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="imgInpEdit" class="col-sm-3 col-form-label lbl-custom">Ảnh</label>
+									<div class="col-sm-6">
+	   									<input type="file" class="form-control-file" name="fileImage" accept="image/png, image/jpeg" id="imgInpEdit" />
+									</div>
+									<div class="col-sm-3">
+										<th:block th:if="${#strings.isEmpty(petDto.path)}">
+											<img id="imagePreviewEdit" th:src="@{/images/default-thumb.gif}" alt="your image" class="image-product"/>
+										</th:block>
+										<th:block th:unless="${#strings.isEmpty(petDto.path)}">
+											<img id="imagePreviewEdit" th:src="@{${petDto.path}}" alt="your image" class="image-product"/>
+										</th:block>
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="noteEdit" class="col-sm-3 col-form-label lbl-custom">Ghi
+										chú</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="noteEdit" name="remark"
+											th:value="${petDto.remark}" placeholder="Ghi chú">
+									</div>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+					<!-- /.card-body -->
+					<div class="card-footer">
+                  <button type="button" class="btn btn-warning" onclick="editAction();">Cập nhật</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy bỏ</button>
+                </div>
+				</div>
+				<!-- <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+				</div> -->
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

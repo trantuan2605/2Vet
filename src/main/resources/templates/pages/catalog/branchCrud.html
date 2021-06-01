@@ -1,0 +1,193 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog modal-dialog-custom">
+
+			<!-- Modal content-->
+			<div class="modal-content modal-content-custom">
+				<div class="modal-header">
+					<h5>Thông tin chi tiết</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="card-body">
+					<div class="card-body" id="detailBranch">
+						<fieldset class="field-panel">
+							<legend>Thông tin chi nhánh</legend>
+							<div class="form-group form-group-custom row">
+								<label for="branchcodeDtl"
+									class="col-sm-3 col-form-label lbl-custom">Mã chi nhánh</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="branchcodeDtl"
+										readonly="readonly" th:value="${branchDto.branchCode}"
+										placeholder="Mã chi nhánh">
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+								<label for="branchnameDtl"
+									class="col-sm-3 col-form-label lbl-custom">Chi nhánh</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="branchnameDtl"
+										readonly="readonly" th:value="${branchDto.branchName}"
+										placeholder="Tên chi nhánh">
+								</div>
+							</div>
+							
+							<div class="form-group form-group-custom row ">
+								<label for="provinceAdd" class="col-sm-3 col-form-label lbl-custom">Tỉnh, Thành phố</label>
+								<div class="col-sm-4 msg-warning">
+									<select class="custom-select form-control-border slt-popup-add-cus" id="provinceDtl"
+										disabled="disabled" onchange="getDistrict(this);">
+				                         <option value="0"> -- Lựa chọn --</option>
+				                         <option th:each="province : ${provinces}"
+				                         	th:selected="${province.provinceId} == ${branchDto.provinceId}"
+				                            th:value="${province.provinceId}"
+				                            th:utext="${province.provinceName}"/>
+				                  	</select>
+								</div>
+								<label for="districtAdd" class="col-sm-2 col-form-label lbl-custom">Quận, Huyện</label>
+								<div class="col-sm-3 msg-warning">
+									<select class="custom-select form-control-border slt-popup-add-cus" id="districtDtl" 
+										disabled="disabled" onchange="getWard(this);">
+				                         <option value="0"> -- Lựa chọn --</option>
+				                         <option th:each="district : ${districts}"
+				                         	th:selected="${district.districtId} == ${branchDto.districtId}"
+				                            th:value="${district.districtId}"
+				                            th:utext="${district.districtName}"/>
+				                  	</select>
+								</div>
+							</div>
+							<div class="form-group form-group-custom row ">
+								<label for="wardAdd" class="col-sm-3 col-form-label lbl-custom">Phường, Xã</label>
+								<div class="col-sm-4 msg-warning">
+									<select class="custom-select form-control-border slt-popup-add-cus" disabled="disabled" name="wardId" id="wardDtl">
+				                         <option value="0"> -- Lựa chọn --</option>
+				                         <option th:each="ward : ${wards}"
+				                         	th:selected="${ward.wardId} == ${branchDto.wardId}"
+				                            th:value="${ward.wardId}"
+				                            th:utext="${ward.wardName}"/>
+				                  	</select>
+								</div>
+								<label for="address" class="col-sm-2 col-form-label lbl-custom">Địa chỉ</label>
+								<div class="col-sm-3 msg-warning">
+									<input type="text" class="form-control" id="addressDtl" readonly="readonly"
+										th:value="${branchDto.address}" placeholder="Địa chỉ">
+								</div>
+							</div>
+							
+<!-- 							<div class="form-group form-group-custom row "> -->
+<!-- 								<label for="addressDtl" -->
+<!-- 									class="col-sm-3 col-form-label lbl-custom">Địa chỉ</label> -->
+<!-- 								<div class="col-sm-9"> -->
+<!-- 									<input type="text" class="form-control" id="addressDtl" -->
+<!-- 										readonly="readonly" th:value="${branchDto.address}" -->
+<!-- 										placeholder="Địa chỉ"> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+							<div class="form-group form-group-custom row">
+								<label for="phoneDtl" class="col-sm-3 col-form-label lbl-custom">Điện
+									thoại</label>
+								<div class="col-sm-3">
+									<input type="text" class="form-control" id="phoneDtl"
+										readonly="readonly" th:value="${branchDto.phone}"
+										placeholder="Điện thoại">
+								</div>
+							</div>
+							
+							<div class="form-group form-group-custom row">
+								<label for="noteDtl" class="col-sm-3 col-form-label lbl-custom">Trưởng chi nhánh</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" id="noteDtl"
+										readonly="readonly" th:value="${branchDto.managerName}"
+										placeholder="Trưởng chi nhánh">
+								</div>
+								<label for="noteDtl" class="col-sm-2 col-form-label lbl-custom">ĐT trưởng chi nhánh</label>
+								<div class="col-sm-3">
+									<input type="text" class="form-control" id="noteDtl"
+										readonly="readonly" th:value="${branchDto.phoneManager}"
+										placeholder="Trưởng chi nhánh">
+								</div>
+							</div>
+							
+							<div class="form-group form-group-custom row">
+								<label for="noteDtl" class="col-sm-3 col-form-label lbl-custom">Phó chi nhánh</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" id="noteDtl"
+										readonly="readonly" th:value="${branchDto.subManagerName}"
+										placeholder="Phó chi nhánh">
+								</div>
+								<label for="noteDtl" class="col-sm-2 col-form-label lbl-custom">ĐT phó chi nhánh</label>
+								<div class="col-sm-3">
+									<input type="text" class="form-control" id="noteDtl"
+										readonly="readonly" th:value="${branchDto.phoneManager}"
+										placeholder="ĐT phó chi nhánh">
+								</div>
+							</div>
+							
+							<div class="form-group form-group-custom row">
+								<label for="noteDtl" class="col-sm-3 col-form-label lbl-custom">Ghi
+									chú</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="noteDtl"
+										readonly="readonly" th:value="${branchDto.descript}"
+										placeholder="Ghi chú">
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+							<div class="col-sm-3"></div>
+							<div class="col-sm-6" style="text-align: center;">
+								<button type="button" class="btn btn-success" data-dismiss="modal"
+									onclick="showAddPopup();" style="margin-right: 15px;">Thêm mới</button>
+								<button type="button" class="btn btn-warning" data-dismiss="modal"
+									onclick="showEditPopup();">Cập nhật</button>
+							</div>
+							<div class="col-sm-3"></div>
+							</div>
+						</fieldset>
+						<!-- danh sach dich vu su dung cho chi nhanh -->
+						<fieldset class="field-panel">
+							<legend>Danh sách dịch vụ</legend>
+							<button type="button" class="btn btn-success btn-xs add-service-btn" data-dismiss="modal" onclick="showAddServicePopup();"><i class="fas fa-plus-square"></i> Chọn dịch vụ</button>
+							<div class="card" id ="refresh-section">
+									<!-- /.card-header -->
+									<div class="card-body">
+										<table id="branchServiceDataTbl" class="table table-bordered table-hover">
+											<thead>
+												<tr>
+													<th class="col-no-1 text-center">STT</th>
+													<th class="col-no-2 text-center">Dịch vụ</th>
+													<th class="col-no-3 text-center">Đơn giá</th>
+												</tr>
+											</thead>
+											<tbody id = "branchServiceTbl">
+												<input type="hidden" id="msg-add-branch-service" th:value="${message}"/>
+												<tr th:each="service, state:${lstBranchService}" class="text_data">
+													<td class="col-no-1" th:text="${state.count}">1.</td>
+													<td class="col-no-2" th:text="${service.serviceName}">KH0000001</td>
+													<td class="col-no-3" th:text=${service.price}>Trần Tiến Đức</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</fieldset>
+					</div>
+					<!-- /.card-body -->
+					<div class="card-footer">
+						<!-- <button type="button" class="btn btn-success" data-dismiss="modal"
+							onclick="showAddPopup();">Thêm mới</button>
+						<button type="button" class="btn btn-warning" data-dismiss="modal"
+							onclick="showEditPopup();">Cập nhật</button> -->
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Hủy
+							bỏ</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

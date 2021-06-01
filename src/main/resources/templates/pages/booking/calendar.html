@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="pages/head">
+</head>
+<head>
+<link rel="stylesheet" th:href="@{/plugins/fullcalendar/main.css}">
+<link rel="stylesheet" th:href="@{/css/customize/calendar.css}">
+<link rel="stylesheet" th:href="@{/plugins/jquery-timepicker-1.3.5/jquery.timepicker.css}">
+<script th:src="@{/js/pages/booking/calendar.js}"></script>
+<script th:src="@{/plugins/jquery-ui/jquery-ui.min.js}"></script>
+ <!-- jquery for date picker  start -->
+<script th:src="@{/js/moment/moment.min.js}"></script>
+<script th:src="@{/plugins/fullcalendar/main.js}"></script>
+<!-- <script th:src="@{/plugins/fullcalendar/fullcalendar.js}"></script> -->
+<script th:src="@{/plugins/fullcalendar/locales/vi.js}"></script>
+<script th:src="@{/js/jquery/jquery.serializeToJSON.js}"></script>
+<script th:src="@{/js/pages/common.js}"></script>
+<script th:src="@{/plugins/ckeditor/ckeditor.js}"></script>
+<script th:src="@{/plugins/ckeditor/adapters/jquery.js}"></script>
+<script th:src="@{/plugins/jquery-timepicker-1.3.5/jquery.timepicker.js}"></script>
+<script th:src="@{/js/websocket/sockjs-0.3.4.js}"></script>
+<script th:src="@{/js/websocket/stomp.js}"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<div th:replace="pages/menu"></div>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 class="m-0" th:text="${title}"></h1>
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="#">Home</a></li>
+								<li class="breadcrumb-item active" th:text="${title}"></li>
+							</ol>
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</div>
+			<!-- /.content-header -->
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<!-- Small boxes (Stat box) -->
+					<div class="row">
+						<div class="col-md-3" id="calendar-col-3">
+							<div class="sticky-top mb-3">
+								<div class="card">
+									<div class="card-header">
+										<h4 class="card-title">Hiển thị Lịch khám theo:</h4>
+									</div>
+									<div class="card-body">
+										<!-- the events -->
+										<div id="external-events">
+											<div class="external-event bg-success event-display-by">
+												<label for="event-assigned" class="event-assign-lbl">Lịch khám đã nhận</label>
+												<div class="checkbox">
+														<input type="checkbox" id="event-assigned" onclick="getEventAssign(this);">
+												</div>
+											</div>
+											<div class="external-event bg-warning event-display-by">
+												<label for="event-waiting-assign" class="event-assign-lbl">Lịch khám đang chờ nhận</label>
+												<div class="checkbox">
+														<input type="checkbox" id="event-waiting-assign" onclick="getEventAssign(this);">
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- /.card-body -->
+								</div>
+								<!-- /.card -->
+								<!-- <div class="card">
+									<div class="card-header">
+										<h3 class="card-title">Tạo lịch</h3>
+									</div>
+									<div class="card-body">
+										<div class="btn-group"
+											style="width: 100%; margin-bottom: 10px;">
+											<ul class="fc-color-picker" id="color-chooser">
+												<li><a class="text-primary" href="#"><i
+														class="fas fa-square"></i></a></li>
+												<li><a class="text-warning" href="#"><i
+														class="fas fa-square"></i></a></li>
+												<li><a class="text-success" href="#"><i
+														class="fas fa-square"></i></a></li>
+												<li><a class="text-danger" href="#"><i
+														class="fas fa-square"></i></a></li>
+												<li><a class="text-muted" href="#"><i
+														class="fas fa-square"></i></a></li>
+											</ul>
+										</div>
+										/btn-group
+										<div class="input-group">
+											<input id="new-event" type="text" class="form-control"
+												placeholder="Tạo lịch khám">
+
+											<div class="input-group-append">
+												<button id="add-new-event" type="button"
+													class="btn btn-primary">Thêm</button>
+											</div>
+											/btn-group
+										</div>
+										/input-group
+									</div>
+								</div> -->
+							</div>
+						</div>
+						<!-- /.col -->
+						<div class="col-md-9" id="calendar-col-9">
+							<div class="card card-primary">
+								<div class="card-body p-0">
+									<input type="hidden" id="contextRoot" th:value="${contextRoot}"/>
+									<!-- THE CALENDAR -->
+									<div id="calendar"></div>
+								</div>
+								<!-- /.card-body -->
+							</div>
+							<!-- /.card -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+					<!-- Main row -->
+					<!-- /.row (main row) -->
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+		<div th:replace="pages/footer"></div>
+		<!-- /.control-sidebar -->
+	</div>
+	<div th:replace="pages/booking/detailEvent"></div>
+	<div th:replace="pages/booking/confirmDialogYesNo"></div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+.avatar-profile {
+	margin-top: -5px;
+}
+.btn-logout{
+	width: 100%;
+	text-align: left;
+    padding-left: 15px;
+    border: none;
+    background: none;
+}
+
+.btn-logout:hover{
+    color: #16181b;
+    text-decoration: none;
+    background-color: #f8f9fa;
+}
+
+.icon-btn-logout, .text-logout-btn{
+	color:#6c757d;
+}
+.menu-child-customize {
+	margin-left: 15px;
+}
+
+.icon-menu-parent-customize, .icon-menu-child-customize {
+	margin-right: 12px !important;
+}
+.info-custom {
+	font-weight: 700;
+}

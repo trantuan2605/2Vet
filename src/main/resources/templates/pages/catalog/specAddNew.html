@@ -1,0 +1,92 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<div class="modal fade" id="modalAddSpec" role="dialog">
+		<div class="modal-dialog modal-dialog-custom">
+
+			<!-- Modal content-->
+			<div class="modal-content modal-content-custom">
+				<div class="modal-header">
+					<h5>Thông tin chi tiết</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="card-body">
+					<div class="card-body">
+						<form th:object="${spec}" name="specFrm" id="specForm">
+							<fieldset class="field-panel">
+								<legend>Thông tin giống</legend>
+
+								<div class="form-group form-group-custom row">
+									<label for="specieEdit" class="col-sm-3 col-form-label lbl-custom">Loài</label>
+										<div class="col-sm-3 msg-warning">
+										<!-- <input type="text" class="form-control" id="specieEdit" name="breed"
+											th:value="${petDto.certificateBirth}" placeholder="Giấy khai sinh"> -->
+										<select th:field="*{breedCdStr}" class="custom-select form-control-border slt-popup-add-cus" name="breedCdStr" id="breedEdit">
+					                         <option value="0"> -- Lựa chọn --</option>
+					                         <option th:each="breed : ${lstBreed}"
+					                            th:value="${breed.breedCode}"
+					                            th:utext="${breed.breedName}"/>
+						                  </select>
+									</div>
+								</div>
+								
+								<div class="form-group form-group-custom row">
+									<label for="cusnameAdd"
+										class="col-sm-3 col-form-label lbl-custom">Tên giống</label>
+									<div class="col-sm-9 msg-warning">
+										<input type="text" th:field="*{specName}"
+											class="form-control txt-popup-add-cus" id="cusnameAdd"
+											placeholder="Tên giống">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="note" class="col-sm-3 col-form-label lbl-custom">Đặc điểm</label>
+									<div class="col-sm-9">
+										<input type="text" th:field="*{spectify}"
+											class="form-control txt-popup-add-cus" id="note"
+											placeholder="Đặc điểm">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="note" class="col-sm-3 col-form-label lbl-custom">Ghi
+										chú</label>
+									<div class="col-sm-9">
+										<input type="text" th:field="*{descript}"
+											class="form-control txt-popup-add-cus" id="note"
+											placeholder="Ghi chú">
+									</div>
+								</div>
+								<!-- upload file -->
+									<div class="form-group form-group-custom row">
+										<label for="noteAdd" class="col-sm-3 col-form-label lbl-custom">Ảnh</label>
+										<div class="col-sm-6">
+		   									<input type="file" class="form-control-file" name="fileImage" accept="image/png, image/jpeg" id="imgInp" />
+										</div>
+										<div class="col-sm-3">
+											<img id="blah" th:src="@{/images/default-thumb.gif}" alt="your image" class="image-product"/>
+										</div>
+									</div>
+
+							</fieldset>
+						</form>
+					</div>
+				</div>
+				<!-- /.card-body -->
+				<div class="card-footer">
+					<button type="button" class="btn btn-success"
+						onclick="addAction();">Thêm mới</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Hủy
+						bỏ</button>
+				</div>
+			</div>
+			<!-- <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+				</div> -->
+		</div>
+
+	</div>
+</body>
+</html>

@@ -1,0 +1,67 @@
+/* .col-md-3-custom-calendar {
+	    -ms-flex: 0 0 14%;
+	    flex: 0 0 14%;
+	    max-width: 14%;
+}
+.col-md-9-custom-calendar {
+    -ms-flex: 0 0 86%;
+    flex: 0 0 86%;
+    max-width: 86%;
+} */
+#calendar div.fc-view-harness div.fc-view table{
+	width: 1346px;
+}
+#calendar div.fc-view-harness div.fc-view{
+	overflow-x: auto;
+}
+.fc .fc-daygrid-day-number {
+	margin-right: 15px;
+}
+.modal-dialog-custom{
+	max-width: 650px !important;
+	margin: auto;
+	/* top: 10%; */
+}
+.header-detail-event{
+	height: 22px;
+    background: #f1f3f4;
+}
+.header-detail-event button.close {
+	height: 15px;
+    padding: 4px;
+}
+.card-footer-custom {
+	background: #ffff;
+	text-align: right;
+}
+.card-body-custom{
+	padding-bottom: 0px;
+	padding-top: 0px;
+}
+.btn-hide {
+	display: none;
+}
+.time-meeting {
+	width: 70px;
+}
+.add-time-after{
+	max-width: 100% !important;
+}
+.event-wrap-text{
+	flex-wrap: wrap;
+}
+.descript-margin {
+	margin-left: 20px;
+}
+.event-assign-lbl{
+	width: 95%;
+}
+.event-display-by {
+	display: flex;
+	cursor: pointer !important;
+}
+.event-assign-status {
+	color: #dc3545;
+    font-weight: 400 !important;
+    margin-top: 5px;
+}

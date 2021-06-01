@@ -1,0 +1,63 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<div class="modal fade" id="editSputumModal" role="dialog">
+		<div class="modal-dialog modal-dialog-custom">
+
+			<!-- Modal content-->
+			<div class="modal-content modal-content-custom">
+				<div class="modal-header">
+					<h5>Thông tin chi tiết</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="card-body">
+					<div class="card-body" id="detailSputumEdit">
+						<form name="sputumFrmEdit" id="cusFormEdit">
+							<input type="hidden" th:value="${sputumDto.id}" name ="id">
+							<fieldset class="field-panel">
+								<legend>Thông tin xét nghiệm dịch đờm</legend>
+								<div class="form-group form-group-custom row">
+									<label for="cuscodeEdit" class="col-sm-3 col-form-label lbl-custom">Mã
+										xét nghiệm dịch đờm</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="sputumCodeEdit" readonly="readonly" name="sputumCode"
+											th:value="${sputumDto.sputumCode}" placeholder="Mã xét nghiệm dịch đờm">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="cusnameEdit" class="col-sm-3 col-form-label lbl-custom">Tên
+										xét nghiệm dịch đờm</label>
+									<div class="col-sm-9 msg-warning">
+										<input type="text" class="form-control" id="sputumNameEdit" name="sputumName"
+											th:value="${sputumDto.sputumName}" placeholder="Tên xét nghiệm dịch đờm">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="noteEdit" class="col-sm-3 col-form-label lbl-custom">Ghi
+										chú</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="noteEdit" name="descript"
+											th:value="${sputumDto.descript}" placeholder="Ghi chú">
+									</div>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+					<!-- /.card-body -->
+					<div class="card-footer">
+                  <button type="button" class="btn btn-warning" onclick="editAction();">Cập nhật</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy bỏ</button>
+                </div>
+				</div>
+				<!-- <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+				</div> -->
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

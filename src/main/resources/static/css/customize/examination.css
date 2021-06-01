@@ -1,0 +1,28 @@
+.step-window-custom{
+    max-width: 100%;
+    flex: 0 0 100%;
+}
+.date-create-lbl{
+	text-align: right;
+}
+.ticket-no-lbl{
+	text-align: center;
+}
+.title-span {
+	font-weight: bold;
+    margin-right: 5px
+}
+.image-upload > input
+{
+    display: none;
+}
+
+.image-upload img
+{
+    width: 80px;
+    cursor: pointer;
+}
+.image-upload {
+	text-align: center;
+    margin-top: 7px;
+}

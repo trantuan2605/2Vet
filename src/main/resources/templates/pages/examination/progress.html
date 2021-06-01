@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="pages/head">
+</head>
+<head>
+<link rel="stylesheet" th:href="@{/css/customize/common.css}">
+<link rel="stylesheet" th:href="@{/multi_step_form/style.css}">
+<link rel="stylesheet" th:href="@{/css/customize/examination.css}">
+<link rel="stylesheet" th:href="@{/css/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css}">
+<script th:src="@{/js/pages/common.js}"></script>
+<script th:src="@{/js/jquery/jquery.serializeToJSON.js}"></script>
+<script th:src="@{/js/pages/examina/progress.js}"></script>
+<script th:src="@{/js/pages/examina/progress1.js}"></script>
+<script th:src="@{/js/pages/examina/progress2.js}"></script>
+<script th:src="@{/js/pages/examina/progress3.js}"></script>
+<script th:src="@{/js/pages/examina/progress4.js}"></script>
+<!-- <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet"> -->
+<script
+	src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+</head>
+<body>
+	<div class="wrapper">
+		<div th:replace="pages/menu"></div>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 class="m-0" th:text="${title}"></h1>
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="#">Home</a></li>
+								<li class="breadcrumb-item active" th:text="${title}"></li>
+							</ol>
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</div>
+			<!-- /.content-header -->
+
+			<!-- Main content -->
+			<div class="content">
+				<!--content inner-->
+				<div class="content__inner">
+					<div class="container"></div>
+					<div class="container overflow-hidden">
+						<!--multisteps-form-->
+						<div class="multisteps-form">
+							<!--progress bar-->
+							<div class="row">
+								<div class="col-12 col-lg-8 ml-auto mr-auto mb-4">
+									<div class="multisteps-form__progress">
+										<button class="multisteps-form__progress-btn js-active"
+											type="button" title="Thông tin chung">Thông tin chung</button>
+										<button class="multisteps-form__progress-btn" type="button"
+											title="Thông tin phiếu khám bệnh lâm sàng">Thông tin phiếu khám bệnh lâm sàng</button>
+										<button class="multisteps-form__progress-btn" type="button"
+											title="Thông tin phiếu khám bệnh cận lâm sàng">Thông tin phiếu khám bệnh cận lâm sàng</button>
+										<button class="multisteps-form__progress-btn" type="button"
+											title="Kết luận bệnh án">Kết luận bệnh án</button>
+									</div>
+								</div>
+							</div>
+							<!--form panels-->
+							<div class="row">
+								<div class="col-12 col-lg-8 m-auto step-window-custom">
+									<div class="multisteps-form__form">
+										<!--single form panel progress 1-->
+										<div th:replace="pages/examination/progress1"></div>
+										<!--single form panel progress 2-->
+										<div th:replace="pages/examination/progress2"></div>
+										<!--single form panel progrees 3-->
+										<div th:replace="pages/examination/progress3"></div>
+										<!--single form panel progress 4-->
+										<div th:replace="pages/examination/progress4"></div>
+										<!--single form panel progress 5-->
+										<!-- <div th:replace="pages/examination/progress5"></div> -->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+		<div th:replace="pages/footer"></div>
+		<!-- /.control-sidebar -->
+	</div>
+	<!--PEN CONTENT     -->
+	<!-- partial -->
+	<script
+		src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'></script>
+	<script th:src="@{/multi_step_form/script.js}"></script>
+	<input type="hidden" id="activePanelNum" th:value="${activePanelNum}"/>
+	<input type="hidden" id="examIdHidden" th:value="${examIdHidden}"/>
+	<input type="hidden" id="serviceCodeLstHidden" th:value="${serviceCodeLstHidden}"/>
+	<input type="hidden" id="contextRoot" th:value="${contextRoot}"/>
+	<!-- 
+	<div th:replace="pages/booking/detailEvent"></div>
+	<div th:replace="pages/booking/confirmDialogYesNo"></div> -->
+</body>
+</html>

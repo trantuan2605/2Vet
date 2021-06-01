@@ -1,0 +1,19 @@
+.col-no-1 {
+	width: 3% !important;
+}
+.col-no-2 {
+	width: 17% !important;
+}
+.col-no-3 {
+	width: 40% !important;
+}
+.col-no-4 {
+	width: 40% !important;
+}
+.text-center{
+	text-align: center;
+}
+
+.filter-on-col{
+	width: 100%;
+}

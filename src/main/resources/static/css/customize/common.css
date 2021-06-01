@@ -1,0 +1,95 @@
+.text_data:hover {
+	background: #f9a11c;
+	color: #fff;
+	cursor: pointer;
+}
+
+.modal-dialog-custom{
+	max-width: 800px;
+	margin: auto;
+}
+
+.modal-content-custom {
+	width:100%;
+}
+
+.field-panel {
+	border: 1px solid orange;
+	padding: 15px !important;
+	margin-bottom: 20px;
+}
+
+legend {
+	width: auto;
+	font-size: 17px !important;
+	font-weight: bold;
+}
+
+.lbl-custom {
+	font-weight: normal !important;
+}
+
+.modal-header {
+	padding: 10px !important;
+}
+
+.card-body {
+	padding: 3px !important;
+}
+
+.form-group-custom {
+	margin-bottom: 10px;
+}
+
+.modal-footer {
+	padding: 5px !important;
+}
+
+.card-footer, .add-remove-row{
+	text-align: center !important;
+}
+
+.card-footer button.btn{
+	margin-right: 20px;
+	width: 100px !important;
+}
+
+.control-header {
+	text-align: right;
+}
+
+.advance-search {
+	text-align: center !important;
+	margin-top: 10px;
+}
+
+.display-init{
+	display: none;
+}
+
+.modal { overflow: auto !important; }
+
+.none-display {
+	display: none;
+}
+
+.invalid-feedback-customize {
+	width: 100%;
+    margin-top: 0.25rem;
+    font-size: 80%;
+    color: #dc3545;
+}
+
+.dataTables_scrollHeadInner{
+	width: 100%;
+}
+.filter-on-col{
+	width: 100%;
+}
+.text-center{
+	text-align: center;
+}
+.image-product {
+	width: 142px;
+    border: 1px solid orange;
+}

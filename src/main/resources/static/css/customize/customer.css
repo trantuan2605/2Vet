@@ -1,0 +1,35 @@
+.modal-dialog-custom{
+	max-width: 1000px !important;
+	margin: auto;
+}
+
+.group-sex {
+	display: inline-flex;
+	margin-top: 7px !important;
+}
+
+.custom-radio-sex {
+	margin-right: 10px;
+}
+.chk-base-info{
+	margin-top: 6px;
+	margin-right: 5px;
+}
+/* .text-center{
+	min-width: 200px;
+} */
+.customer-info-add, .customer-info{
+	overflow-x: scroll;
+}
+
+.hasDatepicker {
+    position: relative;
+    z-index: 9999;
+}
+
+.bootstrap-datetimepicker-widget.dropdown-menu.usetwentyfour {
+	inset: auto !important;
+}
+.align-middle{
+	vertical-align: middle;
+}

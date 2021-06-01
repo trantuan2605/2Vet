@@ -1,0 +1,142 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<div class="modal fade" id="editGroup3ndModal" role="dialog">
+		<div class="modal-dialog modal-dialog-custom">
+
+			<!-- Modal content-->
+			<div class="modal-content modal-content-custom">
+				<div class="modal-header">
+					<h5>Thông tin chi tiết</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="card-body">
+					<div class="card-body" id="detailGroup3ndEdit">
+						<form name="group3ndFrmEdit" id="group3ndFormEdit">
+							<input type="hidden" th:value="${groupItemDto.id}" name ="id">
+							<input type="hidden" th:value="${groupItemDto.appGroupId}" name ="groupId">
+							<input type="hidden" th:value="${groupItemDto.group2ndCode}" name ="group2ndCode">
+							<fieldset class="field-panel">
+								<legend th:text="${legend}"></legend>
+								<div class="form-group form-group-custom row">
+									<label for="group3ndCodeEdit" class="col-sm-3 col-form-label lbl-custom">Mã</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="group3ndCodeEdit" readonly="readonly" name="group3ndCode"
+											th:value="${groupItemDto.group3ndCode}" placeholder="Mã">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="group3ndNameEdit" class="col-sm-3 col-form-label lbl-custom">Tên</label>
+									<div class="col-sm-9 msg-warning">
+										<input type="text" class="form-control" id="group3ndNameEdit" name="group3ndName"
+											th:value="${groupItemDto.group3ndName}" placeholder="Tên">
+									</div>
+								</div>
+								<th:block th:switch="${groupItemDto.appGroupId}">
+									<th:block th:case="1">
+										<div class="form-group form-group-custom row">
+											<label for="itemSpec1Edit" class="col-sm-3 col-form-label lbl-custom">Đơn vị tính</label>
+											<div class="col-sm-9 msg-warning">
+												<input type="text" class="form-control" id="itemSpec1Edit" name="itemSpec1"
+													th:value="${groupItemDto.itemSpec1}" placeholder="Đơn vị tính">
+											</div>
+										</div>
+									</th:block>
+									<th:block th:case="2">
+										<div class="form-group form-group-custom row">
+											<label for="itemSpec3Edit" class="col-sm-3 col-form-label lbl-custom">Nhà cung cấp</label>
+											<div class="col-sm-9 msg-warning">
+												<input type="text" class="form-control" id="itemSpec3Edit" name="itemSpec3"
+													th:value="${groupItemDto.itemSpec3}" placeholder="Nhà cung cấp">
+											</div>
+										</div>
+										<div class="form-group form-group-custom row">
+											<label for="itemSpec2Edit" class="col-sm-3 col-form-label lbl-custom">Quy cách</label>
+											<div class="col-sm-3 msg-warning">
+												<input type="text" class="form-control" id="itemSpec2Edit" name="itemSpec2"
+													th:value="${groupItemDto.itemSpec2}" placeholder="Quy cách">
+											</div>
+											<label for="itemSpec4Edit" class="col-sm-3 col-form-label lbl-custom">Đơn vị tính</label>
+											<div class="col-sm-3 msg-warning">
+												<input type="text" class="form-control" id="itemSpec4Edit" name="itemSpec4"
+													th:value="${groupItemDto.itemSpec4}" placeholder="Đơn vị tính">
+											</div>
+										</div>
+									</th:block>
+									<th:block th:case="3">
+										<div class="form-group form-group-custom row">
+											<label for="itemSpec6Edit" class="col-sm-3 col-form-label lbl-custom">Dạng sử dụng</label>
+											<div class="col-sm-9 msg-warning">
+												<input type="text" class="form-control" id="itemSpec6Edit" name="itemSpec6"
+													th:value="${groupItemDto.itemSpec6}" placeholder="Dạng sử dụng">
+											</div>
+										</div>
+										<div class="form-group form-group-custom row">
+											<label for="itemSpec8Edit" class="col-sm-3 col-form-label lbl-custom">Thành phần</label>
+											<div class="col-sm-9 msg-warning">
+												<input type="text" class="form-control" id="itemSpec8Edit" name="itemSpec8"
+													th:value="${groupItemDto.itemSpec8}" placeholder="Thành phần">
+											</div>
+										</div>
+										<div class="form-group form-group-custom row">
+											<label for="itemSpec5Edit" class="col-sm-3 col-form-label lbl-custom">Đơn vị tính</label>
+											<div class="col-sm-3 msg-warning">
+												<input type="text" class="form-control" id="itemSpec5Edit" name="itemSpec5"
+													th:value="${groupItemDto.itemSpec5}" placeholder="Đơn vị tính">
+											</div>
+											<label for="itemSpec7Edit" class="col-sm-3 col-form-label lbl-custom">Quy cách</label>
+											<div class="col-sm-3 msg-warning">
+												<input type="text" class="form-control" id="itemSpec7Edit" name="itemSpec7"
+													th:value="${groupItemDto.itemSpec7}" placeholder="Quy cách">
+											</div>
+										</div>
+									</th:block>
+								</th:block>
+								<div class="form-group form-group-custom row">
+									<label for="noteEdit" class="col-sm-3 col-form-label lbl-custom">Ghi
+										chú</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="noteEdit" name="descript"
+											th:value="${groupItemDto.descript}" placeholder="Ghi chú">
+									</div>
+								</div>
+								
+							<th:block th:switch="${groupItemDto.appGroupId}">
+								<th:block th:case="2">
+									<!-- upload file -->
+									<div class="form-group form-group-custom row">
+										<label for="imageEdit" class="col-sm-3 col-form-label lbl-custom">Ảnh</label>
+										<input type="hidden" th:value="${groupItemDto.path}" name ="path">
+										<div class="col-sm-6">
+		   									<input type="file" name="fileImage" class="form-control-file" accept="image/png, image/jpeg" id="imageEdit" />
+										</div>
+										<div class="col-sm-3">
+											<th:block th:if="${#strings.isEmpty(groupItemDto.path)}">
+												<img id="imagePreviewEdit" th:src="@{/images/default-thumb.gif}" alt="your image" class="image-product"/>
+											</th:block>
+											<th:block th:unless="${#strings.isEmpty(groupItemDto.path)}">
+												<img id="imagePreviewEdit" th:src="@{${groupItemDto.path}}" alt="your image" class="image-product"/>
+											</th:block>
+										</div>
+										
+									</div>
+								</th:block>
+							</th:block>	
+							</fieldset>
+						</form>
+					</div>
+					<!-- /.card-body -->
+					<div class="card-footer">
+                  <button type="button" class="btn btn-warning" onclick="editAction();">Cập nhật</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy bỏ</button>
+                </div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

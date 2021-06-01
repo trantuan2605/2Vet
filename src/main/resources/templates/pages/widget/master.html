@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="pages/head">
+</head>
+<head>
+	<!-- <link rel="stylesheet" th:href="@{/css/customize/widget.css}"> -->
+	<script th:src="@{/js/pages/widget/master.js}"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<div th:replace="pages/menu"></div>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 class="m-0" th:text="${title}"></h1>
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="#">Home</a></li>
+								<li class="breadcrumb-item active" th:text="${title}"></li>
+							</ol>
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</div>
+			<!-- /.content-header -->
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+				<input type="hidden" id="contextRoot" th:value="${contextRoot}"/>
+					<!-- Small boxes (Stat box) -->
+								<div class="row">
+									<th:block th:each="groupItem, state:${lstGroupItem}">
+										<div class="col-lg-3 col-6 service-element"
+										th:classappend="'service-element-'+ ${groupItem.id}">
+										<!-- small card -->
+											<div class="small-box" th:classappend="'link-'+${groupItem.id}+'-cat-1 bg-success bg-success-pointer'" style="cursor: pointer;" onclick="goCat1st(this);">
+												<div class="inner">
+													<h3>150</h3>
+													<p th:text="${groupItem.groupName}"></p>
+												</div>
+												<div class="icon">
+													<i class="far fa-folder-open"></i>
+												</div>
+												<a href="#" class="small-box-footer" th:classappend="'link-'+${groupItem.id}+'-cat-1'" onclick="goCat1st(this);"> Chi tiết <i
+													class="fas fa-arrow-circle-right"></i>
+												</a>
+											</div>
+									</div>
+									</th:block>
+								</div>
+					<!-- /.row -->
+					<!-- Main row -->
+					<!-- /.row (main row) -->
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+		<div th:replace="pages/footer"></div>
+		<!-- /.control-sidebar -->
+	</div>
+</body>
+</html>

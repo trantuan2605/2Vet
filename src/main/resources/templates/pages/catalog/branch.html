@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="pages/head">
+</head>
+<head>
+<link rel="stylesheet" th:href="@{/css/customize/common.css}">
+<link rel="stylesheet" th:href="@{/css/customize/branch.css}">
+ <!-- css slider -->
+<link rel="stylesheet" th:href="@{/plugins/ion-rangeslider/css/ion.rangeSlider.min.css}">
+<link rel="stylesheet" th:href="@{/plugins/bootstrap-slider/css/bootstrap-slider.min.css}">
+<script th:src="@{/js/pages/catalog/branch.js}"></script>
+<script th:src="@{/js/pages/common.js}"></script>
+<script th:src="@{/js/jquery/jquery.serializeToJSON.js}"></script>
+<script th:src="@{/js/jquery-validation/jquery.validate.js}"></script>
+<script th:src="@{/js/jquery-validation/additional-methods.min.js}"></script>
+<!-- js slider -->
+<script th:src="@{/plugins/ion-rangeslider/js/ion.rangeSlider.min.js}"></script>
+<script th:src="@{/plugins/bootstrap-slider/bootstrap-slider.min.js}"></script>
+ <!-- jquery for date picker  start -->
+<script th:src="@{/js/moment/moment.min.js}"></script>
+<script th:src="@{/js/inputmask/jquery.inputmask.min.js}"></script>
+<script th:src="@{/js/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.js}"></script>
+ <!-- jquery for date picker  end -->
+</head>
+<body>
+	<div class="wrapper">
+		<div th:replace="pages/menu"></div>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 class="m-0" th:text="${title}"></h1>
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="#">Home</a></li>
+								<li class="breadcrumb-item active" th:text="${title}"></li>
+							</ol>
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</div>
+			<!-- /.content-header -->
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<!-- Small boxes (Stat box) -->
+					<div class="row" style="margin-bottom: 10px;">
+						<div class="col-md-2 offset-md-10 control-header">
+							<button type="button" class="btn btn-success" id="btn-add-new" onclick="showAddPopup();"><i class="fas fa-plus-square"></i></button>
+							<!-- <button type="button" class="btn btn-success swalDefaultSuccess" onclick="showDialogConfirm();"><i class="fas fa-plus-square"></i></button> -->
+							<!-- <button type="button" class="btn btn-success" data-card-widget="collapse" data-toggle="collapse" data-target="#formSearchBranch"><i class="fas fa-search-plus"></i></button> -->
+						</div>
+					</div>
+					<div class="row card card-primary collapsed-card">
+		              <div id="formSearchBranch" class="collapse col-md-8 offset-md-2">
+		              	<form th:object="${branch}" name="branchSearchFrm" id="branchSearchForm">
+		              		<fieldset class="field-panel">
+								<legend>Tìm kiếm thông tin Chi nhánh</legend>
+								<div class="form-group form-group-custom row">
+									<label for="branchCode" class="col-sm-3 col-form-label lbl-custom">Mã chi nhánh</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="branchCode"
+											th:field="*{branchCode}" placeholder="Mã chi nhánh">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="branchName" class="col-sm-3 col-form-label lbl-custom">Chi nhánh</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="branchName"
+											th:field="*{branchName}" placeholder="Tên chi nhánh">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="address" class="col-sm-3 col-form-label lbl-custom">Địa chỉ</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="address"
+											th:field="*{address}" placeholder="Địa chỉ">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<div class="col-sm-12 advance-search">
+										<button type="button" id="btn-search" onclick="searchAdvance();" class="btn btn-success"><i class="fas fa-search"></i>Tìm kiếm</button>
+									</div>
+								</div>
+							</fieldset>
+		              	</form>
+		              </div>
+		            </div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card" id ="refresh-section">
+								<!-- /.card-header -->
+								<div class="card-body">
+									<table id="branchDataTbl" class="table table-bordered table-hover">
+										<thead>
+											<tr>
+												<th class="col-no-1 text-center">STT</th>
+												<th class="col-no-2 text-center">Mã chi nhánh</th>
+												<th class="col-no-3 text-center">Chi nhánh</th>
+												<th class="col-no-4 text-center">Địa chỉ</th>
+												<th class="col-no-5 text-center">Điện thoại</th>
+												<th class="col-no-6 text-center">Ghi chú</th>
+											</tr>
+										</thead>
+										<tbody id = "branchTbl">
+											<input type="hidden" id="msg-add" th:value="${message}"/>
+											<tr th:each="branch, state:${lstBranch.datas}" class="text_data">
+												<td class="col-no-1" th:text="${lstBranch.currentPage == 1 ? state.count*lstBranch.currentPage : (lstBranch.maxSize*(lstBranch.currentPage-1))+state.count}">1.</td>
+												<td class="col-no-2" th:text="${branch.branchCode}">KH0000001</td>
+												<td class="col-no-3" th:text=${branch.branchName}>Tráº§n Tiáº¿n Ä�á»©c</td>
+												<td class="col-no-4" th:text=${branch.address}>Sá»‘ 1 ThÃ¡i HÃ </td>
+												<td class="col-no-5" th:text=${branch.phone}>0399355436</td>
+												<td class="col-no-6" th:text=${branch.descript}>ductt@gmail.com</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<!-- /.card-body -->
+								<!-- <div class="card-footer clearfix" th:if="${#lists.size(lstCustomer.datas) >= lstCustomer.maxSize}"> -->
+								<!-- <div class="card-footer clearfix">
+									<ul class="pagination pagination-sm m-0 float-right">
+										<li class="page-item"><a class="page-link" onclick="firstPage();">&laquo;</a></li>
+										<th:block th:each="i: ${#numbers.sequence(1,lstBranch.lastPage)}">
+											<li class="page-item" th:classappend="${i == lstBranch.currentPage} ? active : ''"><a class="page-link" onclick="nextPage(this);" th:text="${i}"></a></li>
+										</th:block>
+										<li class="page-item"><a class="page-link" onclick="lastPage();">&raquo;</a></li>
+									</ul>
+								</div> -->
+							</div>
+							<!-- /.card -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+					<!-- Main row -->
+					<!-- /.row (main row) -->
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+		<div th:replace="pages/footer"></div>
+		<!-- /.control-sidebar -->
+	</div>
+	<div th:replace="pages/catalog/branchCrud"></div>
+	<div th:replace="pages/catalog/branchAddNew"></div>
+	<div th:replace="pages/catalog/branchEdit"></div>
+	<div th:replace="pages/catalog/branchServiceAddNew"></div>
+</body>
+</html>

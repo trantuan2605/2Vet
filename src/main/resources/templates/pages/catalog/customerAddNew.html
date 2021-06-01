@@ -1,0 +1,250 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<div class="modal fade" id="modalAddCustomer" role="dialog">
+		<div class="modal-dialog modal-dialog-custom">
+
+			<!-- Modal content-->
+			<div class="modal-content modal-content-custom">
+				<div class="modal-header">
+					<h5>Thông tin chi tiết</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="card-body">
+					<div class="card-body">
+						<form th:object="${customer}" name="customerFrm" id="cusForm">
+							<fieldset class="field-panel">
+							<legend>Thông tin khách hàng</legend>
+							<!-- <div class="form-group row">
+							<span>Thông tin khách hàng</span>
+						</div> -->
+							<!-- <div class="form-group form-group-custom row">
+								<label for="cuscodeAdd" class="col-sm-3 col-form-label lbl-custom">Mã
+									khách hàng</label>
+								<div class="col-sm-9 msg-warning">
+									<input type="text" th:field="*{cusCode}" class="form-control txt-popup-add-cus" id="cuscodeAdd"
+										placeholder="Mã khách hàng">
+								</div>
+							</div> -->
+							<div class="form-group form-group-custom row">
+								<label for="custypeAdd" class="col-sm-3 col-form-label lbl-custom">Loại
+									khách hàng</label>
+								<!-- <div class="col-sm-9">
+									<input type="text" th:field="*{cusType}" class="form-control txt-popup-add-cus" id="custypeAdd"
+										placeholder="Loại khách hàng">
+								</div> -->
+								<div class="col-sm-9 msg-warning">
+									<select th:field="*{cusType}" class="custom-select form-control-border slt-popup-add-cus">
+			                         <option value="0"> -- Lựa chọn --</option>
+			                         <option th:each="type : ${customerTypes}"
+			                            th:value="${type.code}"
+			                            th:utext="${type.name}"/>
+				                  </select>
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+								<label for="cusnameAdd" class="col-sm-3 col-form-label lbl-custom">Tên
+									khách hàng</label>
+								<div class="col-sm-9 msg-warning">
+									<input type="text" th:field="*{cusName}" class="form-control txt-popup-add-cus" id="cusnameAdd"
+										placeholder="Tên khách hàng">
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+								<label for="phoneAdd" class="col-sm-3 col-form-label lbl-custom">Điện
+									thoại</label>
+								<div class="col-sm-4 msg-warning">
+									<input type="text" th:field="*{phone}" class="form-control txt-popup-add-cus" id="phoneAdd"
+										placeholder="Điện thoại">
+								</div>
+								<label for="identityAdd" class="col-sm-1 col-form-label lbl-custom">CMND</label>
+								<div class="col-sm-4">
+									<input type="text" th:field="*{identityNo}" class="form-control txt-popup-add-cus" id="identityAdd"
+										placeholder="CMND">
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+								<label for="emailAdd" class="col-sm-3 col-form-label lbl-custom">Email</label>
+								<div class="col-sm-4 msg-warning">
+									<input type="email" th:field="*{email}" class="form-control txt-popup-add-cus" id="emailAdd"
+										placeholder="Email">
+								</div>
+								<label for="taxnoAdd" class="col-sm-1 col-form-label lbl-custom">MST</label>
+								<div class="col-sm-4">
+									<input type="text" th:field="*{taxCode}" class="form-control txt-popup-add-cus" id="taxnoAdd"
+										placeholder="MST">
+								</div>
+							</div>
+							<div class="form-group form-group-custom row ">
+								<label for="provinceAdd" class="col-sm-3 col-form-label lbl-custom">Tỉnh, Thành phố</label>
+								<div class="col-sm-4 msg-warning">
+									<select class="custom-select form-control-border slt-popup-add-cus" name="provinceIdAdd" id="provinceAdd" onchange="getDistrict(this);">
+				                         <option value="0"> -- Lựa chọn --</option>
+				                         <option th:each="province : ${provinces}"
+				                            th:value="${province.provinceId}"
+				                            th:utext="${province.provinceName}"/>
+				                  	</select>
+								</div>
+								<label for="districtAdd" class="col-sm-2 col-form-label lbl-custom">Quận, Huyện</label>
+								<div class="col-sm-3 msg-warning" id="reload-district">
+									<select class="custom-select form-control-border slt-popup-add-cus" name="districtIdAdd" id="districtAdd" onchange="getWard(this);">
+				                         <option value="0"> -- Lựa chọn --</option>
+				                         <option th:each="district : ${districts}"
+				                            th:value="${district.districtId}"
+				                            th:utext="${district.districtName}"/>
+				                  	</select>
+								</div>
+							</div>
+							<div class="form-group form-group-custom row ">
+								<label for="wardAdd" class="col-sm-3 col-form-label lbl-custom">Phường, Xã</label>
+								<div class="col-sm-4 msg-warning" id="reload-ward">
+									<select class="custom-select form-control-border slt-popup-add-cus" name="wardId" id="wardAdd">
+				                         <option value="0"> -- Lựa chọn --</option>
+				                         <option th:each="ward : ${wards}"
+				                            th:value="${ward.wardId}"
+				                            th:utext="${ward.wardName}"/>
+				                  	</select>
+								</div>
+								<label for="address" class="col-sm-2 col-form-label lbl-custom">Địa chỉ</label>
+								<div class="col-sm-3 msg-warning">
+									<input type="text" th:field="*{address}" class="form-control txt-popup-add-cus" id="address"
+										placeholder="Địa chỉ">
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+								<label for="note" class="col-sm-3 col-form-label lbl-custom">Ghi
+									chú</label>
+								<div class="col-sm-9">
+									<input type="text" th:field="*{remark}" class="form-control txt-popup-add-cus" id="note"
+										placeholder="Ghi chú">
+								</div>
+							</div>
+						</fieldset>
+						</form>
+						<form id="petForm" name="petLstFrm">
+							<fieldset class="field-panel">
+							<legend>Danh sách thú cưng</legend>
+							<div class="form-group row">
+								<div class="col-sm-12">
+									<div class="show-pet-table">
+										<button type="button" class="btn btn-success" onclick="showPetTbl();"><i class="fas fa-plus-square"></i>&nbsp;Thêm thú cưng</button>
+									</div>
+									<div class="customer-info-add none-display">
+										<div class="pet-msg-warning msg-warning"></div>
+										<table id="tablePet" class="table table-bordered">
+											<thead>
+												<tr>
+													<th class="text-center" style="min-width: 75px"></th>
+													<!-- <th class="text-center">Mã thú nuôi</th> -->
+													<th class="text-center" style="min-width: 200px;">Tên thú nuôi</th>
+													<th class="text-center" style="min-width: 200px;">Loài</th>
+													<th class="text-center" style="min-width: 200px;">Giống</th>
+													<th class="text-center" style="min-width: 180px;">Ngày sinh</th>
+													<th class="text-center" style="min-width: 160px;">Màu</th>
+													<th class="text-center" style="min-width: 200px;">Số microchip</th>
+													<th class="text-center" style="min-width: 180px;">Tiêm chủng / Tẩy giun / Triệt sản</th>
+													<th class="text-center" style="min-width: 160px;">Giới tính</th>
+													<!-- <th class="text-center" style="min-width: 160px;">Ảnh</th> -->
+												</tr>
+											</thead>
+											<tbody>
+												<tr class="tr_clone">
+													<td class="add-remove-row align-middle">
+														<button type="button" class="btn btn-success btn-xs tr_clone_add" onclick="addNewRow(this);"><i class="fas fa-plus-square"></i></button>
+														<button type="button" class="btn btn-danger btn-xs tr_clone_add display-init del-tr-clone" onclick="removeRow(this);"><i class="fas fa-minus-square"></i></button>
+													</td>
+													<!-- <td class="align-middle"><input type="text" name="petCode" class="form-control txt-popup-add-cus" placeholder="Mã thú cưng"></td> -->
+													<td class="align-middle"><input type="text" name="petName" class="form-control txt-popup-add-cus" placeholder="Tên thú cưng"></td>
+													<!-- <td><input type="text" name="breed" class="form-control txt-popup-add-cus" placeholder="Loài"></td> -->
+													<td class="align-middle"><select class="custom-select form-control-border slt-popup-add-cus" name="breed" id="breedAdd1" onchange="changeFunc(this);">
+								                         <option value="0"> -- Chọn --</option>
+								                         <option th:each="breed : ${lstBreed}"
+								                            th:value="${breed.breedCode}"
+								                            th:utext="${breed.breedName}"/>
+									                  </select>
+									                 </td> 
+														<td id="species-droplist-add1" class="drop-list-add align-middle">
+															<select class="custom-select form-control-border slt-popup-add-cus" name="specCode">
+										                         <option value="0"> -- Chọn --</option>
+										                         <option th:each="spec : ${lstSpec}"
+										                            th:value="${spec.specCode}"
+										                            th:utext="${spec.specName}"/>
+											                  </select>
+														</td>
+													<td class="align-middle">
+														<!-- <input type="text" name ="certificateBirth" class="form-control txt-popup-add-cus" id="certiBirth" placeholder="Ngày sinh"> -->
+														<div class="input-group date reserver-date" id="reservationdate1" data-target-input="nearest">
+									                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate1" name="dob"/>
+									                        <div class="input-group-append datetimepicker-input" data-target="#reservationdate1" data-toggle="datetimepicker">
+									                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+									                        </div>
+					                    				</div>
+													</td>
+													<td class="align-middle"><input type="text" name ="color" class="form-control txt-popup-add-cus" id="colorAdd" placeholder="Màu"></td>
+													<td class="align-middle"><input type="text" name ="microchipNo" class="form-control txt-popup-add-cus" id="microchipNoAdd" placeholder="Số microchip"></td>
+													<td class="align-middle">
+														<div class="row">
+															<input type="hidden" class="checkbox-hidden vaccin-hidden" name ="vaccinated" id="vaccinatedAddHidden1">
+															<input type="checkbox" class="checkboxPrimary chk-base-info chk-vaccin" id="vaccinatedAdd1" onchange="changeValueChecked(this);" value="0">
+															<label class="lbl-vaccin" for="vaccinatedAdd1">Đã tiêm chủng</label>
+														</div>
+														<div class="row">
+															<input type="hidden" class="checkbox-hidden worm-hidden" name ="wormed" id="wormedAddHidden1">
+															<input type="checkbox" class="checkboxPrimary chk-base-info chk-worm" id="wormedAdd1" onchange="changeValueChecked(this);" value="0">
+															<label class="lbl-worm" for="wormedAdd1">Đã tẩy giun</label>													
+														</div>
+														<div class="row">
+															<input type="hidden" class="checkbox-hidden sterili-hidden" name ="sterilized" id="sterilizedAddHidden1">
+															<input type="checkbox" class="checkboxPrimary chk-base-info chk-sterili" id="sterilizedAdd1" onchange="changeValueChecked(this);" value="0">
+															<label class="lbl-sterili" for="sterilizedAdd1">Đã triệt sản</label>
+														</div>
+													</td>
+													<td class="align-middle">
+														<div class="group-sex">
+															<!-- <input type="hidden" name ="genderHidden" id ="genderIdHidden1"> -->
+															<div class="custom-control custom-radio custom-radio-sex">
+									                          <input class="custom-control-input" type="radio" id="customRadioAdd1" name="customRadioAdd1" value="1">
+									                          <label for="customRadioAdd1" class="custom-control-label">Đực</label>
+									                        </div>
+									                        <div class="custom-control custom-radio custom-radio-sex">
+									                          <input class="custom-control-input" type="radio" id="customRadioAdd2" name="customRadioAdd1" value="0">
+									                          <label for="customRadioAdd2" class="custom-control-label">Cái</label>
+									                        </div>
+								                        </div>
+													</td>
+													<!-- <td><input type="text" name ="path" class="form-control txt-popup-add-cus" id="pathAdd" placeholder="Ảnh"></td> -->
+											</tbody>
+										</table>
+									</div>
+									<!-- <div class="pagnation-sub none-display">
+										<ul class="pagination pagination-sm m-0 float-right">
+											<li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+											<li class="page-item"><a class="page-link" href="#">1</a></li>
+											<li class="page-item"><a class="page-link" href="#">2</a></li>
+											<li class="page-item"><a class="page-link" href="#">3</a></li>
+											<li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+										</ul>
+									</div> -->
+								</div>
+							</div>
+						</fieldset>
+						</form>
+					</div>
+					<!-- /.card-body -->
+					<div class="card-footer">
+                  <button type="button" class="btn btn-success" onclick="addAction();">Thêm mới</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy bỏ</button>
+                </div>
+				</div>
+				<!-- <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+				</div> -->
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

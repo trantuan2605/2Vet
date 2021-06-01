@@ -1,0 +1,38 @@
+.col-no-1 {
+	width: 3% !important;
+}
+.col-no-2 {
+	width: 8% !important;
+}
+.col-no-3 {
+	width: 9% !important;
+}
+.col-no-4 {
+	width: 5% !important;
+}
+.col-no-5 {
+	width: 6% !important;
+}
+.col-no-6 {
+	width: 6% !important;
+}
+.col-no-7 {
+	width: 7% !important;
+}
+.col-no-8 {
+	width: 12% !important;
+}
+.col-no-9 {
+	width: 9% !important;
+}
+.col-no-10 {
+	width: 13% !important;
+}
+.col-no-11 {
+	width: 22% !important;
+}
+
+body.cke_editable{
+	font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !important;
+    font-size: 14px !important;
+}

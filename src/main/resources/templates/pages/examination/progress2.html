@@ -1,0 +1,217 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<script th:src="@{/js/pages/common.js}"></script>
+<script th:src="@{/js/jquery/jquery.serializeToJSON.js}"></script>
+<!-- Select2 -->
+<link rel="stylesheet" th:href="@{/css/select2/select2.min.css}">
+<link rel="stylesheet" th:href="@{/css/select2-bootstrap4-theme/select2-bootstrap4.min.css}">
+</head>
+<form id="progress2" name="frmProgres2">
+<!-- <input type="hidden" th:value="${examiDTO.id}" name ="id"> -->
+	<div class="multisteps-form__panel shadow p-4 rounded bg-white" id="progress2Step"
+		data-animation="scaleIn">
+		<input type="hidden" id="msg-add" th:value="${message}"/>
+		<input type="hidden" id="examIdHidden" name ="id" th:value="${examId}">
+		<input type="hidden" id="petCodeHidden" name ="petCode" th:value="${petCode}">
+		
+		<fieldset class="field-panel">
+			<legend class="multisteps-form__title">Thông tin phiếu khám
+				bệnh lâm sàng</legend>
+			<div class="multisteps-form__content">
+				<div class="form-group form-group-custom row">
+				<input type="hidden" id="examCodeHidden" name ="examClinicalCode" th:value="${examCode}">
+				<input type="hidden" th:value="${#dates.format(standardDate, 'dd/MM/yyyy')}" name="createTimeStr">
+					<label for="createdDateExam"
+						class="col-sm-3 offset-md-6 col-form-label lbl-custom date-create-lbl"><span
+						class="title-span">Ngày lập:</span><span th:text="${#dates.format(standardDate, 'dd/MM/yyyy')}">DD/MM/YYYY</span></label> <label
+						for="ticketNo"
+						class="col-sm-3 col-form-label lbl-custom ticket-no-lbl"><span
+						class="title-span">Số phiếu:</span><span id="examCode" th:text="${examCode}"></span></label>
+				</div>
+				<div class="form-group form-group-custom row">
+					<label for="timeIn" class="col-sm-2 col-form-label lbl-custom">Thời
+						gian nhập viện</label>
+					<div class="col-sm-2 msg-warning input-group date" id="hospitalizeDate"
+						data-target-input="nearest">
+						<input type="text" class="form-control datetimepicker-input" id="timeIn"
+							data-target="#hospitalizeDate" name="hospitalizeDateStr" oninput="changeTime(this);" />
+						<div class="input-group-append" data-target="#hospitalizeDate"
+							data-toggle="datetimepicker">
+							<div class="input-group-text">
+								<i class="fa fa-calendar"></i>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="form-group form-group-custom row">
+						<input type="hidden" id="serviceCodeListHidden" name ="serviceCodeList">
+						<label for="serviceType"
+							class="col-sm-2 col-form-label lbl-custom">Loại dịch vụ</label>
+						<div class=" col-sm-10 msg-warning select2-purple">
+							<select class="select2 service-select form-control-border slt-popup-add-cus" multiple="multiple" id = "multiple" onchange="changeMultiple(this);"
+								data-placeholder="Chọn loại dịch vụ"
+								data-dropdown-css-class="select2-purple" style="width: 100%;">
+								<option value="0">-- Lựa chọn --</option>
+								<option th:each="service : ${lstService}" th:value="${service.group3ndCode}"
+									th:utext="${service.group3ndName}">
+								</option>
+							</select>
+						</div>
+				</div>
+				<div class="form-group form-group-custom row">
+					<label for="temperature" class="col-sm-2 col-form-label lbl-custom">Nhiệt
+						độ</label>
+					<div class="col-sm-2 msg-warning">
+						<input type="text" name="bodyTemp"
+							class="form-control txt-popup-add-cus" id="temperature"
+							placeholder="Nhiệt độ">
+					</div>
+					<label for="vaccine" class="col-sm-2 col-form-label lbl-custom">Tiêm
+						phòng</label>
+					<div class="col-sm-2 msg-warning">
+						<select
+							class="custom-select form-control-border slt-popup-add-cus"
+							name="vacineCode" id="vacineAdd">
+							<option value="0">-- Lựa chọn --</option>
+							<option th:each="vacine : ${lstVacine}" th:value="${vacine.vacineCode}"
+								th:utext="${vacine.vacineName}" />
+						</select>
+					</div>
+					<label for="firstBranch" class="col-sm-2 col-form-label lbl-custom">Cơ
+						sở khám lần đầu</label>
+					<div class="col-sm-2 msg-warning">
+						<select
+							class="custom-select form-control-border slt-popup-add-cus"
+							name="branchFirstCode" id="firstBranchAdd">
+							<option value="0">-- Lựa chọn --</option>
+							<option th:each="branch : ${lstBranch}" th:value="${branch.branchCode}"
+								th:utext="${branch.branchName}" />
+						</select>
+					</div>
+				</div>
+				<div class="form-group form-group-custom row">
+					
+					<label for="branchExam" class="col-sm-2 col-form-label lbl-custom">Cơ
+						sở điều trị</label>
+					<div class="col-sm-2 msg-warning">
+						<select
+							class="custom-select form-control-border slt-popup-add-cus"
+							name="branchCode" id="branchExamAdd">
+							<option value="0">-- Lựa chọn --</option>
+							<option th:each="branch : ${lstBranch}" th:value="${branch.branchCode}"
+								th:utext="${branch.branchName}" />
+						</select>
+					</div>
+					<label for="doctor" class="col-sm-2 col-form-label lbl-custom">Bác
+						sĩ khám</label>
+					<div class="col-sm-2 msg-warning">
+						<select
+							class="custom-select form-control-border slt-popup-add-cus"
+							name="doctorCode" id="doctorAdd">
+							<option value="0">-- Lựa chọn --</option>
+							<option th:each="doctor : ${lstDoctor}" th:value="${doctor.doctorCode}"
+								th:utext="${doctor.doctorName}" />
+						</select>
+					</div>
+					<label for="amountTemp" class="col-sm-2 col-form-label lbl-custom">Số
+						tiền đặt cọc</label>
+					<div class="col-sm-2 msg-warning">
+						<input type="text" name="deposit"
+							class="form-control txt-popup-add-cus" id="amountTemp"
+							placeholder="Số tiền đặt cọc">
+					</div>
+				</div>
+
+				<div class="form-group form-group-custom row">
+						<input type="hidden" id="symptomCodeListHidden" name ="symptomCodeList">
+						<label for="symptomType"
+							class="col-sm-2 col-form-label lbl-custom">Triệu chứng</label>
+						<div class=" col-sm-10 msg-warning select2-purple">
+							<select class="select2 symptom-select form-control-border slt-popup-add-cus" multiple="multiple" id = "multiple-symptom" onchange="changeMultipleSymptom(this);"
+								data-placeholder="Chọn triệu chứng"
+								data-dropdown-css-class="select2-purple" style="width: 100%;">
+								<option value="0">-- Lựa chọn --</option>
+								<option th:each="symptom : ${lstSymptom}" th:value="${symptom.symptomCode}"
+									th:utext="${symptom.symptomName}">
+								</option>
+							</select>
+						</div>
+				</div>
+				
+				<div class="form-group form-group-custom row">
+					<label for="summary" class="col-sm-2 col-form-label lbl-custom">Triệu
+						chứng bổ sung</label>
+					<div class="col-sm-10 msg-warning">
+						<!-- 						<textarea class="form-control form-control txt-popup-add-cus" id="summary" rows="3" name="symptom" placeholder="Chẩn đoán sơ bộ ..."></textarea> -->
+						<input type="text" name="symptomExtra"
+							class="form-control txt-popup-add-cus" id="summary"
+							placeholder="Triệu chứng bổ sung">
+					</div>
+
+				</div>
+
+				<div class="form-group form-group-custom row">
+					<label for="summary" class="col-sm-2 col-form-label lbl-custom">Chẩn
+						đoán sơ bộ</label>
+					<div class="col-sm-10 msg-warning">
+						<textarea class="form-control form-control txt-popup-add-cus" id="summary" rows="3" name="symptom" placeholder="Chẩn đoán sơ bộ ..."></textarea>
+<!-- 						<input type="text" name=summary -->
+<!-- 							class="form-control txt-popup-add-cus" id="summary" -->
+<!-- 							placeholder="Chẩn đoán sơ bộ"> -->
+					</div>
+					
+				</div>
+				
+				<div class="form-group form-group-custom row">
+					<label for="description" class="col-sm-2 col-form-label lbl-custom">Ghi
+						chú</label>
+					<div class="col-sm-10 msg-warning">
+						<textarea class="form-control form-control txt-popup-add-cus" id="description" rows="3" name="remark" placeholder="Ghi chú ..."></textarea>
+<!-- 						<input type="text" name="description" -->
+<!-- 							class="form-control txt-popup-add-cus" id="description" -->
+<!-- 							placeholder="Ghi chú"> -->
+					</div>
+				</div>
+			</div>
+		</fieldset>
+		
+		<div class="row">
+			<div class="button-row d-flex mt-4 col-4">
+				<button class="btn btn-primary js-btn-prev" type="button"
+					title="Trở về">Trở về</button>
+			</div>
+			<div class="button-row d-flex mt-4 col-4">
+				<button class="btn btn-primary" type="button" style="margin: auto;"
+					title="Lưu" onclick="process2();">Lưu</button>
+			</div>
+			<div class="button-row d-flex mt-4 col-4">
+				<button class="btn btn-primary ml-auto js-btn-next" type="button"
+					title="Tiếp tục">Tiếp tục</button>
+			</div>
+		</div>
+		
+<!-- 		<div class="button-row d-flex mt-4"> -->
+<!-- 			<button class="btn btn-primary js-btn-prev" type="button" -->
+<!-- 				title="Trở về">Trở về</button> -->
+<!-- 			<button class="btn btn-primary" type="button" -->
+<!-- 			title="Lưu" onclick="process2();">Lưu</button> -->
+<!-- 			<button class="btn btn-primary ml-auto js-btn-next" type="button" -->
+<!-- 				title="Tiếp tục" onclick="intialDate();">Tiếp tục</button> -->
+<!-- 		</div> -->
+	</div>
+</form>
+<script th:src="@{/js/select2/select2.full.min.js}"></script>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Initialize Select2 Elements
+//     $('.select2bs4').select2({
+//       theme: 'bootstrap4'
+//     })
+  })
+</script>
+</html>

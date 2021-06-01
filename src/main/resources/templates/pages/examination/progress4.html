@@ -1,0 +1,193 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<script th:src="@{/js/pages/common.js}"></script>
+<script th:src="@{/js/jquery/jquery.serializeToJSON.js}"></script>
+
+<!-- Select2 -->
+<link rel="stylesheet" th:href="@{/css/select2/select2.min.css}">
+<link rel="stylesheet" th:href="@{/css/select2-bootstrap4-theme/select2-bootstrap4.min.css}">
+</head>
+<form id="progress4" name="frmProgres4">
+	<div class="multisteps-form__panel shadow p-4 rounded bg-white"
+		data-animation="scaleIn">
+<!-- 		<input type="hidden" id="examCodeHidden" name ="examClinicalCode" th:value="${examCode}"> -->
+		<input type="hidden" id="msg-add-progress4" th:value="${message}"/>
+		<fieldset class="field-panel">
+			<legend class="multisteps-form__title">Kết luận bệnh án</legend>
+			<div class="multisteps-form__content">
+			
+				<div class="form-group form-group-custom row">
+					<label for="timeIn" class="col-sm-2 col-form-label lbl-custom">Thời
+						gian nhập viện</label>
+					<div class="col-sm-2 msg-warning input-group date" id="hospitalizeDate"
+						data-target-input="nearest">
+						<input type="text" class="form-control datetimepicker-input" id="timeIn_pgr_4" th:value="${timeIn}"
+							data-target="#hospitalizeDate" name="hospitalizeDate" >
+						<div class="input-group-append" data-target="#hospitalizeDate"
+							data-toggle="datetimepicker">
+							<div class="input-group-text">
+								<i class="fa fa-calendar"></i>
+							</div>
+						</div>
+					</div>
+
+					<label for="timeOut" class="col-sm-2 col-form-label lbl-custom">Thời
+						gian ra viện</label>
+						<div class="col-sm-2 msg-warning input-group date" id="dischargeDate"
+						data-target-input="nearest">
+						<input type="text" class="form-control datetimepicker-input" id="timeOut"
+							data-target="#dischargeDate" name="dischargeDate" oninput="changeTime(this);" />
+						<div class="input-group-append" data-target="#dischargeDate"
+							data-toggle="datetimepicker">
+							<div class="input-group-text">
+								<i class="fa fa-calendar"></i>
+							</div>
+						</div>
+					</div>
+					<label for="dayExam" class="col-sm-2 col-form-label lbl-custom">Số
+						ngày nằm viện</label>
+					<div class="col-sm-2 msg-warning">
+						<input type="text" name="day"
+							class="form-control txt-popup-add-cus" id="dayExam"
+							placeholder="Số ngày nằm viện" readonly>
+					</div>
+				</div>
+			
+				<div class="form-group form-group-custom row">
+					<label for="diagnose" class="col-sm-2 col-form-label lbl-custom">Chẩn
+						đoán</label>
+					<div class="col-sm-5 msg-warning">
+						<textarea class="form-control form-control txt-popup-add-cus" id="diagnose" rows="3" 
+							th:text="${progress4Dtl.diagnose}" name="diagnose" placeholder="Chẩn đoán sơ bộ ..."></textarea>
+					</div>
+<!-- 					<label for="noteAdd" class="col-sm-2 col-form-label lbl-custom">Insert file</label> -->
+					<div class="col-sm-5">
+						    <input type="file" class="form-control-file" name="fileImageDiagnose"
+							accept="image/png, image/jpeg" id="imgInp" />
+					</div>
+<!-- 					<label for="examAgain" class="col-sm-2 col-form-label lbl-custom">Lịch -->
+<!-- 						tái khám</label> -->
+<!-- 					<div class="col-sm-2 msg-warning"> -->
+<!-- 						<input type="text" name="examAgain" -->
+<!-- 							class="form-control txt-popup-add-cus" id="examAgain" -->
+<!-- 							placeholder="Lịch tái khám"> -->
+<!-- 					</div> -->
+				</div>
+				<div class="form-group form-group-custom row">
+					<label for="diagnose" class="col-sm-2 col-form-label lbl-custom">Phương pháp điều trị</label>
+					<div class="col-sm-5 msg-warning">
+						<textarea class="form-control form-control txt-popup-add-cus" id="treatments" rows="3" 
+							th:text="${progress4Dtl.treatments}" name="treatments" placeholder="Phương pháp điều trị ..."></textarea>
+					</div>
+<!-- 					<label for="noteAdd" class="col-sm-2 col-form-label lbl-custom">Insert file</label> -->
+					<div class="col-sm-5">
+						    <input type="file" class="form-control-file" name="fileImageTreatments"
+							accept="image/png, image/jpeg" id="imgInp" />
+					</div>
+					
+<!-- 					<label for="branchExamSummary" -->
+<!-- 						class="col-sm-2 col-form-label lbl-custom">Cơ sở khám</label> -->
+<!-- 					<div class="col-sm-2 msg-warning"> -->
+<!-- 						<input type="text" name="branchExamSummary" -->
+<!-- 							class="form-control txt-popup-add-cus" id="branchExamSummary" -->
+<!-- 							placeholder="Cơ sở khám"> -->
+<!-- 					</div> -->
+				</div>
+				<div class="form-group form-group-custom row">
+					<label for="diagnose" class="col-sm-2 col-form-label lbl-custom">Tiên lượng</label>
+					<div class="col-sm-5 msg-warning">
+						<textarea class="form-control form-control txt-popup-add-cus" id="prognosis" 
+							th:text="${progress4Dtl.prognosis}" rows="3" name="prognosis" placeholder="Tiên lượng ..."></textarea>
+					</div>
+<!-- 					<label for="noteAdd" class="col-sm-2 col-form-label lbl-custom">Insert file</label> -->
+					<div class="col-sm-5">
+						    <input type="file" class="form-control-file" name="fileImagePrognosis"
+							accept="image/png, image/jpeg" id="imgInp" />
+					</div>
+					
+<!-- 					<label for="doctorSummary" -->
+<!-- 						class="col-sm-2 col-form-label lbl-custom">Bác sĩ khám</label> -->
+<!-- 					<div class="col-sm-2 msg-warning"> -->
+<!-- 						<input type="text" name="doctorSummary" -->
+<!-- 							class="form-control txt-popup-add-cus" id="doctorSummary" -->
+<!-- 							placeholder="Bác sĩ khám"> -->
+<!-- 					</div> -->
+				</div>
+				
+				<div class="form-group form-group-custom row">
+					<label for="timeIn" class="col-sm-2 col-form-label lbl-custom">Lịch tái khám</label>
+					<div class="col-sm-2 msg-warning input-group date" id="reExamDate"
+						data-target-input="nearest">
+						<input type="text" class="form-control datetimepicker-input" id="reExamDate"
+							data-target="#reExamDate" name="reExamDate" th:value="${progress4Dtl.reExamDateStr}"/>
+						<div class="input-group-append" data-target="#reExamDate"
+							data-toggle="datetimepicker">
+							<div class="input-group-text">
+								<i class="fa fa-calendar"></i>
+							</div>
+						</div>
+					</div>
+					
+					<label for="firstBranch" class="col-sm-2 col-form-label lbl-custom">Cơ sở khám</label>
+					<div class="col-sm-2 msg-warning">
+						<select
+							class="custom-select form-control-border slt-popup-add-cus form-control select2bs4"
+							name="branchCode" id="branchAdd">
+							<option value="0">-- Lựa chọn --</option>
+							<option th:each="branch : ${lstBranch}" 
+								th:value="${branch.branchCode}"
+								th:selected="${branch.branchCode} == ${progress4Dtl.branchCode}"
+								th:utext="${branch.branchName}" />
+						</select>
+					</div>
+					
+					<label for="doctor" class="col-sm-2 col-form-label lbl-custom">Bác sĩ khám</label>
+					<div class="col-sm-2 msg-warning">
+						<select
+							class="custom-select form-control-border slt-popup-add-cus form-control select2bs4"
+							name="doctorCode" id="doctorAdd">
+							<option value="0">-- Lựa chọn --</option>
+							<option th:each="doctor : ${lstDoctor}" 
+								th:value="${doctor.doctorCode}"
+								th:selected="${doctor.doctorCode} == ${progress4Dtl.doctorCode}"
+								th:utext="${doctor.doctorName}" />
+						</select>
+					</div>
+				</div>
+				
+				<div class="form-group form-group-custom row">
+					<label for="diagnose" class="col-sm-2 col-form-label lbl-custom">Ghi chú</label>
+					<div class="col-sm-10 msg-warning">
+						<textarea class="form-control form-control txt-popup-add-cus" id="remark" rows="3" 
+						 th:text="${progress4Dtl.remark}" name="remark" placeholder="Ghi chú ..."></textarea>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+
+	<div class="row">
+			<div class="button-row d-flex mt-4 col-4">
+				<button class="btn btn-primary js-btn-prev" type="button"
+					title="Trở về">Trở về</button>
+			</div>
+			<div class="button-row d-flex mt-4 col-4">
+				<button class="btn btn-primary" type="button" style="margin: auto;"
+					title="Lưu" onclick="process4();">Lưu</button>
+			</div>
+			<div class="button-row d-flex mt-4 col-4">
+				<button class="btn btn-success ml-auto" type="button" title="Send" onclick="redirectSummary();">Hoàn tất</button> 
+			</div>
+		</div>
+	</div>
+</form>
+<script th:src="@{/js/select2/select2.full.min.js}"></script>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+  })
+</script>
+</html>

@@ -1,0 +1,22 @@
+
+.btn-right-align {
+	text-align: right;
+}
+.service-element {
+	display: none;
+}
+.a-link-custom{
+	cursor: pointer;
+	vertical-align: bottom;
+	margin-left: 10px;
+}
+.buton-control{
+	text-align: right;
+}
+.title-btn-widget{
+    margin-left: 10px;
+    font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+.bg-info-pointer {
+	cursor: pointer;
+}

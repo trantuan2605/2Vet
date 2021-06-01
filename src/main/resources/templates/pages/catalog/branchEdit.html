@@ -1,0 +1,145 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<div class="modal fade" id="editBranchModal" role="dialog">
+		<div class="modal-dialog modal-dialog-custom">
+
+			<!-- Modal content-->
+			<div class="modal-content modal-content-custom">
+				<div class="modal-header">
+					<h5>Thông tin chi tiết</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="card-body">
+					<div class="card-body" id="detailBranchEdit">
+						<form name="branchFrmEdit" id="branchFormEdit">
+							<input type="hidden" th:value="${branchDto.id}" name ="id">
+							<fieldset class="field-panel">
+								<legend>Thông tin chi nhánh</legend>
+								<div class="form-group form-group-custom row">
+									<label for="branchcodeEdit" class="col-sm-3 col-form-label lbl-custom">Mã
+										chi nhánh</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" id="branchcodeEdit" readonly="readonly" name="branchCode"
+											th:value="${branchDto.branchCode}" placeholder="Mã chi nhánh">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="branchnameEdit" class="col-sm-3 col-form-label lbl-custom">Chi nhánh</label>
+									<div class="col-sm-3 msg-warning">
+										<input type="text" class="form-control" id="branchnameEdit" name="branchName"
+											th:value="${branchDto.branchName}" placeholder="Tên chi nhánh">
+									</div>
+									<label for="doeEdit" class="col-sm-3 col-form-label lbl-custom">Ngày thành lập</label>
+									<div class="col-sm-3">
+										<div class="input-group date" id="reservationdateedit" data-target-input="nearest">
+					                        <input type="text" class="form-control datetimepicker-input" id="doeEdit" data-toggle="datetimepicker" data-target="#reservationdateedit" name="doeStr" th:value="${branchDto.doeStr}"/>
+					                        <div class="input-group-append" data-target="#reservationdateedit" data-toggle="datetimepicker">
+					                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+					                        </div>
+	                    				</div>
+									</div>
+								</div>
+
+
+								<div class="form-group form-group-custom row ">
+									<label for="provinceEdit"
+										class="col-sm-3 col-form-label lbl-custom">Tỉnh, Thành
+										phố</label>
+									<div class="col-sm-3 msg-warning">
+										<select
+											class="custom-select form-control-border slt-popup-add-cus"
+											name="provinceIdEdit" id="provinceEdit" onchange="getDistrict(this);">
+											<option value="0">-- Lựa chọn --</option>
+											<option th:each="province : ${provinces}"
+												th:selected="${province.provinceId} == ${branchDto.provinceId}"
+												th:value="${province.provinceId}"
+												th:utext="${province.provinceName}" />
+										</select>
+									</div>
+									<label for="districtEdit"
+										class="col-sm-3 col-form-label lbl-custom">Quận, Huyện</label>
+									<div class="col-sm-3 msg-warning" id="reload-district-edit">
+										<select
+											class="custom-select form-control-border slt-popup-add-cus"
+											name="districtIdEdit" id="districtEdit" onchange="getWard(this);">
+											<option value="0">-- Lựa chọn --</option>
+											<option th:each="district : ${districts}"
+												th:selected="${district.districtId} == ${branchDto.districtId}"
+												th:value="${district.districtId}"
+												th:utext="${district.districtName}" />
+										</select>
+									</div>
+								</div>
+								<div class="form-group form-group-custom row ">
+									<label for="wardEdit"
+										class="col-sm-3 col-form-label lbl-custom">Phường, Xã</label>
+									<div class="col-sm-3 msg-warning" id="reload-ward-edit">
+										<select
+											class="custom-select form-control-border slt-popup-add-cus"
+											name="wardId" id="wardEdit">
+											<option value="0">-- Lựa chọn --</option>
+											<option th:each="ward : ${wards}"
+												th:selected="${ward.wardId} == ${branchDto.wardId}"
+												th:value="${ward.wardId}" th:utext="${ward.wardName}" />
+										</select>
+									</div>
+								</div>
+
+								<div class="form-group form-group-custom row ">
+									<label for="addressEdit" class="col-sm-3 col-form-label lbl-custom">Địa chỉ</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="addressEdit" name="address"
+											th:value="${branchDto.address}" placeholder="Địa chỉ">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="phoneEdit" class="col-sm-3 col-form-label lbl-custom">Điện
+										thoại</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" id="phoneEdit" name="phone"
+											th:value="${branchDto.phone}" placeholder="Điện thoại">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="noteEdit" class="col-sm-3 col-form-label lbl-custom">Ghi
+										chú</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="noteEdit" name="descript"
+											th:value="${branchDto.descript}" placeholder="Ghi chú">
+									</div>
+								</div>
+								<!-- upload file -->
+									<div class="form-group form-group-custom row">
+										<label for="noteAdd" class="col-sm-3 col-form-label lbl-custom">Ảnh</label>
+										<div class="col-sm-6">
+		   									<input type="file" class="form-control-file" name="fileImage" accept="image/png, image/jpeg" id="imgInp" />
+										</div>
+										<div class="col-sm-3">
+											<th:block th:if="${#strings.isEmpty(branchDto.path)}">
+												<img id="imagePreviewEdit" th:src="@{/images/default-thumb.gif}" alt="your image" class="image-product"/>
+											</th:block>
+											<th:block th:unless="${#strings.isEmpty(branchDto.path)}">
+												<img id="imagePreviewEdit" th:src="@{${branchDto.path}}" alt="your image" class="image-product"/>
+											</th:block>
+										</div>
+										<input type="hidden" th:value="${branchDto.path}" id ="pathHidden" name="pathHidden">
+									</div>
+							</fieldset>
+						</form>
+					</div>
+					<!-- /.card-body -->
+					<div class="card-footer">
+                  <button type="button" class="btn btn-warning" onclick="editAction();">Cập nhật</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy bỏ</button>
+                </div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

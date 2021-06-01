@@ -1,0 +1,129 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<script th:src="@{/js/pages/common.js}"></script>
+<script th:src="@{/js/jquery/jquery.serializeToJSON.js}"></script>
+<script th:src="@{/js/jquery-validation/jquery.validate.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/js/bootstrap/bootstrap.bundle.min.js}" src="static/js/bootstrap/bootstrap.bundle.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script th:src="@{/js/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{/js/datatables-bs4/dataTables.bootstrap4.min.js}"></script>
+<script	th:src="@{/js/datatables-responsive/dataTables.responsive.min.js}"></script>
+</head>
+<form id="progress1" name="frmProgres1">
+	<div
+		class="multisteps-form__panel shadow p-4 rounded bg-white js-active"
+		data-animation="scaleIn" id="cusDetail">
+		<fieldset class="field-panel">
+			<legend class="multisteps-form__title">Thông tin khách hàng</legend>
+			<div class="multisteps-form__content">
+				<div class="form-group form-group-custom row">
+					<label for="cusCodeExam" class="col-sm-3 col-form-label lbl-custom">Mã
+						khách hàng</label>
+					<div class="col-sm-2 msg-warning">
+						<input type="text" name="cusCode"
+							class="form-control txt-popup-add-cus" id="cusCodeExam"
+							placeholder="Mã khách hàng" th:value="${customerDto.cusCode}" readonly> 
+					</div>
+					
+					<div class="col-sm-1">
+						<button type="button" class="btn btn-success" id="btn-attach-prod" onclick="showListCusPopup();">
+							<i class="fas fa-search"></i>
+						</button>
+						
+					</div>
+					<label for="cusTypeExam" class="col-sm-3 col-form-label lbl-custom">Loại
+						khách hàng</label>
+					
+						<div class="col-sm-3 msg-warning">
+							<input type="text" name="cusType"
+								class="form-control txt-popup-add-cus" id="cusTypeExam"
+								placeholder="Loại khách hàng" th:value="${customerDto.cusTypeName}" readonly>
+						</div>
+				</div>
+				<div class="form-group form-group-custom row">
+					<label for="cusNameExam" class="col-sm-3 col-form-label lbl-custom">Tên
+						khách hàng</label>
+					<div class="col-sm-3 msg-warning">
+						<input type="text" name="cusName"
+							class="form-control txt-popup-add-cus" id="cusNameExam"
+							placeholder="Tên khách hàng" th:value="${customerDto.cusName}" readonly>
+					</div>
+					<label for="cusPhoneExam"
+						class="col-sm-3 col-form-label lbl-custom">Số điện thoại</label>
+					<div class="col-sm-3 msg-warning">
+						<input type="text" name="cusPhone"
+							class="form-control txt-popup-add-cus" id="cusPhoneExam"
+							placeholder="Số điện thoại" th:value="${customerDto.phone}" readonly>
+					</div>
+				</div>
+				<div class="form-group form-group-custom row">
+					<label for="cusAddressExam"
+						class="col-sm-3 col-form-label lbl-custom">Địa chỉ</label>
+					<div class="col-sm-9 msg-warning">
+						<input type="text" name="cusAddress"
+							class="form-control txt-popup-add-cus" id="cusAddressExam"
+							placeholder="Địa chỉ"  th:value="${customerDto.address}" readonly>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+		
+		<fieldset class="field-panel">
+			<legend class="multisteps-form__title">Thông tin thú nuôi</legend>
+			<div class="multisteps-form__content" id="pet-info-add">
+				<div class="form-group form-group-custom row">
+					<label for="petCodeExam" class="col-sm-3 col-form-label lbl-custom">Mã
+						thú nuôi</label>
+					<div class="col-sm-3 msg-warning">
+						<select
+							class="custom-select form-control-border slt-popup-add-cus"
+							name="petCode" id="petAdd" onchange="changeFunc(this);">
+							<option value="0">-- Lựa chọn --</option>
+							<option th:each="pet : ${lstPet}" th:value="${pet.petCode}"  th:selected="${pet.petCode} == ${petDto.petCode}"
+							th:utext="${pet.petName}" />
+						</select>
+					</div>
+					<label for="petTypeExam" class="col-sm-3 col-form-label lbl-custom">Loại
+						thú nuôi</label>
+					<div class="col-sm-3 msg-warning">
+						<input type="text" name="petType"
+							class="form-control txt-popup-add-cus" id="petTypeExam"
+							placeholder="Loại thú cưng" th:value="${petDto.breedName}" readonly>
+					</div>
+				</div>
+				<div class="form-group form-group-custom row">
+					<label for="petNameExam" class="col-sm-3 col-form-label lbl-custom">Tên
+						thú nuôi</label>
+					<div class="col-sm-9 msg-warning">
+						<input type="text" name="petName"
+							class="form-control txt-popup-add-cus" id="petNameExam"
+							placeholder="Tên thú nuôi" th:value="${petDto.petName}" readonly>
+					</div>
+				</div>
+				<div class="form-group form-group-custom row">
+					<label for="petSexExam" class="col-sm-3 col-form-label lbl-custom">Giới
+						tính</label>
+					<div class="col-sm-3 msg-warning">
+						<input type="text" name="petSex"
+							class="form-control txt-popup-add-cus" id="petSexExam"
+							placeholder="Giới tính" th:value="${petDto.sexStr}" readonly>
+					</div>
+					<label for="petAgeExam" class="col-sm-3 col-form-label lbl-custom">Tuổi</label>
+					<div class="col-sm-3 msg-warning">
+						<input type="text" name="petAge"
+							class="form-control txt-popup-add-cus" id="petAgeExam"
+							placeholder="Tuổi">
+					</div>
+				</div>
+			</div>
+		</fieldset>
+		<div class="button-row d-flex mt-4">
+			<button class="btn btn-primary ml-auto js-btn-next" type="button"
+				title="Tiếp tục" id="progress1">Tiếp tục</button>
+		</div>
+	</div>
+	<div th:replace="pages/examination/popupCus"></div>
+</form>
+</html>

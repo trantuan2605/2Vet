@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="pages/head">
+</head>
+<head>
+<link rel="stylesheet" th:href="@{/css/customize/common.css}">
+<script th:src="@{/js/pages/catalog/breed.js}"></script>
+<script th:src="@{/js/pages/common.js}"></script>
+<script th:src="@{/js/jquery/jquery.serializeToJSON.js}"></script>
+<script th:src="@{/js/jquery-validation/jquery.validate.js}"></script>
+<script th:src="@{/js/jquery-validation/additional-methods.min.js}"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<div th:replace="pages/menu"></div>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 class="m-0" th:text="${title}"></h1>
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="#">Home</a></li>
+								<li class="breadcrumb-item active" th:text="${title}"></li>
+							</ol>
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</div>
+			<!-- /.content-header -->
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<!-- Small boxes (Stat box) -->
+					<div class="row" style="margin-bottom: 10px;">
+						<div class="col-md-2 offset-md-10 control-header">
+							<button type="button" class="btn btn-success" id="btn-add-new" onclick="showAddPopup();"><i class="fas fa-plus-square"></i></button>
+							<!-- <button type="button" class="btn btn-success swalDefaultSuccess" onclick="showDialogConfirm();"><i class="fas fa-plus-square"></i></button> -->
+<!-- 							<button type="button" class="btn btn-success" data-card-widget="collapse" data-toggle="collapse" data-target="#formSearchCustomer"><i class="fas fa-search-plus"></i></button> -->
+						</div>
+					</div>
+					<div class="row card card-primary collapsed-card">
+		              <div id="formSearchCustomer" class="collapse col-md-8 offset-md-2">
+		              	<form th:object="${breed}" name="breedSearchFrm" id="cusSearchForm">
+		              		<fieldset class="field-panel">
+								<legend>Tìm kiếm thông tin loài</legend>
+								<div class="form-group form-group-custom row">
+									<label for="cuscode" class="col-sm-3 col-form-label lbl-custom">Mã
+										loài</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="cuscode"
+											th:field="*{breedCode}" placeholder="Mã loài">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="cusname" class="col-sm-3 col-form-label lbl-custom">Tên
+										loài</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="cusname"
+											th:field="*{breedName}" placeholder="Tên loài">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<div class="col-sm-12 advance-search">
+										<button type="button" id="btn-search" onclick="searchAdvance();" class="btn btn-success"><i class="fas fa-search"></i>Tìm kiếm</button>
+									</div>
+								</div>
+							</fieldset>
+		              	</form>
+		              </div>
+		            </div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card" id ="refresh-section">
+								<!-- /.card-header -->
+								<div class="card-body">
+									<table class="table table-bordered" id = "breedDataTbl">
+										<thead>
+											<tr>
+												<th style="width: 10px">STT</th>
+												<th>Mã Loài</th>
+												<th>Tên loài</th>
+												<th>Ghi chú</th>
+											</tr>
+										</thead>
+										<tbody id = "customerTbl">
+											<input type="hidden" id="msg-add" th:value="${message}"/>
+											<tr th:each="breed, state:${lstBreed.datas}" class="text_data">
+												<td th:text="${lstBreed.currentPage == 1 ? state.count*lstBreed.currentPage : (lstBreed.maxSize*(lstBreed.currentPage-1))+state.count}">1.</td>
+												<td th:text="${breed.breedCode}">KH0000001</td>
+												<td th:text=${breed.breedName}>Trần Tiến Đức</td>
+												<td th:text=${breed.descript}>Số 1 Thái Hà</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<!-- /.card-body -->
+								<!-- <div class="card-footer clearfix" th:if="${#lists.size(lstCustomer.datas) >= lstCustomer.maxSize}"> -->
+							</div>
+							<!-- /.card -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+					<!-- Main row -->
+					<!-- /.row (main row) -->
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+		<div th:replace="pages/footer"></div>
+		<!-- /.control-sidebar -->
+	</div>
+	<div th:replace="pages/catalog/breedCrud"></div>
+	<div th:replace="pages/catalog/breedAddNew"></div>
+	<div th:replace="pages/catalog/breedEdit"></div>
+</body>
+</html>

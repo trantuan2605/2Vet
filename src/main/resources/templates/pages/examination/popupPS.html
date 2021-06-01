@@ -1,0 +1,209 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<div class="modal fade" id="modalLstProd" role="dialog">
+		<div class="modal-dialog modal-dialog-custom">
+
+			<!-- Modal content-->
+			<div class="modal-content modal-content-custom">
+				<div class="modal-header">
+					<h5>Danh sách sản phẩm</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="card-body">
+					<div class="card-body">
+						<form name="branchFrm" id="branchForm">
+							<fieldset class="field-panel">
+								<div class="form-group form-group-custom row ">
+									<div class="col-12 col-sm-12">
+										<div class="card card-primary card-tabs">
+											<div class="card-header p-0 pt-1">
+												<ul class="nav nav-tabs" id="custom-tabs-one-tab"
+													role="tablist">
+													<li class="nav-item"><a class="nav-link active"
+														id="custom-tabs-one-home-tab" data-toggle="pill"
+														href="#custom-tabs-one-home" role="tab"
+														aria-controls="custom-tabs-one-home" aria-selected="true">Dịch
+															vụ</a></li>
+													<li class="nav-item"><a class="nav-link"
+														id="custom-tabs-one-profile-tab" data-toggle="pill"
+														href="#custom-tabs-one-profile" role="tab"
+														aria-controls="custom-tabs-one-profile"
+														aria-selected="false">Thuốc</a></li>
+													<li class="nav-item"><a class="nav-link"
+														id="custom-tabs-one-messages-tab" data-toggle="pill"
+														href="#custom-tabs-one-messages" role="tab"
+														aria-controls="custom-tabs-one-messages"
+														aria-selected="false">Hàng hóa</a></li>
+												</ul>
+											</div>
+											<div class="card-body" id="showDataPS">
+												<div class="tab-content" id="custom-tabs-one-tabContent">
+													<div class="tab-pane fade show active"
+														id="custom-tabs-one-home" role="tabpanel"
+														aria-labelledby="custom-tabs-one-home-tab">
+														<div class="row">
+															<div class="col-12">
+																<!-- /.card-header -->
+																<div class="card" id="refresh-section">
+																	<div class="card-body">
+																		<table id="widgetServicesDataTbl"
+																			class="table table-bordered table-hover">
+																			<thead>
+																				<tr>
+																					<th class="col-no-1 text-center">STT</th>
+																					<th class="col-no-1 text-center">Chọn</th>
+																					<th class="col-no-2 text-center">Mã</th>
+																					<th class="col-no-3 text-center">Tên</th>
+																					<th class="col-no-4 text-center">Nhóm</th>
+																				</tr>
+																			</thead>
+																			<tbody>
+																				<tr th:each="serviceItem, state:${lstServicesExtra}"
+																					class="text_data text-notbind">
+																					<td class="col-no-1" th:text="${state.count}">1.</td>
+																					<td class="col-no-add-1 text-center">
+																						<input type="checkbox" class="checkboxPrimary" onchange="checkedExtra(this);"
+																						th:checked="${#lists.contains(lstItem3ndCodeTmp, serviceItem.group3ndCode)}">
+																						<input type="hidden" class="item-3nd-code" th:value="${serviceItem.group3ndCode}"/>
+																						<!-- <input type="checkbox" class="checkboxPrimary" th:checked="${serviceItem.groupId == 1}"> -->
+																						<!-- <input type="hidden" class="service-code-hidden" th:value="${service.serviceCode}"/>
+																						<input type="hidden" class="service-price-hidden" th:value="${service.price}" th:id="'range_price_hidden_' + ${state.count}"/>
+																						<input type="hidden" th:value="${service.idBS}"  class="service-id"/> -->
+																					</td>
+																					<td class="col-no-2" th:text="${serviceItem.group3ndCode}">Mã</td>
+																					<td class="col-no-3" th:text="${serviceItem.group3ndName}">Tên</td>
+																					<td class="col-no-4 text-center"
+																						th:text="${serviceItem.group1stName}">Đơn vị tính</td>
+																				</tr>
+																			</tbody>
+																		</table>
+																	</div>
+																</div>
+																<!-- /.card -->
+															</div>
+															<!-- /.col -->
+														</div>
+
+
+
+													</div>
+													<div class="tab-pane fade" id="custom-tabs-one-profile"
+														role="tabpanel"
+														aria-labelledby="custom-tabs-one-profile-tab">
+														<div class="row">
+															<div class="col-12">
+																<!-- /.card-header -->
+																<div class="card" id="refresh-section">
+																	<div class="card-body">
+																		<table id="widgetMedsDataTbl"
+																			class="table table-bordered table-hover">
+																			<thead>
+																				<tr>
+																					<th class="col-no-1 text-center">STT</th>
+																					<th class="col-no-1 text-center">Chọn</th>
+																					<th class="col-no-2 text-center">Mã</th>
+																					<th class="col-no-3 text-center">Tên</th>
+																					<th class="col-no-4 text-center">Nhóm</th>
+																				</tr>
+																			</thead>
+																			<tbody>
+																				<tr th:each="medItem, state:${lstMedsExtra}"
+																					class="text_data text-notbind">
+																					<td class="col-no-1" th:text="${state.count}">1.</td>
+																					<td class="col-no-add-1 text-center">
+																						<input type="checkbox" class="checkboxPrimary" onchange="checkedExtra(this);"
+																						th:checked="${#lists.contains(lstItem3ndCodeTmp, medItem.group3ndCode)}">
+																						<input type="hidden" class="item-3nd-code" th:value="${medItem.group3ndCode}"/>
+																						<!-- <input type="hidden" class="service-code-hidden" th:value="${service.serviceCode}"/>
+																						<input type="hidden" class="service-price-hidden" th:value="${service.price}" th:id="'range_price_hidden_' + ${state.count}"/>
+																						<input type="hidden" th:value="${service.idBS}"  class="service-id"/> -->
+																					</td>
+																					<td class="col-no-2" th:text="${medItem.group3ndCode}">Mã</td>
+																					<td class="col-no-3" th:text="${medItem.group3ndName}">Tên</td>
+																					<td class="col-no-4 text-center"
+																						th:text="${medItem.group1stName}">Đơn vị tính</td>
+																				</tr>
+																			</tbody>
+																		</table>
+																	</div>
+																</div>
+																<!-- /.card -->
+															</div>
+															<!-- /.col -->
+														</div>
+													</div>
+													<div class="tab-pane fade" id="custom-tabs-one-messages"
+														role="tabpanel"
+														aria-labelledby="custom-tabs-one-messages-tab">
+														<div class="row">
+															<div class="col-12">
+																<!-- /.card-header -->
+																<div class="card" id="refresh-section">
+																	<div class="card-body">
+																		<table id="widgetProdsDataTbl"
+																			class="table table-bordered table-hover">
+																			<thead>
+																				<tr>
+																					<th class="col-no-1 text-center">STT</th>
+																					<th class="col-no-1 text-center">Chọn</th>
+																					<th class="col-no-2 text-center">Mã</th>
+																					<th class="col-no-3 text-center">Tên</th>
+																					<th class="col-no-4 text-center">Nhóm</th>
+																				</tr>
+																			</thead>
+																			<tbody>
+																				<tr th:each="prodItem, state:${lstProdsExtra}"
+																					class="text_data text-notbind">
+																					<td class="col-no-1" th:text="${state.count}">1.</td>
+																					<td class="col-no-add-1 text-center">
+																						<input type="checkbox" class="checkboxPrimary" onchange="checkedExtra(this);"
+																							th:checked="${#lists.contains(lstItem3ndCodeTmp, prodItem.group3ndCode)}">
+																						<input type="hidden" class="item-3nd-code" th:value="${prodItem.group3ndCode}"/>
+																						<!-- <input type="hidden" class="service-code-hidden" th:value="${service.serviceCode}"/>
+																						<input type="hidden" class="service-price-hidden" th:value="${service.price}" th:id="'range_price_hidden_' + ${state.count}"/>
+																						<input type="hidden" th:value="${service.idBS}"  class="service-id"/> -->
+																					</td>
+																					<td class="col-no-2" th:text="${prodItem.group3ndCode}">Mã</td>
+																					<td class="col-no-3" th:text="${prodItem.group3ndName}">Tên</td>
+																					<td class="col-no-4 text-center"
+																						th:text="${prodItem.group1stName}">Đơn vị tính</td>
+																				</tr>
+																			</tbody>
+																		</table>
+																	</div>
+																</div>
+																<!-- /.card -->
+															</div>
+															<!-- /.col -->
+														</div>
+
+													</div>
+												</div>
+											</div>
+											<!-- /.card -->
+										</div>
+									</div>
+
+								</div>
+
+							</fieldset>
+						</form>
+					</div>
+					<!-- /.card-body -->
+					<div class="card-footer">
+						<button type="button" class="btn btn-success"
+							onclick="checkedExtraOK();" data-dismiss="modal">OK</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="checkedExtraCancel();">Hủy
+							bỏ</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

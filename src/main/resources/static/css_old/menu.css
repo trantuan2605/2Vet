@@ -1,0 +1,15 @@
+.btn-logout {
+	border: none;
+	background-color: #fff;
+    width: 100%;
+    text-align: left;
+}
+.btn-logout:hover {
+	background-color: #eeee;
+}
+.btn-logout:after {
+	border: none;
+}
+.btn-logout:active:after {
+	border: none;
+}

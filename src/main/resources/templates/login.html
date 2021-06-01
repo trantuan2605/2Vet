@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2Vet - Hệ thống quản lý thú y 2Vet</title>
+	<!-- icon -->
+	<link rel="icon" type="image/x-icon" th:href="@{/images/favicon.ico}">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" th:href="@{/css/fontawesome/all.min.css}">
+	<!-- Theme style -->
+	<link rel="stylesheet" th:href="@{/css/adminlte/adminlte.css}" href="static/css/adminlte/adminlte.css">
+  
+	<!-- jQuery -->
+	<script th:src="@{/js/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+	<script th:src="@{/js/bootstrap/bootstrap.bundle.min.js}" src="static/js/bootstrap/bootstrap.bundle.min.js"></script>
+	<!-- AdminLTE App -->
+	<script th:src="@{/js/adminlte/adminlte.js}" src="static/js/adminlte/adminlte.js"></script>
+	<style type="text/css">
+		body {
+			background-image: url([[@{/images/bachgrao.jpg}]]);
+			background-repeat: repeat;
+			width: 100%;
+		}
+	</style>
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <!-- <div class="login-logo">
+    <img th:src="@{/images/logo-min.jpg}" alt="2Vet Logo"
+		class="brand-image elevation-3" style="opacity: .8" />
+  </div> -->
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <form role="form" th:action="@{/j_spring_security_check}" method="POST">
+      	<div class="login-logo" style="margin-bottom: 50px;">
+		    <img th:src="@{/images/logo-min.png}" alt="2Vet Logo"
+				class="brand-image" style="width: 60%" />
+		  </div>
+		  <div>
+			  <p th:if="${param.error}" class="error login-box-msg">Sai tài khoản hoặc mật khẩu</p>
+	  		  <p th:if="${param.logout}" class="success login-box-msg">Bạn đã đăng nhập khỏi hệ thống</p>
+		</div>
+		<fieldset>
+        <div class="input-group mb-3">
+          <input class="form-control" placeholder="Username" name="username" type="text" autofocus>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" placeholder="Password" name="password" value="">
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- /.col -->
+          <div class="col-12">
+          	<div>
+            	<button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
+            </div>
+          </div>
+          <!-- /.col -->
+        </div>
+        </fieldset>
+      </form>
+      <!-- /.social-auth-links -->
+      
+    </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>
+<!-- /.login-box -->
+</body>
+</html>

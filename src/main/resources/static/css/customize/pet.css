@@ -1,0 +1,82 @@
+/* .col-no-1 {
+	width: 3% !important;
+}
+.col-no-2 {
+	width: 8% !important;
+}
+.col-no-3 {
+	width: 15% !important;
+}
+.col-no-4 {
+	width: 8% !important;
+}
+.col-no-5 {
+	width: 17% !important;
+}
+.col-no-6 {
+	width: 6% !important;
+}
+.col-no-7 {
+	width: 7% !important;
+}
+.col-no-8 {
+	width: 9% !important;
+}
+.col-no-9 {
+	width: 10% !important;
+}
+.col-no-10 {
+	width: 17% !important;
+} */
+
+.col-no-1 {
+	width: 2% !important;
+}
+.col-no-2 {
+	width: 8% !important;
+}
+.col-no-3 {
+	width: 8% !important;
+}
+.col-no-4 {
+	width: 8% !important;
+}
+.col-no-5 {
+	width: 9% !important;
+}
+.col-no-6 {
+	width: 6% !important;
+}
+.col-no-7 {
+	width: 7% !important;
+}
+.col-no-8 {
+	width: 8% !important;
+}
+.col-no-9 {
+	width: 6% !important;
+}
+.col-no-10 {
+	width: 5% !important;
+}
+.col-no-11 {
+	width: 8% !important;
+}
+.col-no-12 {
+	width: 8% !important;
+}
+.col-no-13 {
+	width: 8% !important;
+}
+.col-no-14 {
+	width: 9% !important;
+}
+.filter-on-col{
+	width: 100%;
+}
+.text-center{
+	text-align: center;
+}
+.pet-scroll{
+	overflow-x: scroll;
+}

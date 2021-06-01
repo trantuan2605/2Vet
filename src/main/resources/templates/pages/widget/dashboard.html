@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="pages/head">
+</head>
+<head>
+	<link rel="stylesheet" th:href="@{/css/customize/common.css}">
+	<link rel="stylesheet" th:href="@{/css/customize/widget.css}">
+	<script th:src="@{/js/pages/common.js}"></script>
+	<script th:src="@{/js/pages/widget/widget.js}"></script>
+	<script th:src="@{/js/jquery/jquery.serializeToJSON.js}"></script>
+</head>
+<body>
+	<div class="wrapper">
+		<div th:replace="pages/menu"></div>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 id="title-screen" class="m-0" th:text="${title}"></h1>
+							<input type="hidden" id="contextRoot" th:value="${contextRoot}"/>
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="#">Home</a></li>
+								<li class="breadcrumb-item"><a th:href="@{/widget/master}" th:text="${titleRoot}"></a></li>
+								<li class="breadcrumb-item active" th:text="${title}"></li>
+							</ol>
+						</div>
+						<!-- /.col -->
+					</div>
+					<th:block th:if="${isInsert1st}">
+						<div class="row mb-2">
+							<div class="col-sm-6">
+							</div>
+							<!-- /.col -->
+							<div class="col-sm-6 buton-control">
+								<button type="button" class="btn btn-success" id="btn-add-new" onclick="showAddPopup();"><i class="fas fa-plus-square"><span class="title-btn-widget" th:text="'Thêm mới ' + ${title}"></span></i></button>
+							</div>
+						<!-- /.col -->
+					</div>
+					</th:block>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</div>
+			<!-- /.content-header -->
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid" id="refresh-dashboard">
+				<input type="hidden" id="msg-add" th:value="${message}"/>
+				<input type="hidden" id="contextRoot" th:value="${contextRoot}"/>
+					<!-- Small boxes (Stat box) -->
+					<div th:each="groupItem, state:${lstGroupItem}">
+						<div class="row">
+							<div class="col-md-10">
+								<h5 class="mb-2 mt-4 group-item-title-name" th:text="${groupItem.groupName}"></h5>
+							</div>
+							<div class="col-md-2 btn-right-align">
+								<button type="button" class="btn btn-success" th:classappend="'btn-' + ${groupItem.group1stCode}" onclick="showAdd2ndPopup(this);"><i class="fas fa-plus-square"></i></button>
+								<!-- <button id="loadMore" type="button" class="btn btn-success" th:classappend="'btn-success-'+${state.count}" onclick="loadMore(this);" >Xem thêm ...</button> -->
+								<a id="loadMore" class="a-load-more a-link-custom"  th:classappend="'a-load-more-'+${state.count}" onclick="loadMore(this);" >Xem thêm...</a>
+							</div>
+						</div>
+						<th:block th:if="${groupItem.sizeRows > 0}">
+							<th:block th:each="i: ${#numbers.sequence(1,groupItem.sizeRows)}">
+								<div class="row">
+									<div class="col-lg-2 col-6 service-element"
+										th:classappend="'service-element-'+ ${state.count}"
+										th:each="j: ${#numbers.sequence((i-1)*6,(6*(i)-1))}">
+										<!-- small card -->
+										<th:block th:if="${j< #lists.size(groupItem.lstGroupItemDTO)}">
+											<div class="small-box" th:classappend="'link-'+${groupItem.lstGroupItemDTO[j].group2ndCode}+'-detail bg-info bg-info-pointer'" onclick="goDetail(this);">
+												<div class="inner">
+													<h3>150</h3>
+													<p th:text="${groupItem.lstGroupItemDTO[j].group2ndName}"></p>
+												</div>
+												<div class="icon">
+													<i class="far fa-file-alt fas" th:classappend="${groupItem.lstGroupItemDTO[j].itemIcon}"></i>
+												</div>
+												<a href="#" class="small-box-footer" th:classappend="'link-'+${groupItem.lstGroupItemDTO[j].group2ndCode}+'-detail'" onclick="goDetail(this);"> Chi tiết <i
+													class="fas fa-arrow-circle-right"></i>
+												</a>
+											</div>
+										</th:block>
+									</div>
+								</div>
+							</th:block>
+						</th:block>
+					</div>
+					<!-- /.row -->
+					<!-- Main row -->
+					<!-- /.row (main row) -->
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+		<div th:replace="pages/footer"></div>
+		<div th:replace="pages/widget/group1stAdd"></div>
+		<div th:replace="pages/widget/group2ndAdd"></div>
+		<!-- /.control-sidebar -->
+	</div>
+</body>
+</html>

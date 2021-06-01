@@ -1,0 +1,228 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<div class="modal fade" id="modalAddDoctor" role="dialog">
+		<div class="modal-dialog modal-dialog-custom">
+
+			<!-- Modal content-->
+			<div class="modal-content modal-content-custom">
+				<div class="modal-header">
+					<h5>Thông tin chi tiết</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="card-body">
+					<div class="card-body">
+						<form th:object="${doctor}" name="doctorFrm" id="doctorForm">
+							<fieldset class="field-panel">
+							<legend>Thông tin bác sĩ</legend>
+							<div class="form-group form-group-custom row">
+								<label for="branchAdd" class="col-sm-3 col-form-label lbl-custom">Chi nhánh</label>
+								<div class="col-sm-9">
+									<!-- <input type="text" class="form-control" id="branch" name="branchCode"
+										placeholder="Cơ sở khám chữa"> -->
+										<select th:field="*{branchCode}" class="custom-select form-control-border slt-popup-add-cus" id="branchAdd">
+			                         		<option value="0"> -- Lựa chọn --</option>
+			                         		<option th:each="branch : ${branchs}"
+					                            th:value="${branch.branchCode}"
+					                            th:utext="${branch.branchName}"/>
+			                         	</select>
+
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+								<label for="doctornameAdd" class="col-sm-3 col-form-label lbl-custom">Tên bác sĩ</label>
+								<div class="col-sm-9 msg-warning">
+									<input type="text" th:field="*{doctorName}" class="form-control txt-popup-add-cus" id="doctornameAdd"
+										placeholder="Tên bác sĩ">
+								</div>
+							</div>
+								<div class="form-group form-group-custom row">
+									<div class="col-sm-3"></div>
+									<div class="col-sm-3">
+										<input type="hidden" class="checkbox-hidden sterili-hidden"
+											name="isManager" id="isManagerAddHidden" value="0">
+										<input type="checkbox"
+											class="checkboxPrimary chk-base-info chk-sterili"
+											id="isManagerAdd" onchange="changeValueChecked(this);"
+											value="0"> <label class="lbl-sterili lbl-custom"
+											for="isManagerAdd">Trưởng chi nhánh</label>
+									</div>
+
+									<div class="col-sm-3">
+										<input type="hidden" class="checkbox-hidden sterili-hidden"
+											name="isSubManager" id="isSubManagerAddHidden" value="0">
+										<input type="checkbox"
+											class="checkboxPrimary chk-base-info chk-sterili"
+											id="isSubManagerAdd" onchange="changeValueChecked(this);"
+											value="0"> <label class="lbl-sterili lbl-custom"
+											for="isSubManagerAdd">Phó chi nhánh</label>
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+								<label for="genderAdd" class="col-sm-3 col-form-label lbl-custom">Giới tính</label>
+								<div class="col-sm-3 msg-warning">
+									<!-- <input type="text" th:field="*{gender}" class="form-control txt-popup-add-cus" id="genderAdd"
+										placeholder="Giới tính"> -->
+									<div class="group-sex">
+										<div class="custom-control custom-radio custom-radio-sex">
+				                          <input class="custom-control-input" type="radio" id="customRadioAdd1" name="customRadioAdd1" value="1">
+				                          <label for="customRadioAdd1" class="custom-control-label">Nam</label>
+				                        </div>
+				                        <div class="custom-control custom-radio custom-radio-sex">
+				                          <input class="custom-control-input" type="radio" id="customRadioAdd2" name="customRadioAdd1" value="0">
+				                          <label for="customRadioAdd2" class="custom-control-label">Nữ</label>
+				                        </div>
+			                        </div>
+								</div>
+								<label for="dobAdd" class="col-sm-3 col-form-label lbl-custom">Ngày sinh</label>
+								<div class="col-sm-3">
+									<!-- <input type="text" th:field="*{dob}" class="form-control txt-popup-add-cus" id="dobAdd"
+										placeholder="Ngày sinh"> -->
+									<div class="input-group date" id="reservationdate" data-target-input="nearest">
+				                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" name="dobStr"/>
+				                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+				                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+				                        </div>
+                    				</div>
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+								<label for="identityAdd" class="col-sm-3 col-form-label lbl-custom">CMND</label>
+								<div class="col-sm-3">
+									<input type="text" th:field="*{cmnd}" class="form-control txt-popup-add-cus" id="identityAdd"
+										placeholder="CMND">
+								</div>
+								<label for="phoneAdd" class="col-sm-3 col-form-label lbl-custom">Điện
+									thoại</label>
+								<div class="col-sm-3 msg-warning">
+									<input type="text" th:field="*{phone}" class="form-control txt-popup-add-cus" id="phoneAdd"
+										placeholder="Điện thoại">
+								</div>
+							</div>
+							<div class="form-group form-group-custom row ">
+								<label for="provinceAdd" class="col-sm-3 col-form-label lbl-custom">Tỉnh, Thành phố</label>
+								<div class="col-sm-4 msg-warning">
+									<select class="custom-select form-control-border slt-popup-add-cus" name="provinceIdAdd" id="provinceAdd" onchange="getDistrict(this);">
+				                         <option value="0"> -- Lựa chọn --</option>
+				                         <option th:each="province : ${provinces}"
+				                            th:value="${province.provinceId}"
+				                            th:utext="${province.provinceName}"/>
+				                  	</select>
+								</div>
+								<label for="districtAdd" class="col-sm-2 col-form-label lbl-custom">Quận, Huyện</label>
+								<div class="col-sm-3 msg-warning" id="reload-district">
+									<select class="custom-select form-control-border slt-popup-add-cus" name="districtIdAdd" id="districtAdd" onchange="getWard(this);">
+				                         <option value="0"> -- Lựa chọn --</option>
+				                         <option th:each="district : ${districts}"
+				                            th:value="${district.districtId}"
+				                            th:utext="${district.districtName}"/>
+				                  	</select>
+								</div>
+							</div>
+							<div class="form-group form-group-custom row ">
+								<label for="wardAdd" class="col-sm-3 col-form-label lbl-custom">Phường, Xã</label>
+								<div class="col-sm-4 msg-warning" id="reload-ward">
+									<select class="custom-select form-control-border slt-popup-add-cus" name="wardId" id="wardAdd">
+				                         <option value="0"> -- Lựa chọn --</option>
+				                         <option th:each="ward : ${wards}"
+				                            th:value="${ward.wardId}"
+				                            th:utext="${ward.wardName}"/>
+				                  	</select>
+								</div>
+								<label for="addressAdd" class="col-sm-2 col-form-label lbl-custom">Địa chỉ</label>
+								<div class="col-sm-3 msg-warning">
+									<input type="text" th:field="*{address}" class="form-control txt-popup-add-cus" id="addressAdd"
+										placeholder="Địa chỉ">
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+								<label for="emailAdd" class="col-sm-3 col-form-label lbl-custom">Email</label>
+								<div class="col-sm-3 msg-warning">
+									<input type="email" th:field="*{email}" class="form-control txt-popup-add-cus" id="emailAdd"
+										placeholder="Email">
+								</div>
+								<label for="majorAdd" class="col-sm-3 col-form-label lbl-custom">Chuyên khoa</label>
+								<div class="col-sm-3">
+									<input type="text" th:field="*{majors}" class="form-control txt-popup-add-cus" id="majorAdd"
+										placeholder="Chuyên khoa">
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+								<label for="bankNoAdd" class="col-sm-3 col-form-label lbl-custom">Số tài khoản</label>
+								<div class="col-sm-3 msg-warning">
+									<input type="text" class="form-control txt-popup-add-cus" id="bankNoAdd"
+										th:field="*{bankNo}" placeholder="Số tài khoản">
+								</div>
+								<label for="countryAdd" class="col-sm-2 col-form-label lbl-custom">Quê quán</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control txt-popup-add-cus" id="countryAdd"
+										th:field="*{country}" placeholder="Quê quán">
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+								<label for="dateOfWorkAdd" class="col-sm-3 col-form-label lbl-custom">Ngày chính thức làm việc</label>
+								<div class="col-sm-3">
+									<div class="input-group date" id="dateOfWorkAdd" data-target-input="nearest">
+				                        <input type="text" class="form-control datetimepicker-input" data-target="#dateOfWorkAdd" name="dowStr"/>
+				                        <div class="input-group-append" data-target="#dateOfWorkAdd" data-toggle="datetimepicker">
+				                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+				                        </div>
+                    				</div>
+								</div>
+								<label for="positionAdd" class="col-sm-2 col-form-label lbl-custom">Chức vụ</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control txt-popup-add-cus" id="positionAdd"
+										th:field="*{position}" placeholder="Chức vụ">
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+								<label for="levelAdd" class="col-sm-3 col-form-label lbl-custom">Học vấn</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control txt-popup-add-cus" id="levelAdd"
+										th:field="*{level}" placeholder="Học vấn">
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+								<label for="experienceAdd" class="col-sm-3 col-form-label lbl-custom">Kinh nghiệm</label>
+								<div class="col-sm-9">
+							          <textarea class="ckeditor" id ="experienceAdd" name="experienceStr" cols="80" rows="10" ></textarea>
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+									<label for="imgInp" class="col-sm-3 col-form-label lbl-custom">Ảnh</label>
+									<div class="col-sm-6">
+	   									<input type="file" class="form-control-file" name="fileImage" accept="image/png, image/jpeg" id="imgInp" />
+									</div>
+									<div class="col-sm-3">
+										<img id="blah" th:src="@{/images/default-thumb.gif}" alt="your image" class="image-product"/>
+									</div>
+								</div>
+							<div class="form-group form-group-custom row">
+								<label for="noteAdd" class="col-sm-3 col-form-label lbl-custom">Ghi
+									chú</label>
+								<div class="col-sm-9">
+									<input type="text" th:field="*{descript}" class="form-control txt-popup-add-cus" id="noteAdd"
+										placeholder="Ghi chú">
+								</div>
+							</div>
+						</fieldset>
+						</form>
+					</div>
+					<!-- /.card-body -->
+					<div class="card-footer">
+                  <button type="button" class="btn btn-success" onclick="addAction();">Thêm mới</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy bỏ</button>
+                </div>
+				</div>
+				<!-- <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+				</div> -->
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

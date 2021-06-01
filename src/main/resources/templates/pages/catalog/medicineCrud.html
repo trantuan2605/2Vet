@@ -1,0 +1,82 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog modal-dialog-custom">
+
+			<!-- Modal content-->
+			<div class="modal-content modal-content-custom">
+				<div class="modal-header">
+					<h5>Thông tin chi tiết</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="card-body">
+					<div class="card-body" id="detailMedicine">
+						<fieldset class="field-panel">
+							<legend>Thông tin chi nhánh</legend>
+							<div class="form-group form-group-custom row">
+								<label for="branchcodeDtl"
+									class="col-sm-3 col-form-label lbl-custom">Mã chi nhánh</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="branchcodeDtl"
+										readonly="readonly" th:value="${branchDto.branchCode}"
+										placeholder="Mã chi nhánh">
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+								<label for="branchnameDtl"
+									class="col-sm-3 col-form-label lbl-custom">Chi nhánh</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="branchnameDtl"
+										readonly="readonly" th:value="${branchDto.branchName}"
+										placeholder="Tên chi nhánh">
+								</div>
+							</div>
+							<div class="form-group form-group-custom row ">
+								<label for="addressDtl"
+									class="col-sm-3 col-form-label lbl-custom">Địa chỉ</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="addressDtl"
+										readonly="readonly" th:value="${branchDto.address}"
+										placeholder="Địa chỉ">
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+								<label for="phoneDtl" class="col-sm-3 col-form-label lbl-custom">Điện
+									thoại</label>
+								<div class="col-sm-3">
+									<input type="text" class="form-control" id="phoneDtl"
+										readonly="readonly" th:value="${branchDto.phone}"
+										placeholder="Điện thoại">
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+								<label for="noteDtl" class="col-sm-3 col-form-label lbl-custom">Ghi
+									chú</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="noteDtl"
+										readonly="readonly" th:value="${branchDto.descript}"
+										placeholder="Ghi chú">
+								</div>
+							</div>
+						</fieldset>
+					</div>
+					<!-- /.card-body -->
+					<div class="card-footer">
+						<button type="button" class="btn btn-success" data-dismiss="modal"
+							onclick="showAddPopup();">Thêm mới</button>
+						<button type="button" class="btn btn-warning" data-dismiss="modal"
+							onclick="showEditPopup();">Cập nhật</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Hủy
+							bỏ</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

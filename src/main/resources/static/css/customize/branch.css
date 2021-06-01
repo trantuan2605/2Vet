@@ -1,0 +1,34 @@
+.col-no-1 {
+	width: 3% !important;
+}
+.col-no-2 {
+	width: 15% !important;
+}
+.col-no-3 {
+	width: 15% !important;
+}
+.col-no-4 {
+	width: 30% !important;
+}
+.col-no-5 {
+	width: 12% !important;
+}
+.col-no-6 {
+	width: 25% !important;
+}
+.add-service-btn{
+	margin-bottom: 15px;
+}
+.modal-dialog-custom-service-branch{
+	max-width: 1200px !important;
+	margin: auto;
+}
+.col-no-add-1 {
+	width: 3% !important;
+}
+.col-no-add-2 {
+	width: 47% !important;
+}
+.col-no-add-3 {
+	width: 50% !important;
+}

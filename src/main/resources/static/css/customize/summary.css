@@ -1,0 +1,11 @@
+
+.parent-frm {
+    margin-left: 50px;
+}
+.children-div{
+	margin-left: 50px;
+}
+
+.collapse-btn-data {
+	display: none;
+}

@@ -1,0 +1,196 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog modal-dialog-custom">
+
+			<!-- Modal content-->
+			<div class="modal-content modal-content-custom">
+				<div class="modal-header">
+					<h5>Thông tin chi tiết</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="card-body">
+					<div class="card-body" id="detailCustomer">
+						<fieldset class="field-panel">
+							<legend>Thông tin khách hàng</legend>
+							<!-- <div class="form-group row">
+							<span>Thông tin khách hàng</span>
+						</div> -->
+							<div class="form-group form-group-custom row">
+								<label for="cuscodeDtl" class="col-sm-3 col-form-label lbl-custom">Mã
+									khách hàng</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="cuscodeDtl" readonly="readonly"
+										th:value="${customerDto.cusCode}" placeholder="Mã khách hàng">
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+								<label for="custypeDtl" class="col-sm-3 col-form-label lbl-custom">Loại
+									khách hàng</label>
+								<div class="col-sm-9">
+									<!-- <input type="text" class="form-control" id="custypeDtl" readonly="readonly"
+										th:value="${customerDto.cusType}" placeholder="Loại khách hàng"> -->
+										<select class="custom-select form-control-border slt-popup-add-cus" disabled="disabled">
+					                         <option value="0"> -- Lựa chọn --</option>
+					                         <option th:each="type : ${customerTypes}"
+					                         	th:selected="${type.code} == ${customerDto.cusType}"
+					                            th:value="${type.code}"
+					                            th:utext="${type.name}"/>
+						                  </select>
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+								<label for="cusnameDtl" class="col-sm-3 col-form-label lbl-custom">Tên
+									khách hàng</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="cusnameDtl" readonly="readonly"
+										th:value="${customerDto.cusName}" placeholder="Tên khách hàng">
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+								<label for="phoneDtl" class="col-sm-3 col-form-label lbl-custom">Điện
+									thoại</label>
+								<div class="col-sm-3">
+									<input type="text" class="form-control" id="phoneDtl" readonly="readonly"
+										th:value="${customerDto.phone}" placeholder="Điện thoại">
+								</div>
+								<label for="identityDtl" class="col-sm-3 col-form-label lbl-custom">CMND</label>
+								<div class="col-sm-3">
+									<input type="text" class="form-control" id="identityDtl" readonly="readonly"
+										th:value="${customerDto.identityNo}" placeholder="CMND">
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+								<label for="emailDtl" class="col-sm-3 col-form-label lbl-custom">Email</label>
+								<div class="col-sm-3">
+									<input type="email" class="form-control" id="emailDtl" readonly="readonly"
+										th:value="${customerDto.email}" placeholder="Email">
+								</div>
+								<label for="taxnoDtl" class="col-sm-3 col-form-label lbl-custom">MST</label>
+								<div class="col-sm-3">
+									<input type="text" class="form-control" id="taxnoDtl" readonly="readonly"
+										th:value="${customerDto.taxCode}" placeholder="MST">
+								</div>
+							</div>
+							<div class="form-group form-group-custom row ">
+								<label for="provinceAdd" class="col-sm-3 col-form-label lbl-custom">Tỉnh, Thành phố</label>
+								<div class="col-sm-4 msg-warning">
+									<select class="custom-select form-control-border slt-popup-add-cus" id="provinceDtl"
+										disabled="disabled" onchange="getDistrict(this);">
+				                         <option value="0"> -- Lựa chọn --</option>
+				                         <option th:each="province : ${provinces}"
+				                         	th:selected="${province.provinceId} == ${customerDto.provinceId}"
+				                            th:value="${province.provinceId}"
+				                            th:utext="${province.provinceName}"/>
+				                  	</select>
+								</div>
+								<label for="districtAdd" class="col-sm-2 col-form-label lbl-custom">Quận, Huyện</label>
+								<div class="col-sm-3 msg-warning">
+									<select class="custom-select form-control-border slt-popup-add-cus" id="districtDtl" 
+										disabled="disabled" onchange="getWard(this);">
+				                         <option value="0"> -- Lựa chọn --</option>
+				                         <option th:each="district : ${districts}"
+				                         	th:selected="${district.districtId} == ${customerDto.districtId}"
+				                            th:value="${district.districtId}"
+				                            th:utext="${district.districtName}"/>
+				                  	</select>
+								</div>
+							</div>
+							<div class="form-group form-group-custom row ">
+								<label for="wardAdd" class="col-sm-3 col-form-label lbl-custom">Phường, Xã</label>
+								<div class="col-sm-4 msg-warning">
+									<select class="custom-select form-control-border slt-popup-add-cus" disabled="disabled" name="wardId" id="wardDtl">
+				                         <option value="0"> -- Lựa chọn --</option>
+				                         <option th:each="ward : ${wards}"
+				                         	th:selected="${ward.wardId} == ${customerDto.wardId}"
+				                            th:value="${ward.wardId}"
+				                            th:utext="${ward.wardName}"/>
+				                  	</select>
+								</div>
+								<label for="address" class="col-sm-2 col-form-label lbl-custom">Địa chỉ</label>
+								<div class="col-sm-3 msg-warning">
+									<input type="text" class="form-control" id="addressDtl" readonly="readonly"
+										th:value="${customerDto.address}" placeholder="Địa chỉ">
+								</div>
+							</div>
+							<div class="form-group form-group-custom row">
+								<label for="noteDtl" class="col-sm-3 col-form-label lbl-custom">Ghi
+									chú</label>
+								<div class="col-sm-9">
+									<input type="text" class="form-control" id="noteDtl" readonly="readonly"
+										th:value="${customerDto.remark}" placeholder="Ghi chú">
+								</div>
+							</div>
+						</fieldset>
+						<fieldset class="field-panel">
+							<legend>Danh sách thú cưng</legend>
+							<div class="form-group row">
+								<div class="col-sm-12">
+									<div class="customer-info">
+										<table class="table table-bordered">
+											<thead>
+												<tr>
+													<th class="text-center" style="min-width: 50px;">STT</th>
+													<th class="text-center" style="min-width: 100px;">Mã thú nuôi</th>
+													<th class="text-center" style="min-width: 200px;">Tên thú nuôi</th>
+													<th class="text-center" style="min-width: 100px;">Loài</th>
+													<th class="text-center" style="min-width: 100px;">Giống</th>
+													<th class="text-center" style="min-width: 100px;">Ngày sinh</th>
+													<th class="text-center" style="min-width: 100px;">Màu</th>
+													<th class="text-center" style="min-width: 100px;">Số microchip</th>
+													<th class="text-center" style="min-width: 150px;">Tiêm chủng</th>
+													<th class="text-center" style="min-width: 150px;">Tẩy giun</th>
+													<th class="text-center" style="min-width: 150px;">Triệt sản</th>
+													<th class="text-center" style="min-width: 100px;">Giới tính</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="pet, state:${customerDto.petDtos}">
+													<td th:text="${state.count}">1.</td>
+													<td th:text="${pet.petCode}">NT0000001</td>
+													<td th:text="${pet.petName}">Miu</td>
+													<td th:text="${pet.breedName}">Miu</td>
+													<td th:text="${pet.specName}">Miu</td>
+													<td th:text="${pet.dobStr}"></td>
+													<td th:text="${pet.color}">Đỏ</td>
+													<td th:text="${pet.microchipNo}">Số microchip</td>
+													<td th:text="${pet.vaccinatedStr}">Tiêm chủng</td>
+													<td th:text="${pet.wormedStr}">Tẩy giun</td>
+													<td th:text="${pet.sterilizedStr}">Triệt sản</td>
+													<td th:text="${pet.sexStr}">Cái</td>
+											</tbody>
+										</table>
+									</div>
+									<!-- <div>
+										<ul class="pagination pagination-sm m-0 float-right">
+											<li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+											<li class="page-item"><a class="page-link" href="#">1</a></li>
+											<li class="page-item"><a class="page-link" href="#">2</a></li>
+											<li class="page-item"><a class="page-link" href="#">3</a></li>
+											<li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+										</ul>
+									</div> -->
+								</div>
+							</div>
+						</fieldset>
+					</div>
+					<!-- /.card-body -->
+					<div class="card-footer">
+                  <button type="button" class="btn btn-success" data-dismiss="modal" onclick="showAddPopup();">Thêm mới</button>
+                  <button type="button" class="btn btn-warning" data-dismiss="modal" onclick="showEditPopup();">Cập nhật</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy bỏ</button>
+                </div>
+				</div>
+				<!-- <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+				</div> -->
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

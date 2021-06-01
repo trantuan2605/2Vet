@@ -1,0 +1,328 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<div class="modal fade" id="editCusModal" role="dialog">
+		<div class="modal-dialog modal-dialog-custom">
+
+			<!-- Modal content-->
+			<div class="modal-content modal-content-custom">
+				<div class="modal-header">
+					<h5>Thông tin chi tiết</h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="card-body">
+					<div class="card-body" id="detailCustomerEdit">
+						<form name="customerFrmEdit" id="cusFormEdit">
+							<input type="hidden" th:value="${customerDto.id}" name ="id">
+							<fieldset class="field-panel">
+								<legend>Thông tin khách hàng</legend>
+								<div class="form-group form-group-custom row">
+									<label for="cuscodeEdit" class="col-sm-3 col-form-label lbl-custom">Mã
+										khách hàng</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="cuscodeEdit" readonly="readonly" name="cusCode"
+											th:value="${customerDto.cusCode}" placeholder="Mã khách hàng">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="custypeEdit" class="col-sm-3 col-form-label lbl-custom">Loại
+										khách hàng</label>
+									<div class="col-sm-9">
+											<select class="custom-select form-control-border slt-popup-add-cus" name="cusType" id="cusTypeEdit">
+						                         <option value="0"> -- Lựa chọn --</option>
+						                         <option th:each="type : ${customerTypes}"
+						                         	th:selected="${type.code} == ${customerDto.cusType}"
+						                            th:value="${type.code}"
+						                            th:utext="${type.name}"/>
+							                  </select>
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="cusnameEdit" class="col-sm-3 col-form-label lbl-custom">Tên
+										khách hàng</label>
+									<div class="col-sm-9 msg-warning">
+										<input type="text" class="form-control" id="cusnameEdit" name="cusName"
+											th:value="${customerDto.cusName}" placeholder="Tên khách hàng">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="phoneEdit" class="col-sm-3 col-form-label lbl-custom">Điện
+										thoại</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" id="phoneEdit" name="phone"
+											th:value="${customerDto.phone}" placeholder="Điện thoại">
+									</div>
+									<label for="identityEdit" class="col-sm-3 col-form-label lbl-custom">CMND</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" id="identityEdit" name="identityNo"
+											th:value="${customerDto.identityNo}" placeholder="CMND">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="emailEdit" class="col-sm-3 col-form-label lbl-custom">Email</label>
+									<div class="col-sm-3">
+										<input type="email" class="form-control" id="emailEdit" name="email"
+											th:value="${customerDto.email}" placeholder="Email">
+									</div>
+									<label for="taxnoEdit" class="col-sm-3 col-form-label lbl-custom">MST</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" id="taxnoEdit" name="taxCode"
+											th:value="${customerDto.taxCode}" placeholder="MST">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row ">
+									<label for="provinceEdit" class="col-sm-3 col-form-label lbl-custom">Tỉnh, Thành phố</label>
+									<div class="col-sm-4 msg-warning">
+										<select class="custom-select form-control-border slt-popup-add-cus" name="provinceIdEdit" id="provinceEdit" onchange="getDistrict(this);">
+					                         <option value="0"> -- Lựa chọn --</option>
+					                         <option th:each="province : ${provinces}"
+					                         	th:selected="${province.provinceId} == ${customerDto.provinceId}"
+					                            th:value="${province.provinceId}"
+					                            th:utext="${province.provinceName}"/>
+					                  	</select>
+									</div>
+									<label for="districtEdit" class="col-sm-2 col-form-label lbl-custom">Quận, Huyện</label>
+									<div class="col-sm-3 msg-warning" id="reload-district-edit">
+										<select class="custom-select form-control-border slt-popup-add-cus" name="districtIdEdit" id="districtEdit" onchange="getWard(this);">
+					                         <option value="0"> -- Lựa chọn --</option>
+					                         <option th:each="district : ${districts}"
+					                         	th:selected="${district.districtId} == ${customerDto.districtId}"
+					                            th:value="${district.districtId}"
+					                            th:utext="${district.districtName}"/>
+					                  	</select>
+									</div>
+								</div>
+								<div class="form-group form-group-custom row ">
+									<label for="wardEdit" class="col-sm-3 col-form-label lbl-custom">Phường, Xã</label>
+									<div class="col-sm-4 msg-warning"  id="reload-ward-edit">
+										<select class="custom-select form-control-border slt-popup-add-cus" name="wardId" id="wardEdit">
+					                         <option value="0"> -- Lựa chọn --</option>
+					                         <option th:each="ward : ${wards}"
+					                         	th:selected="${ward.wardId} == ${customerDto.wardId}"
+					                            th:value="${ward.wardId}"
+					                            th:utext="${ward.wardName}"/>
+					                  	</select>
+									</div>
+									<label for="address" class="col-sm-2 col-form-label lbl-custom">Địa chỉ</label>
+									<div class="col-sm-3 msg-warning">
+										<input type="text" class="form-control" id="addressEdit" name="address"
+												th:value="${customerDto.address}" placeholder="Địa chỉ">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="noteEdit" class="col-sm-3 col-form-label lbl-custom">Ghi
+										chú</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="noteEdit" name="remark"
+											th:value="${customerDto.remark}" placeholder="Ghi chú">
+									</div>
+								</div>
+							</fieldset>
+						</form>
+						<form id="petFormEdit" th:object="${lstPet}" name="petLstFrmEdit">
+							<fieldset class="field-panel">
+								<legend>Danh sách thú cưng</legend>
+								<div class="form-group row">
+									<div class="col-sm-12">
+										<div class="show-pet-table">
+											<button type="button" class="btn btn-success" onclick="showPetTbl();"><i class="fas fa-plus-square"></i>&nbsp;Thêm thú cưng</button>
+										</div>
+										<div class="customer-info-add none-display">
+											<div class="pet-msg-warning msg-warning"></div>
+											<table class="table table-bordered" id="tablePetEdit">
+												<thead>
+													<tr>
+														<th class="text-center" style="min-width: 75px"></th>
+														<th class="text-center" style="min-width: 200px;">Tên thú nuôi</th>
+														<th class="text-center" style="min-width: 200px;">Loài</th>
+														<th class="text-center" style="min-width: 200px;">Giống</th>
+														<th class="text-center" style="min-width: 180px;">Ngày sinh</th>
+														<th class="text-center" style="min-width: 160px;">Màu</th>
+														<th class="text-center" style="min-width: 200px;">Số microchip</th>
+														<th class="text-center" style="min-width: 180px;">Tiêm chủng / Tẩy giun / Triệt sản</th>
+														<th class="text-center" style="min-width: 160px;">Giới tính</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr class="tr_clone">
+														<td class="add-remove-row align-middle">
+															<input type="hidden" name ="petId">
+															<button type="button" class="btn btn-success btn-xs tr_clone_add" onclick="addNewRow(this);"><i class="fas fa-plus-square"></i></button>
+															<button type="button" class="btn btn-danger btn-xs tr_clone_add display-init del-tr-clone" onclick="removeRow(this);"><i class="fas fa-minus-square"></i></button>
+														</td>
+														<!-- <td>
+															<input type="text" name="petCodeEdit" class="form-control required" placeholder="Mã thú cưng">
+														</td> -->
+														<td class="align-middle">
+															<input type="text" name="petNameEdit" class="form-control required" placeholder="Tên thú cưng">
+															<input type="hidden" name="petCodeEdit">
+														</td>
+														<td class="align-middle"><select class="custom-select form-control-border slt-popup-add-cus" name="breed" id="breedEdit1" onchange="changeFunc(this);">
+								                         <option value="0"> -- Chọn --</option>
+								                         <option th:each="breed : ${lstBreed}"
+								                            th:value="${breed.breedCode}"
+								                            th:utext="${breed.breedName}"/>
+									                  </select>
+									                 </td> 
+														<td id="species-droplist-edit1" class="drop-list-add align-middle">
+															<select class="custom-select form-control-border slt-popup-add-cus" name="specCode">
+										                         <option value="0"> -- Chọn --</option>
+										                         <option th:each="spec : ${lstSpec}"
+										                            th:value="${spec.specCode}"
+										                            th:utext="${spec.specName}"/>
+											                  </select>
+														</td>
+														<!-- <td>
+															<input type="text" name="certificateBirthEdit" class="form-control" placeholder="Giấy khai sinh">
+														</td> -->
+														<td class="align-middle">
+															<!-- <input type="text" name="certificateBirthEdit" th:value="${pet.certificateBirth}" class="form-control txt-popup-add-cus" placeholder="Giấy khai sinh"> -->
+															<div class="input-group date reserver-date" id="reservationdateEdit0" data-target-input="nearest">
+										                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdateEdit0" name="dob"/>
+										                        <div class="input-group-append datetimepicker-input" data-target="#reservationdateEdit0" data-toggle="datetimepicker">
+										                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+										                        </div>
+						                    				</div>
+														</td>
+														<td class="align-middle"><input type="text" name ="color" class="form-control txt-popup-add-cus" id="colorEdit" placeholder="Màu"></td>
+														<td class="align-middle"><input type="text" name ="microchipNo" class="form-control txt-popup-add-cus" id="microchipNoEdit" placeholder="Số microchip"></td>
+														<td class="align-middle">
+															<div class="row">
+																<input type="hidden" class="checkbox-hidden vaccin-hidden" name ="vaccinated" id="vaccinatedEditHidden0">
+																<input type="checkbox" class="checkboxPrimary chk-base-info chk-vaccin" id="vaccinatedEdit0" 
+																	onchange="changeValueChecked(this);" value="0">
+																<label for="vaccinatedEdit0" class="lbl-vaccin">Đã tiêm chủng</label>
+															</div>
+															<div class="row">
+																<input type="hidden" class="checkbox-hidden worm-hidden" name ="wormed" id="wormedEditHidden0">
+																<input type="checkbox" class="checkboxPrimary chk-base-info chk-worm" id="wormedEdit0" 
+																	onchange="changeValueChecked(this);" value="0">
+																<label for="wormedEdit0" class="lbl-worm">Đã tẩy giun</label>													
+															</div>
+															<div class="row">
+																<input type="hidden" class="checkbox-hidden sterili-hidden" name ="sterilized" id="sterilizedEditHidden0">
+																<input type="checkbox" class="checkboxPrimary chk-base-info chk-sterili" id="sterilizedEdit0" 
+																	onchange="changeValueChecked(this);" value="0">
+																<label for="sterilizedEdit0" class="lbl-sterili">Đã triệt sản</label>
+															</div>
+														</td>
+														
+														<td>
+															<!-- <input type="text" name="sexEdit" class="form-control" placeholder="Giới tính"> -->
+															<div class="group-sex">
+																<div class="custom-control custom-radio custom-radio-sex">
+										                          <input class="custom-control-input" type="radio" id="customRadioEdit1" name="customRadioEdit1" value="1">
+										                          <label for="customRadioEdit1" class="custom-control-label">Đực</label>
+										                        </div>
+										                        <div class="custom-control custom-radio custom-radio-sex">
+										                          <input class="custom-control-input" type="radio" id="customRadioEdit2" name="customRadioEdit1" value="0">
+										                          <label for="customRadioEdit2" class="custom-control-label">Cái</label>
+										                        </div>
+									                        </div>
+														</td>
+													</tr>
+													<tr class="tr_clone" th:each="pet, state:${customerDto.petDtos}">
+														<td class="add-remove-row align-middle">
+															<input type="hidden" th:value="${pet.id}" name ="petId">
+															<button type="button" class="btn btn-success btn-xs tr_clone_add" onclick="addNewRow(this);"><i class="fas fa-plus-square"></i></button>
+															<button type="button" class="btn btn-danger btn-xs tr_clone_add del-tr-clone" onclick="removeRow(this);"><i class="fas fa-minus-square"></i></button>
+														</td>
+														<!-- <td>
+															<input type="text" name="petCodeEdit" th:value="${pet.petCode}" class="form-control txt-popup-add-cus required" placeholder="Mã thú cưng">
+														</td> -->
+														<td class="align-middle">
+															<input type="text" name="petNameEdit" th:value="${pet.petName}" class="form-control txt-popup-add-cus required" placeholder="Tên thú cưng">
+															<input type="hidden" th:value="${pet.petCode}" name ="petCodeEdit">
+														</td>
+														<td class="align-middle"><select class="custom-select form-control-border slt-popup-add-cus" name="breed" th:id="'breedEdit' + ${state.count}" onchange="changeFunc(this);">
+								                         <option value="0"> -- Chọn --</option>
+								                         <option th:each="breed : ${lstBreed}"
+								                         	th:selected="${breed.breedCode} == ${pet.breedCode}"
+								                            th:value="${breed.breedCode}"
+								                            th:utext="${breed.breedName}"/>
+									                  </select>
+									                 </td> 
+														<td th:id="'species-droplist-edit' + ${state.count}" class="drop-list-add align-middle">
+															<select class="custom-select form-control-border slt-popup-add-cus" name="specCode">
+										                         <option th:value="${pet.specCode}" th:utext="${pet.specName}"/>
+											                  </select>
+														</td>
+														<td class="align-middle">
+															<!-- <input type="text" name="certificateBirthEdit" th:value="${pet.certificateBirth}" class="form-control txt-popup-add-cus" placeholder="Giấy khai sinh"> -->
+															<div class="input-group date reserver-date" th:id="'reservationdateEdit' + ${state.count}" data-target-input="nearest">
+										                        <input type="text" class="form-control datetimepicker-input" th:attr="data-target='#reservationdateEdit' +  ${state.count}" name="dob" th:value="${pet.dobStr}"/>
+										                        <div class="input-group-append datetimepicker-input" th:attr="data-target='#reservationdateEdit' +  ${state.count}" data-toggle="datetimepicker">
+										                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+										                        </div>
+						                    				</div>
+														</td>
+														<td class="align-middle"><input type="text" th:value="${pet.color}" name ="color" class="form-control txt-popup-add-cus" id="colorEdit" placeholder="Màu"></td>
+														<td class="align-middle"><input type="text" th:value="${pet.microchipNo}" name ="microchipNo" class="form-control txt-popup-add-cus" id="microchipNoEdit" placeholder="Số microchip"></td>
+														<td class="align-middle">
+															<div class="row">
+																<input type="hidden" class="checkbox-hidden vaccin-hidden" name ="vaccinated" th:id="'vaccinatedEditHidden' + ${state.count}" th:value="${pet.vaccinated}">
+																<input type="checkbox" class="checkboxPrimary chk-base-info chk-vaccin" th:id="'vaccinatedEdit' + ${state.count}" 
+																	onchange="changeValueChecked(this);" value="0" th:checked="${pet.vaccinated == 1}">
+																<label th:attr="for='vaccinatedEdit' +  ${state.count}" class="lbl-vaccin">Đã tiêm chủng</label>
+															</div>
+															<div class="row">
+																<input type="hidden" class="checkbox-hidden worm-hidden" name ="wormed" th:id="'wormedEditHidden' + ${state.count}" th:value="${pet.wormed}">
+																<input type="checkbox" class="checkboxPrimary chk-base-info chk-worm" th:id="'wormedEdit' + ${state.count}" 
+																	onchange="changeValueChecked(this);" value="0" th:checked="${pet.wormed == 1}">
+																<label th:attr="for='wormedEdit' +  ${state.count}" class="lbl-worm">Đã tẩy giun</label>													
+															</div>
+															<div class="row">
+																<input type="hidden" class="checkbox-hidden sterili-hidden" name ="sterilized" th:id="'sterilizedEditHidden' + ${state.count}" th:value="${pet.sterilized}">
+																<input type="checkbox" class="checkboxPrimary chk-base-info chk-sterili" th:id="'sterilizedEdit' + ${state.count}" 
+																	onchange="changeValueChecked(this);" value="0" th:checked="${pet.sterilized == 1}">
+																<label th:attr="for='sterilizedEdit' +  ${state.count}" class="lbl-sterili">Đã triệt sản</label>
+															</div>
+														</td>
+														<td class="align-middle">
+															<div class="group-sex required">
+																<div class="custom-control custom-radio custom-radio-sex">
+										                          <input class="custom-control-input" type="radio" th:id="'customRadioEdit' + ${state.count > 1 ?state.count + 3 : state.count + 2}" th:attr="name='customRadioEdit' + ${state.count > 1 ?state.count + 3 : state.count + 2}" value="1" th:checked="${pet.sex == 1}">
+										                          <label th:attr="for='customRadioEdit' + ${state.count > 1 ?state.count + 3 : state.count + 2}" class="custom-control-label">Đực</label>
+										                        </div>
+										                        <div class="custom-control custom-radio custom-radio-sex">
+										                          <input class="custom-control-input" type="radio" th:id="'customRadioEdit' +  ${state.count > 1 ?state.count + 4 : state.count + 3}" th:attr="name='customRadioEdit' +  ${state.count > 1 ?state.count + 3 : state.count + 2}" value="0" th:checked="${pet.sex == 0}">
+										                          <label th:attr="for='customRadioEdit' +  ${state.count > 1 ?state.count + 4 : state.count + 3}" class="custom-control-label">Cái</label>
+										                        </div>
+									                        </div>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+<!-- 										<div>
+											<ul class="pagination pagination-sm m-0 float-right">
+												<li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+												<li class="page-item"><a class="page-link" href="#">1</a></li>
+												<li class="page-item"><a class="page-link" href="#">2</a></li>
+												<li class="page-item"><a class="page-link" href="#">3</a></li>
+												<li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+											</ul>
+										</div> -->
+									</div>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+					<!-- /.card-body -->
+					<div class="card-footer">
+                  <button type="button" class="btn btn-warning" onclick="editAction();">Cập nhật</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy bỏ</button>
+                </div>
+				</div>
+				<!-- <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Hủy bỏ</button>
+				</div> -->
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

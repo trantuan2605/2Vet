@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" th:href="@{/bootstrap3/css/bootstrap.css}"
+	href='/bootstrap3/css/bootstrap.css' />
+<link rel="stylesheet" type="text/css" th:href="@{/datatable/css/datatables.min.css}"
+	href="/datatable/css/datatables.min.css" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/user.css}"
+	href="/css/user.css" />
+
+<script type="text/javascript" src="/js/lib/jquery.min.js" th:src="@{/js/lib/jquery.min.js}" ></script>
+<script type="text/javascript" src="/js/user/user.js" th:src="@{/js/user/user.js}"></script>
+<script src="/bootstrap3/js/bootstrap.js" th:src="@{/bootstrap3/js/bootstrap.js}" type="text/javascript"></script>
+<script src="/datatable/js/datatables.min.js" th:src="@{/datatable/js/datatables.min.js}" type="text/javascript"></script>
+
+</head>
+<body>
+	<div class="header">
+		<div class="title">
+			<h3>User manager</h3>
+		</div>
+		<div class="user_info">
+			Logged user: <span sec:authentication="name"></span> <br /> Roles: <span
+				sec:authentication="principal.authorities"></span>
+			<form action="#" th:action="@{/logout}" method="POST">
+				<button type="submit">Logout</button>
+			</form>
+		</div>
+	</div>
+	<div class="content">
+		<table id="userTbl" class="display" style="width: 100%;">
+			<thead>
+				<tr>
+					<th><input name="check_all" id="checkAll" type="checkbox" /></th>
+					<th style="text-align: center;">Username</th>
+					<th>Role Name</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+		</table>
+		<input type="button" value="Delete" name="btnDel" id="btnDelUser" />
+		<input type="button" value="Add" name="btnAdd" id="btnAddUser" />
+	</div>
+	<div th:replace="user/addUser :: addUser"></div>
+</body>
+</html>

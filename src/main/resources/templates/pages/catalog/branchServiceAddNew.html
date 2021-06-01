@@ -1,0 +1,66 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8">
+</head>
+<body>
+	<div class="modal fade" id="modalAddBranchService" role="dialog">
+		<div class="modal-dialog modal-dialog-custom-service-branch">
+
+			<!-- Modal content-->
+			<div class="modal-content modal-content-custom">
+				<div class="modal-header">
+					<h5 id="branchNameHeader"></h5>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="card-body">
+					<div class="card-body">
+						<form th:object="${branch}" name="branchFrm" id="branchForm">
+							<fieldset class="field-panel">
+							<legend>Danh sách dịch vụ</legend>
+							<div class="card" id ="refresh-service-section">
+									<!-- /.card-header -->
+									<div class="card-body">
+										<table id="branchServiceAddDataTbl" class="table table-bordered table-hover">
+											<thead>
+												<tr>
+													<th class="col-no-add-1 text-center">
+														<!-- <input type="checkbox" class="checkboxPrimary check-all"> -->
+														Chọn
+													</th>
+													<th class="col-no-add-2 text-center">Dịch vụ</th>
+													<th class="col-no-add-3 text-center">Đơn giá</th>
+												</tr>
+											</thead>
+											<tbody id="branchServiceTbl">
+												<tr th:each="service, state:${lstService}" class="text_data">
+													<td class="col-no-add-1 text-center">
+														<input type="checkbox" class="checkboxPrimary" th:checked="${service.checkedStt == 1}">
+														<input type="hidden" class="service-code-hidden" th:value="${service.serviceCode}"/>
+														<input type="hidden" class="service-price-hidden" th:value="${service.price}" th:id="'range_price_hidden_' + ${state.count}"/>
+														<input type="hidden" th:value="${service.idBS}"  class="service-id"/>
+													</td>
+													<td class="col-no-add-2" th:text="${service.serviceName}">KH0000001</td>
+													<td class="col-no-add-3">
+														 <input th:id="'range_price_' + ${state.count}" type="text" name="range_price_id" class="range-price">
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+					<!-- /.card-body -->
+					<div class="card-footer">
+                  <button type="button" class="btn btn-success" onclick="addServiceAction();">Lưu</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Hủy bỏ</button>
+                </div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>

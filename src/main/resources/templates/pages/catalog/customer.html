@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="pages/head">
+</head>
+<head>
+<link rel="stylesheet" th:href="@{/css/customize/customer.css}">
+<link rel="stylesheet" th:href="@{/css/customize/common.css}">
+<link rel="stylesheet" th:href="@{/css/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.css}">
+<script th:src="@{/js/pages/common.js}"></script>
+<script th:src="@{/js/pages/catalog/customer.js}"></script>
+<script th:src="@{/js/jquery/jquery.serializeToJSON.js}"></script>
+<script th:src="@{/js/jquery-validation/jquery.validate.js}"></script>
+<script th:src="@{/js/jquery-validation/additional-methods.min.js}"></script>
+ <!-- jquery for date picker  start -->
+<script th:src="@{/js/moment/moment.min.js}"></script>
+<script th:src="@{/js/inputmask/jquery.inputmask.min.js}"></script>
+<script th:src="@{/js/tempusdominus-bootstrap-4/tempusdominus-bootstrap-4.min.js}"></script>
+ <!-- jquery for date picker  end -->
+</head>
+<body>
+	<div class="wrapper">
+		<div th:replace="pages/menu"></div>
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<div class="content-header">
+				<div class="container-fluid">
+					<div class="row mb-2">
+						<div class="col-sm-6">
+							<h1 class="m-0" th:text="${title}"></h1>
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-6">
+							<ol class="breadcrumb float-sm-right">
+								<li class="breadcrumb-item"><a href="#">Home</a></li>
+								<li class="breadcrumb-item active" th:text="${title}"></li>
+							</ol>
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</div>
+			<!-- /.content-header -->
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="container-fluid">
+					<!-- Small boxes (Stat box) -->
+					<div class="row" style="margin-bottom: 10px;">
+						<div class="col-md-2 offset-md-10 control-header">
+							<button type="button" class="btn btn-success" id="btn-add-new" onclick="showAddPopup();"><i class="fas fa-plus-square"></i></button>
+							<!-- <button type="button" class="btn btn-success swalDefaultSuccess" onclick="showDialogConfirm();"><i class="fas fa-plus-square"></i></button> -->
+							<!-- <button type="button" class="btn btn-success" data-card-widget="collapse" data-toggle="collapse" data-target="#formSearchCustomer"><i class="fas fa-search-plus"></i></button> -->
+						</div>
+					</div>
+					<div class="row card card-primary collapsed-card">
+		              <div id="formSearchCustomer" class="collapse col-md-8 offset-md-2">
+		              	<form th:object="${customer}" name="customerSearchFrm" id="cusSearchForm">
+		              		<fieldset class="field-panel">
+								<legend>Tìm kiếm thông tin khách hàng</legend>
+								<div class="form-group form-group-custom row">
+									<label for="cuscode" class="col-sm-3 col-form-label lbl-custom">Mã
+										khách hàng</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="cuscode"
+											th:field="*{cusCode}" placeholder="Mã khách hàng">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="custype" class="col-sm-3 col-form-label lbl-custom">Loại
+										khách hàng</label>
+									<!-- <div class="col-sm-9">
+										<input type="text" class="form-control" id="custype"
+											placeholder="Loại khách hàng">
+									</div> -->
+									<div class="col-sm-9 msg-warning">
+										<select th:field="*{cusType}" class="custom-select form-control-border slt-popup-add-cus">
+				                         <option value="0"> -- Lựa chọn --</option>
+				                         <option th:each="type : ${customerTypes}"
+				                            th:value="${type.code}"
+				                            th:utext="${type.name}"/>
+					                  </select>
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="cusname" class="col-sm-3 col-form-label lbl-custom">Tên
+										khách hàng</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control" id="cusname"
+											th:field="*{cusName}" placeholder="Tên khách hàng">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<label for="phone" class="col-sm-3 col-form-label lbl-custom">Điện
+										thoại</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" id="phone"
+											th:field="*{phone}" placeholder="Điện thoại">
+									</div>
+									<label for="identity" class="col-sm-3 col-form-label lbl-custom">CMND</label>
+									<div class="col-sm-3">
+										<input type="text" class="form-control" id="identity"
+											th:field="*{identityNo}" placeholder="CMND">
+									</div>
+								</div>
+								<div class="form-group form-group-custom row">
+									<div class="col-sm-12 advance-search">
+										<button type="button" id="btn-search" onclick="searchAdvance();" class="btn btn-success"><i class="fas fa-search"></i>Tìm kiếm</button>
+									</div>
+								</div>
+							</fieldset>
+		              	</form>
+		              </div>
+		            </div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card" id ="refresh-section">
+								<!-- /.card-header -->
+								<div class="card-body">
+									<table id="customerDataTbl" class="table table-bordered">
+										<thead>
+											<tr>
+												<th style="width: 10px">STT</th>
+												<th>Mã KH</th>
+												<th>Khách hàng</th>
+												<th>Địa chỉ</th>
+												<th>Điện thoại</th>
+												<th>Email</th>
+												<th>CMND</th>
+												<th>MST</th>
+												<th>Loại KH</th>
+											</tr>
+										</thead>
+										<tbody id = "customerTbl">
+											<input type="hidden" id="msg-add" th:value="${message}"/>
+											<tr th:each="customer, state:${lstCustomer.datas}" class="text_data">
+												<td th:text="${lstCustomer.currentPage == 1 ? state.count*lstCustomer.currentPage : (lstCustomer.maxSize*(lstCustomer.currentPage-1))+state.count}">1.</td>
+												<td th:text="${customer.cusCode}">KH0000001</td>
+												<td th:text=${customer.cusName}>Trần Tiến Đức</td>
+												<td th:text=${customer.address}>Số 1 Thái Hà</td>
+												<td th:text=${customer.phone}>0399355436</td>
+												<td th:text=${customer.email}>ductt@gmail.com</td>
+												<td th:text=${customer.identityNo}>0132611933</td>
+												<td th:text=${customer.taxCode}>MST</td>
+												<td th:text=${customer.cusTypeName}>Khách lẻ</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<!-- /.card-body -->
+								<!-- <div class="card-footer clearfix" th:if="${#lists.size(lstCustomer.datas) >= lstCustomer.maxSize}"> -->
+								<!-- <div class="card-footer clearfix">
+									<ul class="pagination pagination-sm m-0 float-right">
+										<li class="page-item"><a class="page-link" onclick="firstPage();">&laquo;</a></li>
+										<th:block th:each="i: ${#numbers.sequence(1,lstCustomer.lastPage)}">
+											<li class="page-item" th:classappend="${i == lstCustomer.currentPage} ? active : ''"><a class="page-link" onclick="nextPage(this);" th:text="${i}"></a></li>
+										</th:block>
+										<li class="page-item"><a class="page-link" onclick="lastPage();">&raquo;</a></li>
+									</ul>
+								</div> -->
+							</div>
+							<!-- /.card -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+					<!-- Main row -->
+					<!-- /.row (main row) -->
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+			<!-- /.content -->
+		</div>
+		<!-- /.content-wrapper -->
+		<div th:replace="pages/footer"></div>
+		<!-- /.control-sidebar -->
+	</div>
+	<div th:replace="pages/catalog/customerCrud"></div>
+	<div th:replace="pages/catalog/customerAddNew"></div>
+	<div th:replace="pages/catalog/customerEdit"></div>
+</body>
+</html>

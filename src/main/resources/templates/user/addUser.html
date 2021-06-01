@@ -1,0 +1,43 @@
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+	<div th:fragment="addUser">
+	<div id="modal-content" class="modal fade" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">×</button>
+					<h3>Add User Manager</h3>
+				</div>
+				<div class="modal-body">
+					<p> UserId:<br />
+						<input class="txt-input" type="text" id="userId" />
+					</p>
+					<p> Username: <br />
+						<input class="txt-input" type="text" id="username" readonly="readonly" disabled="disabled"/>
+					</p>
+					<p class ="p-pass"> Password: <br />
+						<input class="txt-input" type="password" id="password" /><input type="image" th:src="@{images/show-password.png}" src="/images/show-password.png" class= "showhidePwd" id="showhidepwd"/>
+					</p>
+					<p class ="p-pass"> Password Confirm:<br />
+						<input class="txt-input" type="password" id="passwordConfirm" /><input type="image" th:src="@{images/show-password.png}" src="/images/show-password.png" class= "showhidePwd" id= "showhidepwdconfirm"/>
+					</p>
+					<div class="role"> Role: <br />
+						<div class="radio-control"><input type="radio" class="chkPermission" id="admin" name ="permission" /><label class="lblPermission" for="admin">Admin</label></div>
+						<div class="radio-control"><input type="radio" class="chkPermission" id="member" name ="permission" /><label class="lblPermission" for="member">Member</label></div>
+						<div class="radio-control"><input type="radio" class="chkPermission" id="full" name ="permission"/><label class="lblPermission" for="full">Full</label></div>
+					</div>
+					<input type="hidden" value="" id="userIdHidden"/>
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="btn btn-primary" id="btnUpdate">Save changes</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
